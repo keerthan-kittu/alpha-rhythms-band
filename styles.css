@@ -5658,7 +5658,6 @@ body.loading-locked {
 }
 
 .perf-card:hover {
-  transform: translateY(-8px) scale(1.05) rotate(-0.5deg) !important;
   border-color: #ef4444;
   box-shadow: 0 24px 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(239, 68, 68, 0.65);
   z-index: 30;
@@ -5666,11 +5665,11 @@ body.loading-locked {
 
 .perf-card:active,
 .perf-card.touch-active {
-  transform: translateY(-3px) scale(1.03) !important;
   border-color: #fbbf24 !important;
   box-shadow: 0 0 30px rgba(245, 158, 11, 0.7) !important;
   z-index: 35;
 }
+
 
 .perf-card-inner {
   position: relative;
@@ -5830,94 +5829,106 @@ body.loading-locked {
    Strict vertical spacing eliminates all card overlaps
    ======================================================== */
 
-.performances-sticky-frame {
-  min-height: clamp(680px, 86vh, 860px);
-  position: relative;
-  width: 100%;
-}
+@media (min-width: 992px) {
+  .performances-sticky-frame {
+    min-height: clamp(680px, 86vh, 860px);
+    position: relative;
+    width: 100%;
+  }
 
-/* Card 1: Top-Left (Shalala-ing) */
-.card-tech {
-  left: 3%;
-  top: 5%;
-  right: auto;
-  bottom: auto;
-  width: clamp(190px, 14.5vw, 230px);
-  animation: card-float-1 5s ease-in-out infinite alternate;
-}
+  /* Desktop card hover transform */
+  .perf-card:hover {
+    transform: translateY(-8px) scale(1.05) rotate(-0.5deg) !important;
+  }
 
-/* Card 4: Mid-Left (All Occasions) */
-.card-music {
-  left: 3%;
-  top: 37%;
-  right: auto;
-  bottom: auto;
-  width: clamp(190px, 14.5vw, 230px);
-  animation: card-float-2 6.5s ease-in-out infinite alternate 1s;
-}
+  .perf-card:active,
+  .perf-card.touch-active {
+    transform: translateY(-3px) scale(1.03) !important;
+  }
 
-/* Card 5: Bottom-Left (Open Bookings) */
-.card-competition {
-  left: 3%;
-  top: 69%;
-  right: auto;
-  bottom: auto;
-  width: clamp(190px, 14.5vw, 230px);
-  animation: card-float-1 6.2s ease-in-out infinite alternate 0.7s;
-}
+  /* Card 1: Top-Left (Shalala-ing) */
+  .card-tech {
+    left: 3%;
+    top: 5%;
+    right: auto;
+    bottom: auto;
+    width: clamp(190px, 14.5vw, 230px);
+    animation: card-float-1 5s ease-in-out infinite alternate;
+  }
 
-/* Card 2: Top-Center (Konkan Fiesta) */
-.card-nights {
-  left: 50%;
-  top: 3.5%;
-  right: auto;
-  bottom: auto;
-  transform: translateX(-50%);
-  width: clamp(185px, 14vw, 220px);
-  animation: card-float-2 6s ease-in-out infinite alternate;
-}
+  /* Card 4: Mid-Left (All Occasions) */
+  .card-music {
+    left: 3%;
+    top: 37%;
+    right: auto;
+    bottom: auto;
+    width: clamp(190px, 14.5vw, 230px);
+    animation: card-float-2 6.5s ease-in-out infinite alternate 1s;
+  }
 
-/* Card 3: Top-Right (Festha Paus) */
-.card-culture {
-  right: 3%;
-  left: auto;
-  top: 5%;
-  bottom: auto;
-  width: clamp(190px, 14.5vw, 230px);
-  animation: card-float-1 5.5s ease-in-out infinite alternate 0.5s;
-}
+  /* Card 5: Bottom-Left (Open Bookings) */
+  .card-competition {
+    left: 3%;
+    top: 69%;
+    right: auto;
+    bottom: auto;
+    width: clamp(190px, 14.5vw, 230px);
+    animation: card-float-1 6.2s ease-in-out infinite alternate 0.7s;
+  }
 
-/* Card 7: Mid-Right (Into The 80s) */
-.card-fashion {
-  right: 3%;
-  left: auto;
-  top: 37%;
-  bottom: auto;
-  width: clamp(190px, 14.5vw, 230px);
-  animation: card-float-2 5.8s ease-in-out infinite alternate 1.5s;
-}
+  /* Card 2: Top-Center (Konkan Fiesta) */
+  .card-nights {
+    left: 50%;
+    top: 3.5%;
+    right: auto;
+    bottom: auto;
+    transform: translateX(-50%);
+    width: clamp(185px, 14vw, 220px);
+    animation: card-float-2 6s ease-in-out infinite alternate;
+  }
 
-/* Card 6: Bottom-Right (Tore House Down) */
-.card-dance {
-  right: 3%;
-  left: auto;
-  top: 69%;
-  bottom: auto;
-  width: clamp(190px, 14.5vw, 230px);
-  animation: card-float-1 5.2s ease-in-out infinite alternate 1.2s;
-}
+  /* Card 3: Top-Right (Festha Paus) */
+  .card-culture {
+    right: 3%;
+    left: auto;
+    top: 5%;
+    bottom: auto;
+    width: clamp(190px, 14.5vw, 230px);
+    animation: card-float-1 5.5s ease-in-out infinite alternate 0.5s;
+  }
 
-/* Active Spotlight Animation (Applies across Desktop & Mobile) */
-.perf-card.perf-spotlight {
-  transform: translateY(-8px) scale(1.06) !important;
-  border-color: #ef4444 !important;
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.95), 0 0 35px rgba(239, 68, 68, 0.75), 0 0 15px rgba(245, 158, 11, 0.6) !important;
-  z-index: 35 !important;
-  opacity: 1 !important;
-}
+  /* Card 7: Mid-Right (Into The 80s) */
+  .card-fashion {
+    right: 3%;
+    left: auto;
+    top: 37%;
+    bottom: auto;
+    width: clamp(190px, 14.5vw, 230px);
+    animation: card-float-2 5.8s ease-in-out infinite alternate 1.5s;
+  }
 
-.card-nights.perf-spotlight {
-  transform: translateX(-50%) translateY(-8px) scale(1.06) !important;
+  /* Card 6: Bottom-Right (Tore House Down) */
+  .card-dance {
+    right: 3%;
+    left: auto;
+    top: 69%;
+    bottom: auto;
+    width: clamp(190px, 14.5vw, 230px);
+    animation: card-float-1 5.2s ease-in-out infinite alternate 1.2s;
+  }
+
+  /* Active Spotlight Animation (Applies to Desktop) */
+  .perf-card.perf-spotlight {
+    transform: translateY(-8px) scale(1.06) !important;
+    border-color: #ef4444 !important;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.95), 0 0 35px rgba(239, 68, 68, 0.75), 0 0 15px rgba(245, 158, 11, 0.6) !important;
+    z-index: 35 !important;
+    opacity: 1 !important;
+  }
+
+  .card-nights.perf-spotlight {
+    transform: translateX(-50%) translateY(-8px) scale(1.06) !important;
+  }
 }
 
 .perf-card.perf-spotlight .perf-thumb {
@@ -6170,18 +6181,20 @@ body.loading-locked {
   }
 
   /* ONLY the active card is spotlighted */
-  .perf-card.mobile-active {
+  .perf-card.mobile-active,
+  .perf-card.perf-spotlight {
     opacity: 1 !important;
     pointer-events: auto !important;
     transform: translate(-50%, -50%) scale(1) !important;
     box-shadow: 0 20px 48px rgba(0, 0, 0, 0.95), 0 0 28px rgba(239, 68, 68, 0.5) !important;
     border-color: #ef4444 !important;
-    z-index: 20 !important;
+    z-index: 25 !important;
   }
 
   .perf-card.mobile-active:active,
+  .perf-card.perf-spotlight:active,
   .perf-card.mobile-active.touch-active {
-    transform: translate(-50%, -50%) scale(1.02) !important;
+    transform: translate(-50%, -50%) scale(0.98) !important;
     border-color: #fbbf24 !important;
     box-shadow: 0 0 35px rgba(245, 158, 11, 0.7) !important;
   }
@@ -6283,6 +6296,11 @@ body.loading-locked {
     width: clamp(275px, 86vw, 325px) !important;
   }
 
+  .perf-card.mobile-active,
+  .perf-card.perf-spotlight {
+    transform: translate(-50%, -50%) scale(1) !important;
+  }
+
   .perf-mobile-nav {
     bottom: 58px;
     padding: 5px 11px;
@@ -6302,6 +6320,8 @@ body.loading-locked {
   .perf-progress-dock {
     bottom: 10px;
   }
+}
+
 
 
 

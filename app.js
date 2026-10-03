@@ -1639,9 +1639,11 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
     if (!section || cards.length === 0) return;
 
     let activeIdx = 0;
+    let timerRaf = null;
     let progressStartTime = performance.now();
-    let progressRaf = null;
+    let currentElapsed = 0;
     let isPaused = false;
+    let pauseTimeout = null;
     const CYCLE_DURATION = 3500; // 3.5s per card
 
     function setActivePerformance(idx, playSound = false) {
@@ -1680,52 +1682,85 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
     }
 
     function resetProgressTimer() {
-      if (progressRaf) cancelAnimationFrame(progressRaf);
+      if (timerRaf) cancelAnimationFrame(timerRaf);
+      currentElapsed = 0;
       progressStartTime = performance.now();
+      if (progressFill) progressFill.style.width = '0%';
 
       function stepProgress(now) {
         if (!isPaused) {
-          const elapsed = now - progressStartTime;
-          const pct = Math.min(100, Math.max(0, (elapsed / CYCLE_DURATION) * 100));
+          currentElapsed = now - progressStartTime;
+          const pct = Math.min(100, Math.max(0, (currentElapsed / CYCLE_DURATION) * 100));
           if (progressFill) {
-            progressFill.style.width = pct + '%';
+            progressFill.style.width = pct.toFixed(1) + '%';
           }
-          if (elapsed >= CYCLE_DURATION) {
+          if (currentElapsed >= CYCLE_DURATION) {
             setActivePerformance(activeIdx + 1, false);
             return;
           }
         } else {
-          // Keep progressStartTime aligned while paused
-          progressStartTime = performance.now() - (parseFloat(progressFill?.style.width || '0') / 100 * CYCLE_DURATION);
+          progressStartTime = now - currentElapsed;
         }
-        progressRaf = requestAnimationFrame(stepProgress);
+        timerRaf = requestAnimationFrame(stepProgress);
       }
-      progressRaf = requestAnimationFrame(stepProgress);
+      timerRaf = requestAnimationFrame(stepProgress);
     }
 
     // Initialize Card 1
     setActivePerformance(0, false);
 
-    // Pause only when hovering specifically over a card or dock, never the whole page
+    // Only allow hover pause on true pointer devices (desktop with mouse)
+    const canHover = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    if (canHover) {
+      cards.forEach((card) => {
+        card.addEventListener('mouseenter', () => {
+          isPaused = true;
+          if (pauseTimeout) clearTimeout(pauseTimeout);
+          // Auto-resume after 5 seconds even if mouse stays hovered
+          pauseTimeout = setTimeout(() => { isPaused = false; }, 5000);
+        });
+        card.addEventListener('mouseleave', () => {
+          isPaused = false;
+          if (pauseTimeout) clearTimeout(pauseTimeout);
+        });
+      });
+
+      const dock = document.querySelector('.perf-progress-dock');
+      if (dock) {
+        dock.addEventListener('mouseenter', () => {
+          isPaused = true;
+          if (pauseTimeout) clearTimeout(pauseTimeout);
+          pauseTimeout = setTimeout(() => { isPaused = false; }, 5000);
+        });
+        dock.addEventListener('mouseleave', () => {
+          isPaused = false;
+          if (pauseTimeout) clearTimeout(pauseTimeout);
+        });
+      }
+    }
+
     cards.forEach((card, idx) => {
-      card.addEventListener('mouseenter', () => { isPaused = true; });
-      card.addEventListener('mouseleave', () => { isPaused = false; });
-      card.addEventListener('click', () => {
-        setActivePerformance(idx, true);
+      card.addEventListener('click', (e) => {
+        const isMobile = window.innerWidth < 992;
+        if (isMobile && activeIdx !== idx) {
+          e.preventDefault();
+          isPaused = false;
+          setActivePerformance(idx, true);
+        } else {
+          isPaused = false;
+          setActivePerformance(idx, true);
+        }
       });
     });
-
-    const dock = document.querySelector('.perf-progress-dock');
-    if (dock) {
-      dock.addEventListener('mouseenter', () => { isPaused = true; });
-      dock.addEventListener('mouseleave', () => { isPaused = false; });
-    }
 
     // Dots Click Handler
     dots.forEach((dot, idx) => {
       dot.addEventListener('click', (e) => {
         e.preventDefault();
-        initAudioContext();
+        e.stopPropagation();
+        isPaused = false;
+        if (typeof initAudioContext === 'function') initAudioContext();
         setActivePerformance(idx, true);
       });
     });
@@ -1734,7 +1769,9 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
     if (mobilePrevBtn) {
       mobilePrevBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        initAudioContext();
+        e.stopPropagation();
+        isPaused = false;
+        if (typeof initAudioContext === 'function') initAudioContext();
         setActivePerformance(activeIdx - 1, true);
       });
     }
@@ -1742,7 +1779,9 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
     if (mobileNextBtn) {
       mobileNextBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        initAudioContext();
+        e.stopPropagation();
+        isPaused = false;
+        if (typeof initAudioContext === 'function') initAudioContext();
         setActivePerformance(activeIdx + 1, true);
       });
     }
@@ -1762,6 +1801,7 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
         const deltaX = e.changedTouches[0].clientX - touchStartX;
         const deltaY = e.changedTouches[0].clientY - touchStartY;
         if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY)) {
+          isPaused = false;
           if (deltaX < 0) {
             setActivePerformance(activeIdx + 1, true);
           } else {
