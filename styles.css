@@ -740,54 +740,52 @@ body.loading-locked {
 
 .site-header.scrolled,
 #main-header.scrolled {
-  background: rgba(8, 8, 14, 0.94) !important;
+  background: rgba(255, 255, 255, 0.95) !important;
   backdrop-filter: blur(20px) !important;
   -webkit-backdrop-filter: blur(20px) !important;
-  border-bottom: 1px solid rgba(245, 158, 11, 0.35) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12) !important;
   padding: 10px 32px !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
 }
 
 .site-header.scrolled .brand-name,
 #main-header.scrolled .brand-name {
-  color: #ffffff !important;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.95), 0 0 14px rgba(255, 255, 255, 0.4) !important;
+  color: #000000 !important;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.4) !important;
 }
 
 .site-header.scrolled .brand-sub,
 #main-header.scrolled .brand-sub {
-  color: #fbbf24 !important;
-  text-shadow: 0 0 8px rgba(245, 158, 11, 0.6) !important;
+  color: #b45309 !important;
 }
 
 .site-header.scrolled .nav-logo,
 #main-header.scrolled .nav-logo {
-  filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(245, 158, 11, 0.7)) !important;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.25)) !important;
 }
 
 .site-header.scrolled .nav-link,
 #main-header.scrolled .nav-link {
-  color: #ffffff !important;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9) !important;
-  opacity: 0.95;
+  color: #000000 !important;
+  text-shadow: none !important;
+  opacity: 1;
 }
 
 .site-header.scrolled .nav-link:hover,
 #main-header.scrolled .nav-link:hover {
-  color: #ffd700 !important;
+  color: #d97706 !important;
   opacity: 1;
 }
 
 .site-header.scrolled .nav-link.active,
 #main-header.scrolled .nav-link.active {
-  color: #ffd700 !important;
+  color: #d97706 !important;
   opacity: 1;
-  text-shadow: 0 0 14px rgba(245, 158, 11, 0.85) !important;
 }
 
 .site-header.scrolled .mobile-toggle span,
 #main-header.scrolled .mobile-toggle span {
-  background: #ffffff !important;
+  background: #000000 !important;
 }
 
 .nav-container {
