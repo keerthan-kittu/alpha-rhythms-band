@@ -1634,51 +1634,107 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
     const mobileNextBtn = document.getElementById('perf-mobile-next-btn');
     const mobileCounter = document.getElementById('perf-mobile-counter');
     const bgCanvas = document.getElementById('performances-bg');
+    const progressFill = document.getElementById('perf-progress-fill');
 
     if (!section || cards.length === 0) return;
 
-    // Reveal all cards with slight cascade
-    cards.forEach((card, idx) => {
-      card.classList.add('revealed');
-      card.style.animationDelay = (idx * 0.12) + 's';
-    });
+    let activeIdx = 0;
+    let progressStartTime = 0;
+    let progressRaf = null;
+    let isPaused = false;
+    const CYCLE_DURATION = 3500; // 3.5s per card
 
-    let currentMobileIdx = 0;
-    function setMobileActiveCard(idx) {
+    function setActivePerformance(idx, playSound = false) {
       if (idx < 0) idx = cards.length - 1;
       if (idx >= cards.length) idx = 0;
-      currentMobileIdx = idx;
+      activeIdx = idx;
 
       cards.forEach((card, i) => {
-        if (i === currentMobileIdx) {
+        if (i === activeIdx) {
+          card.classList.add('perf-spotlight');
           card.classList.add('mobile-active');
         } else {
+          card.classList.remove('perf-spotlight');
           card.classList.remove('mobile-active');
         }
       });
 
       dots.forEach((dot, i) => {
-        if (i === currentMobileIdx) {
+        if (i === activeIdx) {
           dot.classList.add('active');
+          dot.innerHTML = '<i class="fa-solid fa-bolt"></i>';
         } else {
           dot.classList.remove('active');
+          dot.textContent = `${i + 1}`;
         }
       });
 
       if (mobileCounter) {
-        mobileCounter.textContent = `CARD ${currentMobileIdx + 1} OF ${cards.length}`;
+        mobileCounter.textContent = `CARD ${activeIdx + 1} OF ${cards.length}`;
       }
+
+      if (playSound && typeof playClickTick === 'function') {
+        playClickTick();
+      }
+
+      resetProgressTimer();
     }
 
-    // Set initial card for mobile
-    setMobileActiveCard(0);
+    function resetProgressTimer() {
+      if (progressRaf) cancelAnimationFrame(progressRaf);
+      progressStartTime = performance.now();
 
+      function stepProgress(now) {
+        if (isPaused) {
+          progressRaf = requestAnimationFrame(stepProgress);
+          return;
+        }
+        const elapsed = now - progressStartTime;
+        const pct = Math.min(100, Math.max(0, (elapsed / CYCLE_DURATION) * 100));
+        if (progressFill) {
+          progressFill.style.width = pct + '%';
+        }
+        if (elapsed < CYCLE_DURATION) {
+          progressRaf = requestAnimationFrame(stepProgress);
+        } else {
+          setActivePerformance(activeIdx + 1, false);
+        }
+      }
+      progressRaf = requestAnimationFrame(stepProgress);
+    }
+
+    // Initialize Card 1
+    setActivePerformance(0, false);
+
+    // Pause on hover so users can browse at ease
+    section.addEventListener('mouseenter', () => { isPaused = true; });
+    section.addEventListener('mouseleave', () => {
+      isPaused = false;
+      progressStartTime = performance.now();
+    });
+
+    // Dots Click Handler
+    dots.forEach((dot, idx) => {
+      dot.addEventListener('click', (e) => {
+        e.preventDefault();
+        initAudioContext();
+        setActivePerformance(idx, true);
+      });
+    });
+
+    // Cards Click to Spotlight
+    cards.forEach((card, idx) => {
+      card.addEventListener('click', () => {
+        setActivePerformance(idx, true);
+      });
+    });
+
+    // Mobile Navigation Controls
     if (mobilePrevBtn) {
       mobilePrevBtn.addEventListener('click', (e) => {
         e.preventDefault();
         initAudioContext();
-        playClickTick();
-        setMobileActiveCard(currentMobileIdx - 1);
+        setActivePerformance(activeIdx - 1, true);
       });
     }
 
@@ -1686,18 +1742,9 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
       mobileNextBtn.addEventListener('click', (e) => {
         e.preventDefault();
         initAudioContext();
-        playClickTick();
-        setMobileActiveCard(currentMobileIdx + 1);
+        setActivePerformance(activeIdx + 1, true);
       });
     }
-
-    dots.forEach((dot, idx) => {
-      dot.addEventListener('click', () => {
-        initAudioContext();
-        playClickTick();
-        setMobileActiveCard(idx);
-      });
-    });
 
     // Touch swipe for mobile spotlight
     let touchStartX = 0;
@@ -1715,9 +1762,9 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
         const deltaY = e.changedTouches[0].clientY - touchStartY;
         if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY)) {
           if (deltaX < 0) {
-            setMobileActiveCard(currentMobileIdx + 1);
+            setActivePerformance(activeIdx + 1, true);
           } else {
-            setMobileActiveCard(currentMobileIdx - 1);
+            setActivePerformance(activeIdx - 1, true);
           }
         }
       }

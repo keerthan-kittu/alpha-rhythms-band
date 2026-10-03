@@ -5827,23 +5827,43 @@ body.loading-locked {
 
 /* ========================================================
    Desktop Layout (>= 992px): 7 Zero-Collision Dedicated Quadrants
+   Strict vertical spacing eliminates all card overlaps
    ======================================================== */
+
+.performances-sticky-frame {
+  min-height: clamp(680px, 86vh, 860px);
+  position: relative;
+  width: 100%;
+}
 
 /* Card 1: Top-Left (Shalala-ing) */
 .card-tech {
   left: 3%;
-  top: 4%;
+  top: 5%;
   right: auto;
   bottom: auto;
-  width: clamp(195px, 15.5vw, 240px);
-  transform: translateY(0px) scale(1);
+  width: clamp(190px, 14.5vw, 230px);
   animation: card-float-1 5s ease-in-out infinite alternate;
 }
-.card-tech:hover {
-  transform: translateY(-10px) scale(1.06) !important;
-  border-color: #f59e0b !important;
-  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(245, 158, 11, 0.45) !important;
-  z-index: 40 !important;
+
+/* Card 4: Mid-Left (All Occasions) */
+.card-music {
+  left: 3%;
+  top: 37%;
+  right: auto;
+  bottom: auto;
+  width: clamp(190px, 14.5vw, 230px);
+  animation: card-float-2 6.5s ease-in-out infinite alternate 1s;
+}
+
+/* Card 5: Bottom-Left (Open Bookings) */
+.card-competition {
+  left: 3%;
+  top: 69%;
+  right: auto;
+  bottom: auto;
+  width: clamp(190px, 14.5vw, 230px);
+  animation: card-float-1 6.2s ease-in-out infinite alternate 0.7s;
 }
 
 /* Card 2: Top-Center (Konkan Fiesta) */
@@ -5853,109 +5873,84 @@ body.loading-locked {
   right: auto;
   bottom: auto;
   transform: translateX(-50%);
-  width: clamp(185px, 14.5vw, 225px);
+  width: clamp(185px, 14vw, 220px);
   animation: card-float-2 6s ease-in-out infinite alternate;
-}
-.card-nights:hover {
-  transform: translateX(-50%) translateY(-10px) scale(1.06) !important;
-  border-color: #f59e0b !important;
-  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(245, 158, 11, 0.45) !important;
-  z-index: 40 !important;
 }
 
 /* Card 3: Top-Right (Festha Paus) */
 .card-culture {
   right: 3%;
   left: auto;
-  top: 4%;
+  top: 5%;
   bottom: auto;
-  width: clamp(195px, 15.5vw, 240px);
-  transform: translateY(0px) scale(1);
+  width: clamp(190px, 14.5vw, 230px);
   animation: card-float-1 5.5s ease-in-out infinite alternate 0.5s;
-}
-.card-culture:hover {
-  transform: translateY(-10px) scale(1.06) !important;
-  border-color: #f59e0b !important;
-  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(245, 158, 11, 0.45) !important;
-  z-index: 40 !important;
-}
-
-/* Card 4: Mid-Left (All Occasions) */
-.card-music {
-  left: 2.5%;
-  top: 50%;
-  right: auto;
-  bottom: auto;
-  transform: translateY(-50%) scale(1);
-  width: clamp(195px, 15.5vw, 240px);
-  animation: card-float-2 6.5s ease-in-out infinite alternate 1s;
-}
-.card-music:hover {
-  transform: translateY(calc(-50% - 10px)) scale(1.06) !important;
-  border-color: #f59e0b !important;
-  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(245, 158, 11, 0.45) !important;
-  z-index: 40 !important;
 }
 
 /* Card 7: Mid-Right (Into The 80s) */
 .card-fashion {
-  right: 2.5%;
+  right: 3%;
   left: auto;
-  top: 50%;
+  top: 37%;
   bottom: auto;
-  transform: translateY(-50%) scale(1);
-  width: clamp(195px, 15.5vw, 240px);
-  animation: card-float-1 5.8s ease-in-out infinite alternate 1.5s;
-}
-.card-fashion:hover {
-  transform: translateY(calc(-50% - 10px)) scale(1.06) !important;
-  border-color: #f59e0b !important;
-  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(245, 158, 11, 0.45) !important;
-  z-index: 40 !important;
-}
-
-/* Card 5: Bottom-Left (Open Bookings) */
-.card-competition {
-  left: 5%;
-  bottom: 42px;
-  right: auto;
-  top: auto;
-  width: clamp(195px, 15.5vw, 240px);
-  transform: translateY(0px) scale(1);
-  animation: card-float-2 6.2s ease-in-out infinite alternate 0.7s;
-}
-.card-competition:hover {
-  transform: translateY(-10px) scale(1.06) !important;
-  border-color: #f59e0b !important;
-  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(245, 158, 11, 0.45) !important;
-  z-index: 40 !important;
+  width: clamp(190px, 14.5vw, 230px);
+  animation: card-float-2 5.8s ease-in-out infinite alternate 1.5s;
 }
 
 /* Card 6: Bottom-Right (Tore House Down) */
 .card-dance {
-  right: 5%;
+  right: 3%;
   left: auto;
-  bottom: 42px;
-  top: auto;
-  width: clamp(195px, 15.5vw, 240px);
-  transform: translateY(0px) scale(1);
+  top: 69%;
+  bottom: auto;
+  width: clamp(190px, 14.5vw, 230px);
   animation: card-float-1 5.2s ease-in-out infinite alternate 1.2s;
 }
-.card-dance:hover {
-  transform: translateY(-10px) scale(1.06) !important;
-  border-color: #f59e0b !important;
-  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(245, 158, 11, 0.45) !important;
-  z-index: 40 !important;
+
+/* Active Spotlight Animation (Applies across Desktop & Mobile) */
+.perf-card.perf-spotlight {
+  transform: translateY(-8px) scale(1.06) !important;
+  border-color: #ef4444 !important;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.95), 0 0 35px rgba(239, 68, 68, 0.75), 0 0 15px rgba(245, 158, 11, 0.6) !important;
+  z-index: 35 !important;
+  opacity: 1 !important;
+}
+
+.card-nights.perf-spotlight {
+  transform: translateX(-50%) translateY(-8px) scale(1.06) !important;
+}
+
+.perf-card.perf-spotlight .perf-thumb {
+  filter: grayscale(0%) contrast(115%) brightness(105%) !important;
+}
+
+.perf-card.perf-spotlight .perf-play-overlay {
+  opacity: 1 !important;
+}
+
+.perf-card.perf-spotlight .perf-play-overlay i {
+  transform: scale(1.1) !important;
+  animation: play-pulse 1.8s infinite ease-in-out;
+}
+
+.perf-card.perf-spotlight .perf-label-text {
+  color: #fbbf24 !important;
+  text-shadow: 0 0 10px rgba(245, 158, 11, 0.8) !important;
+}
+
+@keyframes play-pulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 18px rgba(239, 68, 68, 0.8); }
+  50% { transform: scale(1.12); box-shadow: 0 0 30px rgba(245, 158, 11, 0.95); }
 }
 
 @keyframes card-float-1 {
   0% { transform: translateY(0px); }
-  100% { transform: translateY(-7px); }
+  100% { transform: translateY(-5px); }
 }
 
 @keyframes card-float-2 {
   0% { transform: translateY(0px); }
-  100% { transform: translateY(7px); }
+  100% { transform: translateY(5px); }
 }
 
 /* Bottom Progress Dock */
