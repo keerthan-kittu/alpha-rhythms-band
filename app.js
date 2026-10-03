@@ -1639,7 +1639,7 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
     if (!section || cards.length === 0) return;
 
     let activeIdx = 0;
-    let progressStartTime = 0;
+    let progressStartTime = performance.now();
     let progressRaf = null;
     let isPaused = false;
     const CYCLE_DURATION = 3500; // 3.5s per card
@@ -1660,12 +1660,11 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
       });
 
       dots.forEach((dot, i) => {
+        dot.textContent = `${i + 1}`;
         if (i === activeIdx) {
           dot.classList.add('active');
-          dot.innerHTML = '<i class="fa-solid fa-bolt"></i>';
         } else {
           dot.classList.remove('active');
-          dot.textContent = `${i + 1}`;
         }
       });
 
@@ -1685,20 +1684,21 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
       progressStartTime = performance.now();
 
       function stepProgress(now) {
-        if (isPaused) {
-          progressRaf = requestAnimationFrame(stepProgress);
-          return;
-        }
-        const elapsed = now - progressStartTime;
-        const pct = Math.min(100, Math.max(0, (elapsed / CYCLE_DURATION) * 100));
-        if (progressFill) {
-          progressFill.style.width = pct + '%';
-        }
-        if (elapsed < CYCLE_DURATION) {
-          progressRaf = requestAnimationFrame(stepProgress);
+        if (!isPaused) {
+          const elapsed = now - progressStartTime;
+          const pct = Math.min(100, Math.max(0, (elapsed / CYCLE_DURATION) * 100));
+          if (progressFill) {
+            progressFill.style.width = pct + '%';
+          }
+          if (elapsed >= CYCLE_DURATION) {
+            setActivePerformance(activeIdx + 1, false);
+            return;
+          }
         } else {
-          setActivePerformance(activeIdx + 1, false);
+          // Keep progressStartTime aligned while paused
+          progressStartTime = performance.now() - (parseFloat(progressFill?.style.width || '0') / 100 * CYCLE_DURATION);
         }
+        progressRaf = requestAnimationFrame(stepProgress);
       }
       progressRaf = requestAnimationFrame(stepProgress);
     }
@@ -1706,25 +1706,26 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
     // Initialize Card 1
     setActivePerformance(0, false);
 
-    // Pause on hover so users can browse at ease
-    section.addEventListener('mouseenter', () => { isPaused = true; });
-    section.addEventListener('mouseleave', () => {
-      isPaused = false;
-      progressStartTime = performance.now();
+    // Pause only when hovering specifically over a card or dock, never the whole page
+    cards.forEach((card, idx) => {
+      card.addEventListener('mouseenter', () => { isPaused = true; });
+      card.addEventListener('mouseleave', () => { isPaused = false; });
+      card.addEventListener('click', () => {
+        setActivePerformance(idx, true);
+      });
     });
+
+    const dock = document.querySelector('.perf-progress-dock');
+    if (dock) {
+      dock.addEventListener('mouseenter', () => { isPaused = true; });
+      dock.addEventListener('mouseleave', () => { isPaused = false; });
+    }
 
     // Dots Click Handler
     dots.forEach((dot, idx) => {
       dot.addEventListener('click', (e) => {
         e.preventDefault();
         initAudioContext();
-        setActivePerformance(idx, true);
-      });
-    });
-
-    // Cards Click to Spotlight
-    cards.forEach((card, idx) => {
-      card.addEventListener('click', () => {
         setActivePerformance(idx, true);
       });
     });
