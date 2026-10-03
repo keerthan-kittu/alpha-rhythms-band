@@ -2219,12 +2219,13 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
       }
     }
 
-    // Native scroll fallback / backup tracker
+    // Scroll tracker - update header, nav, and progress metrics unconditionally
     window.addEventListener('scroll', () => {
-      if (!lenis) {
-        updateScrollMetrics(window.scrollY);
-      }
+      updateScrollMetrics(window.scrollY);
     }, { passive: true });
+
+    // Initial check on load
+    updateScrollMetrics(window.scrollY || 0);
 
     let cachedHeroBottom = 0;
     function cacheLayoutMetrics() {
