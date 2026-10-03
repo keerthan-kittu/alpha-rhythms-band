@@ -4462,115 +4462,41 @@ body.loading-locked {
 .site-footer {
   background: #040406;
   border-top: 1px solid var(--border-subtle);
-  padding: 70px 24px 30px;
-}
-
-.footer-top {
-  display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1.4fr;
-  gap: 40px;
-  margin-bottom: 50px;
-}
-
-.footer-brand .footer-logo {
-  width: 48px;
-  height: 48px;
-  object-fit: contain;
-  margin-bottom: 12px;
-}
-
-.footer-title {
-  display: block;
-  font-family: var(--font-display);
-  font-size: 1.2rem;
-  font-weight: 800;
-  letter-spacing: 0.15em;
-  color: #fff;
-}
-
-.footer-brand p {
-  color: var(--text-dim);
-  font-size: 0.85rem;
-  margin-top: 6px;
-}
-
-.footer-links-col h4,
-.footer-newsletter h4 {
-  font-family: var(--font-caps);
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
-  color: var(--accent-gold);
-  margin-bottom: 16px;
-}
-
-.footer-links-col ul {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.footer-links-col a {
-  color: var(--text-muted);
-  text-decoration: none;
-  font-size: 0.85rem;
-  transition: color 0.2s ease;
-}
-
-.footer-links-col a:hover {
-  color: #fff;
-}
-
-.footer-newsletter p {
-  color: var(--text-muted);
-  font-size: 0.85rem;
-  margin-bottom: 14px;
-}
-
-.newsletter-input-box {
-  display: flex;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border-subtle);
-  border-radius: 6px;
-  overflow: hidden;
-}
-
-.newsletter-input-box input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  padding: 10px 14px;
-  color: #fff;
-  font-size: 0.85rem;
-  outline: none;
-}
-
-.newsletter-input-box button {
-  background: var(--accent-gold);
-  color: #000;
-  border: none;
-  padding: 0 16px;
-  cursor: pointer;
-}
-
-.newsletter-success {
-  display: block;
-  font-size: 0.78rem;
-  color: #34d399;
-  margin-top: 6px;
+  padding: 36px 24px;
 }
 
 .footer-bottom {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  padding-top: 24px;
-  border-top: 1px solid var(--border-subtle);
-  font-size: 0.8rem;
+  justify-content: center;
+  text-align: center;
+  gap: 12px;
+  font-size: 0.82rem;
   color: var(--text-dim);
-  flex-wrap: wrap;
+}
+
+.footer-brand-minimal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 12px;
 }
+
+.footer-brand-minimal .footer-logo {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.footer-brand-minimal .footer-title {
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: #ffffff;
+}
+
 
 .footer-replay-link {
   background: none;

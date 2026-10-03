@@ -1427,18 +1427,21 @@ Alpha Rhythms on stage at Tiara!
     });
   }
 
-  // Newsletter Form
+  // Newsletter Form (if present)
   const newsletterForm = document.getElementById('newsletter-form');
   const newsletterMsg = document.getElementById('newsletter-msg');
-  newsletterForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    newsletterForm.reset();
-    newsletterMsg.textContent = "✓ You are now subscribed to the Alpha Inner Circle!";
-    showToast("Subscribed to Alpha Rhythms newsletter!", "fa-circle-check");
-    setTimeout(() => {
-      newsletterMsg.textContent = "";
-    }, 5000);
-  });
+  if (newsletterForm) {
+    newsletterForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      newsletterForm.reset();
+      if (newsletterMsg) newsletterMsg.textContent = "✓ You are now subscribed to the Alpha Inner Circle!";
+      showToast("Subscribed to Alpha Rhythms newsletter!", "fa-circle-check");
+      setTimeout(() => {
+        if (newsletterMsg) newsletterMsg.textContent = "";
+      }, 5000);
+    });
+  }
+
 
   // EPK Download (Real File Generation & Download across all devices)
   const epkBtn = document.getElementById('download-epk-btn');
