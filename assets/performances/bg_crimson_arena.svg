@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <!-- Radial Gradients for Fiery Red / Black Base -->
+    <radialGradient id="deepRedGlow" cx="50%" cy="50%" r="75%">
+      <stop offset="0%" stop-color="#b91c1c" stop-opacity="0.95" />
+      <stop offset="35%" stop-color="#991b1b" stop-opacity="0.9" />
+      <stop offset="70%" stop-color="#450a0a" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#050507" stop-opacity="1" />
+    </radialGradient>
+
+    <radialGradient id="hotSpotCenter" cx="50%" cy="45%" r="40%">
+      <stop offset="0%" stop-color="#ef4444" stop-opacity="0.75" />
+      <stop offset="50%" stop-color="#b91c1c" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#7f1d1d" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Crater Hole Gradients -->
+    <radialGradient id="craterHole" cx="38%" cy="38%" r="65%">
+      <stop offset="0%" stop-color="#020203" />
+      <stop offset="75%" stop-color="#0a0a0f" />
+      <stop offset="92%" stop-color="#1f0a0a" />
+      <stop offset="100%" stop-color="#450a0a" />
+    </radialGradient>
+
+    <!-- Halftone Dot Pattern -->
+    <pattern id="halftoneDots" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
+      <circle cx="8" cy="8" r="2.2" fill="#000000" opacity="0.35" />
+      <circle cx="8" cy="8" r="1.1" fill="#fee2e2" opacity="0.15" />
+    </pattern>
+
+    <pattern id="denseHalftone" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="12" cy="12" r="3.5" fill="#000000" opacity="0.45" />
+      <circle cx="0" cy="0" r="2" fill="#450a0a" opacity="0.3" />
+      <circle cx="24" cy="0" r="2" fill="#450a0a" opacity="0.3" />
+      <circle cx="0" cy="24" r="2" fill="#450a0a" opacity="0.3" />
+      <circle cx="24" cy="24" r="2" fill="#450a0a" opacity="0.3" />
+    </pattern>
+  </defs>
+
+  <!-- Deep Crimson Base -->
+  <rect width="100%" height="100%" fill="#050507" />
+  <rect width="100%" height="100%" fill="url(#deepRedGlow)" />
+  <rect width="100%" height="100%" fill="url(#hotSpotCenter)" />
+
+  <!-- Splatter / Halftone Layer -->
+  <rect width="100%" height="100%" fill="url(#halftoneDots)" opacity="0.6" mix-blend-mode="multiply" />
+  <rect width="100%" height="100%" fill="url(#denseHalftone)" opacity="0.4" />
+
+  <!-- Distressed Rings & Giant Cosmic Crater Structures (Matching Reference Image) -->
+  <!-- 1. Giant Center-Left Swirl Crater -->
+  <g transform="translate(360, 380)">
+    <ellipse cx="0" cy="0" rx="280" ry="240" fill="none" stroke="#7f1d1d" stroke-width="60" opacity="0.4" stroke-dasharray="12 18" />
+    <ellipse cx="0" cy="0" rx="220" ry="180" fill="none" stroke="#dc2626" stroke-width="24" opacity="0.5" stroke-dasharray="45 15" />
+    <ellipse cx="0" cy="0" rx="140" ry="110" fill="none" stroke="#000000" stroke-width="32" opacity="0.8" />
+    <ellipse cx="-15" cy="-10" rx="90" ry="70" fill="url(#craterHole)" />
+    <ellipse cx="-15" cy="-10" rx="90" ry="70" fill="none" stroke="#fca5a5" stroke-width="3" opacity="0.8" />
+  </g>
+
+  <!-- 2. Prominent Upper Crater (Near Nights Card) -->
+  <g transform="translate(930, 240)">
+    <circle cx="0" cy="0" r="55" fill="url(#craterHole)" />
+    <circle cx="0" cy="0" r="55" fill="none" stroke="#ffffff" stroke-width="3" opacity="0.85" />
+    <circle cx="0" cy="0" r="70" fill="none" stroke="#ef4444" stroke-width="8" opacity="0.6" stroke-dasharray="10 6" />
+    <circle cx="0" cy="0" r="95" fill="none" stroke="#000000" stroke-width="16" opacity="0.7" />
+  </g>
+
+  <!-- 3. Center Mid Crater -->
+  <g transform="translate(920, 480)">
+    <circle cx="0" cy="0" r="32" fill="#000000" />
+    <circle cx="0" cy="0" r="32" fill="none" stroke="#fca5a5" stroke-width="2.5" opacity="0.9" />
+    <circle cx="0" cy="0" r="42" fill="none" stroke="#dc2626" stroke-width="6" opacity="0.5" />
+  </g>
+
+  <!-- 4. Lower Left Crater (Near Music & Competition) -->
+  <g transform="translate(690, 800)">
+    <circle cx="0" cy="0" r="62" fill="url(#craterHole)" />
+    <circle cx="0" cy="0" r="62" fill="none" stroke="#ffffff" stroke-width="4" opacity="0.9" />
+    <circle cx="0" cy="0" r="80" fill="none" stroke="#ef4444" stroke-width="10" opacity="0.5" />
+    <circle cx="0" cy="0" r="110" fill="none" stroke="#000000" stroke-width="20" opacity="0.75" />
+  </g>
+
+  <!-- 5. Lower Center Small Crater -->
+  <g transform="translate(1280, 840)">
+    <circle cx="0" cy="0" r="36" fill="url(#craterHole)" />
+    <circle cx="0" cy="0" r="36" fill="none" stroke="#fca5a5" stroke-width="2.5" opacity="0.85" />
+    <circle cx="0" cy="0" r="48" fill="none" stroke="#000000" stroke-width="8" opacity="0.7" />
+  </g>
+
+  <!-- 6. Mid Right Crescent Rim Crater (Near Fashion) -->
+  <g transform="translate(1330, 580)">
+    <ellipse cx="0" cy="0" rx="90" ry="75" fill="url(#craterHole)" />
+    <path d="M -70 20 A 85 70 0 0 0 65 30" fill="none" stroke="#ffffff" stroke-width="5" opacity="0.95" />
+    <ellipse cx="0" cy="0" rx="120" ry="100" fill="none" stroke="#991b1b" stroke-width="22" opacity="0.5" stroke-dasharray="20 10" />
+  </g>
+
+  <!-- 7. Massive Right Edge Vortex / Eclipse Flare -->
+  <g transform="translate(1820, 720)">
+    <circle cx="0" cy="0" r="320" fill="none" stroke="#7f1d1d" stroke-width="60" opacity="0.5" stroke-dasharray="30 20" />
+    <circle cx="0" cy="0" r="260" fill="none" stroke="#dc2626" stroke-width="25" opacity="0.6" />
+    <circle cx="0" cy="0" r="190" fill="#020204" />
+    <circle cx="0" cy="0" r="190" fill="none" stroke="#ef4444" stroke-width="6" opacity="0.8" />
+  </g>
+
+  <!-- Vignette Shadows around edges -->
+  <rect width="100%" height="100%" fill="none" stroke="#000000" stroke-width="80" opacity="0.4" />
+</svg>

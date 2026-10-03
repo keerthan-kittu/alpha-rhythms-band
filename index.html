@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+<html lang="en" class="loading-locked">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5, viewport-fit=cover">
+  <meta name="screen-orientation" content="portrait">
+  <meta name="x5-orientation" content="portrait">
+  <title>ALPHA RHYTHMS | Official Band Experience</title>
+  <meta name="description" content="Alpha Rhythms - Official Band Website. Experience the electrifying sound, upcoming tour dates, discography, and exclusive merchandise. Est. 2021.">
+  <meta name="keywords" content="Alpha Rhythms, Alpha Rhythms band, rock band, live concerts, tour dates, music, electric guitar">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/logo_transparent.png">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Montserrat:ital,wght@1,800;1,900&family=Outfit:wght@300;400;500;600;700;800&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Cache-Busting Headers for instant updates -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  
+  <link rel="stylesheet" href="styles.css?v=20261003_lineup_fix_v24">
+  <script>
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+  </script>
+</head>
+<body class="loading-locked">
+
+  <!-- ========================================================
+       TIARA-STYLE INTRO LOADER OVERLAY
+       Features:
+       1. Ambient cosmic starfield with twinkling & shooting stars
+       2. Band Logo with sinusoidal liquid wave drift filling upwards
+       3. Live percentage counter & frequency visualizer
+       4. Aperture Zoom-through Portal Opening Transition
+       ======================================================== -->
+  <div id="tiara-loader" class="loader-overlay" aria-label="Loading Alpha Rhythms Experience">
+    <!-- Interactive Cosmic Sparkles Canvas -->
+    <canvas id="loader-interactive-canvas" class="loader-canvas"></canvas>
+
+    <!-- Starfield Background -->
+    <div class="stars-backdrop">
+      <div id="twinkle-container" class="twinkle-stars"></div>
+      <div id="shooting-container" class="shooting-stars-layer"></div>
+    </div>
+
+    <!-- Center Stage Logo with Dual-Wave Liquid Fill -->
+    <div class="loader-center-stage">
+      <div class="logo-aura-glow" id="loader-aura"></div>
+      <div class="shockwave-ring" id="shockwave-ring"></div>
+
+      <!-- Master Emblem Box: Absolute 1:1 Coordinate Lock -->
+      <div id="loader-emblem-box" class="loader-emblem-container">
+        <!-- 1. Background Uncharged Base Wireframe (Ultra-light subtle guide) -->
+        <img id="loader-base-logo" src="assets/logo_white.png" alt="Alpha Rhythms Base" class="emblem-base-logo">
+
+        <!-- 2. Dual Direction Opposing Natural Color Stages -->
+        <div id="band-natural-stage" class="emblem-natural-stage">
+          <!-- Layer A: Authentic Yellow Outline (Descends from ABOVE) -->
+          <div id="layer-yellow-outline" class="emblem-natural-layer layer-yellow">
+            <img id="yellow-outline-img" src="assets/logo_outline_yellow.png" alt="Alpha Rhythms Yellow Outline" class="natural-layer-img">
+          </div>
+
+          <!-- Layer B: Authentic White Inner Art (Ascends from BELOW) -->
+          <div id="layer-white-inner" class="emblem-natural-layer layer-white">
+            <img id="white-inner-img" src="assets/logo_inner_white.png" alt="Alpha Rhythms White Inner" class="natural-layer-img">
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Loading HUD -->
+      <div class="loader-hud">
+        <div class="hud-brand">ALPHA RHYTHMS</div>
+        <div class="hud-tagline">
+          <span class="hud-tagline-text">IGNITING SOUND SYSTEM</span>
+          <span class="hud-tagline-bars">
+            <span></span><span></span><span></span><span></span><span></span>
+          </span>
+        </div>
+        
+        <div class="progress-display">
+          <div class="counter-box">
+            <span id="load-percent">0</span><span class="pct-symbol">%</span>
+          </div>
+          <div class="meter-bar-track">
+            <div id="meter-fill" class="meter-fill-bar"></div>
+          </div>
+        </div>
+
+        <div class="hud-status" id="hud-status-text">Synchronizing resonance...</div>
+      </div>
+
+      <!-- Quick Skip Button (Subtle & Non-Intrusive) -->
+      <button id="skip-intro-btn" class="skip-btn" title="Skip Intro">Skip Intro <i class="fa-solid fa-forward-step"></i></button>
+    </div>
+
+    <!-- Cinematic Arena Stage Dual Shutters & Laser Horizon Seam -->
+    <div class="stage-shutter stage-shutter-top" id="stage-shutter-top"></div>
+    <div class="stage-shutter stage-shutter-bottom" id="stage-shutter-bottom"></div>
+    <div class="stage-horizon-beam" id="stage-horizon-beam"></div>
+  </div>
+
+  <!-- ========================================================
+       MAIN WEBSITE CONTENT
+       Scales smoothly into view when portal expands!
+       ======================================================== -->
+  <div id="app-content" class="site-wrapper">
+    <!-- Dynamic Top Scroll Progress Bar -->
+    <div id="scroll-progress-bar" class="scroll-progress-bar" aria-hidden="true"></div>
+
+    <!-- Top Navigation Bar -->
+    <header id="main-header" class="site-header">
+      <div class="nav-container">
+        <a href="#hero" class="brand-link">
+          <img src="assets/logo_transparent.png" alt="Alpha Rhythms" class="nav-logo" id="nav-brand-logo">
+          <div class="brand-text">
+            <span class="brand-name">ALPHA RHYTHMS</span>
+            <span class="brand-sub">EST. 2021</span>
+          </div>
+        </a>
+
+        <nav class="desktop-nav">
+          <ul class="nav-menu">
+            <li><a href="#hero" class="nav-link active">Home</a></li>
+            <li><a href="#performances" class="nav-link">Performances <span class="badge-live">STAGE</span></a></li>
+            <li><a href="#tour" class="nav-link">Calendar <span class="badge-live">LIVE</span></a></li>
+            <li><a href="#band" class="nav-link">The Band</a></li>
+            <li><a href="#contact" class="nav-link">Contact</a></li>
+          </ul>
+        </nav>
+
+        <!-- Right Side Action Controls -->
+        <div class="nav-actions">
+          <!-- Mobile Hamburger -->
+          <button id="mobile-toggle-btn" class="mobile-toggle" aria-label="Toggle Navigation">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Dropdown Menu -->
+      <div id="mobile-menu" class="mobile-menu-drawer">
+        <ul class="mobile-nav-links">
+          <li><a href="#hero" class="mobile-link">Home</a></li>
+          <li><a href="#performances" class="mobile-link">Performances</a></li>
+          <li><a href="#tour" class="mobile-link">Booking Calendar</a></li>
+          <li><a href="#band" class="mobile-link">The Band</a></li>
+          <li><a href="#contact" class="mobile-link">Booking & Press</a></li>
+        </ul>
+      </div>
+    </header>
+
+    <!-- ========================================================
+         HERO SECTION
+         ======================================================== -->
+    <!-- ========================================================
+         HERO SECTION: THE ARENA STAGE EXPERIENCE
+         Features:
+         - Whole Band 1a.jpg Center Stage with 3D Parallax Tilt
+         - Volumetric Stage Spotlights & Dynamic Concert Haze
+         - Real-time Floating Sparks & Fire Embers Canvas Engine
+         - Interactive Holographic Alpha Rhythms Band Crest Logo
+         - Stage Lighting Controller (Inferno / Gold / Cyber / Noir)
+         - Band Lineup Spotlight Chips with Signature Licks
+         - Pyro Arena Flash on Riff Execution
+         ======================================================== -->
+    <section id="hero" class="hero-section">
+      <!-- 1. The Band Visual Rig: Full-Scale 1a.jpg, Perfectly Framed -->
+      <div class="hero-stage-rig" id="hero-stage-rig">
+        <div class="hero-stage-backdrop">
+          <picture>
+            <source media="(max-width: 768px)" srcset="assets/1a_mobile.jpg">
+            <source srcset="assets/band_hero_web.jpg 1440w, assets/1a.jpg 4000w" sizes="100vw">
+            <img src="assets/1a.jpg" alt="Alpha Rhythms - The Band" class="hero-band-img" id="hero-band-photo" loading="eager">
+          </picture>
+        </div>
+
+        <!-- Dynamic Concert Spotlight Beam following mouse -->
+        <div class="hero-spotlight-beam" id="hero-spotlight-beam"></div>
+
+        <div class="hero-bottom-fade"></div>
+      </div>
+
+      <!-- Mobile Top Crest Logo: Placed in the space between header and band members -->
+      <div class="hero-mobile-crest" id="hero-mobile-crest" role="button" tabindex="0" aria-label="Alpha Rhythms Crest">
+        <img src="assets/logo_black_yellow.png" alt="Alpha Rhythms Crest" class="hero-mobile-crest-logo">
+      </div>
+
+      <!-- 2. Sleek Arena Dock -->
+      <div class="hero-dock-wrapper">
+        <div class="hero-stage-dock hero-stage-dock--center" id="hero-dock-interactive" role="button" tabindex="0" aria-label="Alpha Rhythms Dock">
+          <!-- Centered Official Band Logo + Title Lockup -->
+          <div class="dock-brand">
+            <div class="dock-logo-box">
+              <img src="assets/LogoALPHA.png" alt="Alpha Rhythms Logo" class="dock-logo" id="hero-interactive-logo">
+            </div>
+            <div class="dock-titles">
+              <span class="dock-sub">THE SOUND OF POWER</span>
+              <h1 class="dock-main">ALPHA RHYTHMS</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a href="#performances" class="scroll-down-indicator" aria-label="Scroll to performances section">
+        <span class="mouse-icon"><span class="mouse-wheel"></span></span>
+        <span class="scroll-text">DISCOVER MORE</span>
+      </a>
+    </section>
+
+    <!-- ========================================================
+         2. PERFORMANCES SECTION — "OUR PERFORMANCES SO FAR..."
+         Next-Level Scroll-Pinned Interactive Arena Showcase
+         Features 7 Scatter Cards Linked to YouTube & Reels
+         ======================================================== -->
+
+
+    <section id="performances" class="performances-section" aria-label="Our Performances So Far">
+      <div class="performances-scroll-container" id="performances-scroll-container">
+        <div class="performances-sticky-frame" id="performances-sticky-frame">
+          
+          <!-- Background: Cosmic Crimson Arena Texture with Live Band Performing Silhouette -->
+          <div class="performances-bg-canvas" id="performances-bg">
+            <div class="bg-crimson-backdrop"></div>
+            <!-- Halftone & Crater Vector Overlay -->
+            <div class="bg-crater-overlay"></div>
+            <!-- Dynamic Concert Crowd & Live Band Performing Silhouette -->
+            <div class="bg-stage-silhouette"></div>
+            <!-- Heavy Vignette Edge -->
+            <div class="bg-crimson-vignette"></div>
+          </div>
+
+
+
+
+
+          <!-- Big Slanted Central Typography -->
+          <div class="performances-center-hero" id="performances-center-hero">
+            <div class="perf-tagline-kicker"><i class="fa-solid fa-bolt"></i> ALPHA RHYTHMS &bull; STAGE ARCHIVES</div>
+            <h2 class="perf-headline-title">
+              <span class="desktop-only-inline">OUR PERFORMANCES SO FAR...</span>
+              <span class="mobile-only-inline">OUR PERFORMANCES</span>
+            </h2>
+
+            <p class="perf-subtitle-clean">
+              <i class="fa-brands fa-instagram"></i> Tap any live set or reel to watch our concert moments
+            </p>
+          </div>
+
+          <!-- Scatter Performance Cards Layer (Real Posts & Reels from @alpha.rhythms) -->
+          <div class="performances-cards-stage" id="performances-cards-stage">
+
+            <!-- Card 1: Top-Left (Shalala-ing Into Birthday Night) -->
+            <a href="https://www.instagram.com/alpha.rhythms/reel/Ddp1Gy4IR27/" target="_blank" rel="noopener noreferrer" class="perf-card card-tech" data-card-index="1" aria-label="Watch Shalala-ing into the birthday night on Instagram">
+              <div class="perf-card-inner">
+                <div class="perf-thumb-box">
+                  <img src="assets/performances/card1_tech.jpg" alt="Shalala-ing Into The Birthday Night" class="perf-thumb" loading="lazy">
+                  <div class="perf-card-badge insta-badge"><i class="fa-brands fa-instagram"></i> LIVE REEL</div>
+                  <div class="perf-play-overlay"><i class="fa-solid fa-play"></i></div>
+                </div>
+                <div class="perf-label-strip">
+                  <span class="perf-label-text">Shalala-ing</span>
+                  <span class="perf-sub-label"><i class="fa-solid fa-arrow-up-right-from-square"></i> Birthday Night Vibes</span>
+                </div>
+              </div>
+            </a>
+
+            <!-- Card 2: Top-Center (Konkan Fiesta Season 6) -->
+            <a href="https://www.instagram.com/alpha.rhythms/p/DdyAkF5t11j/" target="_blank" rel="noopener noreferrer" class="perf-card card-nights" data-card-index="2" aria-label="Watch Konkan Fiesta Season 6 on Instagram">
+              <div class="perf-card-inner">
+                <div class="perf-thumb-box">
+                  <img src="assets/performances/card2_nights.jpg" alt="Konkan Fiesta Season 6 Headline" class="perf-thumb" loading="lazy">
+                  <div class="perf-card-badge insta-badge"><i class="fa-brands fa-instagram"></i> CONCERT</div>
+                  <div class="perf-play-overlay"><i class="fa-solid fa-play"></i></div>
+                </div>
+                <div class="perf-label-strip">
+                  <span class="perf-label-text">Konkan Fiesta</span>
+                  <span class="perf-sub-label"><i class="fa-solid fa-arrow-up-right-from-square"></i> Season 6 &bull; Soorya Woods</span>
+                </div>
+              </div>
+            </a>
+
+            <!-- Card 3: Top-Right (Festha Paus Season 2) -->
+            <a href="https://www.instagram.com/herapinto/reel/DbztE8DTPxM/" target="_blank" rel="noopener noreferrer" class="perf-card card-culture" data-card-index="3" aria-label="Watch Festha Paus Season 2 on Instagram">
+              <div class="perf-card-inner">
+                <div class="perf-thumb-box">
+                  <img src="assets/performances/card3_culture.jpg" alt="Festha Paus Season 2 Live" class="perf-thumb" loading="lazy">
+                  <div class="perf-card-badge insta-badge"><i class="fa-brands fa-instagram"></i> RAIN FEST</div>
+                  <div class="perf-play-overlay"><i class="fa-solid fa-play"></i></div>
+                </div>
+                <div class="perf-label-strip">
+                  <span class="perf-label-text">Festha Paus</span>
+                  <span class="perf-sub-label"><i class="fa-solid fa-arrow-up-right-from-square"></i> Riot of Rain &amp; Madness</span>
+                </div>
+              </div>
+            </a>
+
+            <!-- Card 4: Bottom-Left (Band Alpha Rhythms - For All Occasions) -->
+            <a href="https://www.instagram.com/alpha.rhythms/p/DE5GkjavFdG/" target="_blank" rel="noopener noreferrer" class="perf-card card-music" data-card-index="4" aria-label="Watch Band Alpha Rhythms on Instagram">
+              <div class="perf-card-inner">
+                <div class="perf-thumb-box">
+                  <img src="assets/performances/card4_music.jpg" alt="Band Alpha Rhythms" class="perf-thumb" loading="lazy">
+                  <div class="perf-card-badge insta-badge"><i class="fa-brands fa-instagram"></i> THE BAND</div>
+                  <div class="perf-play-overlay"><i class="fa-solid fa-play"></i></div>
+                </div>
+                <div class="perf-label-strip">
+                  <span class="perf-label-text">All Occasions</span>
+                  <span class="perf-sub-label"><i class="fa-solid fa-arrow-up-right-from-square"></i> A Perfect Live Band</span>
+                </div>
+              </div>
+            </a>
+
+            <!-- Card 5: Bottom Mid-Left (Open For Bookings - Bring Rhythm to Your Big Day) -->
+            <a href="https://www.instagram.com/coastalcolorsm/reel/DcyJTglsldj/" target="_blank" rel="noopener noreferrer" class="perf-card card-competition" data-card-index="5" aria-label="Watch Open For Bookings Reel on Instagram">
+              <div class="perf-card-inner">
+                <div class="perf-thumb-box">
+                  <img src="assets/performances/card5_competition.jpg" alt="Alpha Rhythms Open For Bookings" class="perf-thumb" loading="lazy">
+                  <div class="perf-card-badge insta-badge"><i class="fa-brands fa-instagram"></i> SEASON 26-27</div>
+                  <div class="perf-play-overlay"><i class="fa-solid fa-play"></i></div>
+                </div>
+                <div class="perf-label-strip">
+                  <span class="perf-label-text">Open Bookings</span>
+                  <span class="perf-sub-label"><i class="fa-solid fa-arrow-up-right-from-square"></i> Rhythm To Your Big Day</span>
+                </div>
+              </div>
+            </a>
+
+            <!-- Card 6: Bottom Mid-Right (We Tore The House Down) -->
+            <a href="https://www.instagram.com/alpha.rhythms/reel/DbdVDFAtE6D/" target="_blank" rel="noopener noreferrer" class="perf-card card-dance" data-card-index="6" aria-label="Watch We Tore The House Down on Instagram">
+              <div class="perf-card-inner">
+                <div class="perf-thumb-box">
+                  <img src="assets/performances/card6_dance.jpg" alt="We Tore The House Down Live Set" class="perf-thumb" loading="lazy">
+                  <div class="perf-card-badge insta-badge"><i class="fa-brands fa-instagram"></i> LIVE SET</div>
+                  <div class="perf-play-overlay"><i class="fa-solid fa-play"></i></div>
+                </div>
+                <div class="perf-label-strip">
+                  <span class="perf-label-text">Tore House Down</span>
+                  <span class="perf-sub-label"><i class="fa-solid fa-arrow-up-right-from-square"></i> We Didn't Just Play</span>
+                </div>
+              </div>
+            </a>
+
+            <!-- Card 7: Bottom-Right (Straight Out Of The Vault & Into The 80s) -->
+            <a href="https://www.instagram.com/alpha.rhythms/p/DYDJ4scEyEF/" target="_blank" rel="noopener noreferrer" class="perf-card card-fashion" data-card-index="7" aria-label="Watch Into The 80s Retro Lineup on Instagram">
+              <div class="perf-card-inner">
+                <div class="perf-thumb-box">
+                  <img src="assets/performances/card7_fashion.jpg" alt="Straight Out of the Vault & Into The 80s" class="perf-thumb" loading="lazy">
+                  <div class="perf-card-badge insta-badge"><i class="fa-brands fa-instagram"></i> RETRO ERA</div>
+                  <div class="perf-play-overlay"><i class="fa-solid fa-play"></i></div>
+                </div>
+                <div class="perf-label-strip">
+                  <span class="perf-label-text">Into The 80s</span>
+                  <span class="perf-sub-label"><i class="fa-solid fa-arrow-up-right-from-square"></i> Era Is Retro &bull; Set Now</span>
+                </div>
+              </div>
+            </a>
+
+          </div>
+
+
+
+          <!-- Mobile Spotlight Navigation Bar (< 992px) -->
+          <div class="perf-mobile-nav" id="perf-mobile-nav" aria-label="Performance Showcase Navigation">
+            <button class="perf-nav-btn perf-prev-btn" id="perf-mobile-prev-btn" type="button" aria-label="Previous Performance">
+              <i class="fa-solid fa-chevron-left"></i> PREV
+            </button>
+            <div class="perf-mobile-counter" id="perf-mobile-counter">CARD 1 OF 7</div>
+            <button class="perf-nav-btn perf-next-btn" id="perf-mobile-next-btn" type="button" aria-label="Next Performance">
+              NEXT <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+
+          <!-- Bottom Navigation / Progress Bar -->
+          <div class="perf-progress-dock">
+            <div class="perf-progress-track">
+              <div class="perf-progress-fill" id="perf-progress-fill"></div>
+            </div>
+            <div class="perf-progress-indicators" id="perf-dots">
+              <span class="p-dot active" data-step="1"><i class="fa-solid fa-bolt"></i> 1</span>
+              <span class="p-dot" data-step="2">2</span>
+              <span class="p-dot" data-step="3">3</span>
+              <span class="p-dot" data-step="4">4</span>
+              <span class="p-dot" data-step="5">5</span>
+              <span class="p-dot" data-step="6">6</span>
+              <span class="p-dot" data-step="7">7</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         TOUR DATES & TICKETS SECTION
+         ======================================================== -->
+        <!-- ========================================================
+         SECTION 3: TOUR DATES & LIVE REAL-TIME BOOKING CALENDAR
+         Features:
+         - Live Real-Time Availability Calendar (Yellow = Available, Red = Booked & Locked)
+         - Official December 2026 Schedule from @alpha.rhythms Instagram
+         - Interactive date locking with instant local & cross-tab sync
+         - Full booking modal with WhatsApp integration & instant lock confirmation
+         - Toggle tabs: Live Calendar, Stadium Tour Dates, Official Poster View
+         ======================================================== -->
+    <section id="tour" class="section-block tour-section reveal-section" aria-label="Alpha Rhythms Tour and Live Booking Calendar">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="eyebrow"><i class="fa-solid fa-calendar-check"></i> LIVE TOUR & BOOKING SCHEDULE</span>
+          <h2 class="section-heading">BOOKING CALENDAR</h2>
+        </div>
+
+        <div class="live-calendar-wrapper">
+            
+            <!-- Calendar Header Bar with Month Switcher & Realtime Status -->
+            <div class="cal-control-bar">
+              <div class="cal-month-nav">
+                <button class="cal-nav-btn" id="cal-prev-btn" title="Previous Month" aria-label="Previous Month">
+                  <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <div class="cal-current-label">
+                  <h3 id="cal-month-title" class="cal-month-title">DECEMBER 2026</h3>
+                  <span class="cal-schedule-tag" id="cal-schedule-tag"><i class="fa-solid fa-circle-check"></i> WEDDING SCHEDULE</span>
+                </div>
+                <button class="cal-nav-btn" id="cal-next-btn" title="Next Month" aria-label="Next Month">
+                  <i class="fa-solid fa-chevron-right"></i>
+                </button>
+              </div>
+
+
+            </div>
+
+            <!-- Legend Banner -->
+            <div class="cal-legend-bar">
+              <div class="legend-item legend-available">
+                <span class="legend-swatch swatch-yellow"></span>
+                <span class="legend-label"><strong>AVAILABLE DATES</strong> <small>(Tap to Book)</small></span>
+              </div>
+              <div class="legend-item legend-booked">
+                <span class="legend-swatch swatch-red"><i class="fa-solid fa-circle-check"></i></span>
+                <span class="legend-label"><strong>BOOKED</strong></span>
+              </div>
+              <div class="legend-item legend-source">
+                <a href="https://www.instagram.com/p/DcQHBGvTe-t/?stkn=MXRnN2Jmcng5djlsdw%3D%3D" target="_blank" rel="noopener noreferrer" class="legend-ig-link">
+                  <i class="fa-brands fa-instagram"></i> Verified on @alpha.rhythms
+                </a>
+              </div>
+            </div>
+
+            <!-- Calendar Poster Frame Layout -->
+            <div class="cal-frame-card">
+              <!-- Poster Header Banner -->
+              <div class="cal-poster-header">
+                <h4 class="poster-headline">TOUR & WEDDING DATES FOR <span id="cal-banner-month">DECEMBER 2026</span></h4>
+                <p class="poster-tagline">Check available dates and secure your event with Alpha Rhythms.</p>
+              </div>
+
+              <!-- Weekdays Header Row -->
+              <div class="cal-weekdays-row">
+                <div class="cal-weekday sun">SUN</div>
+                <div class="cal-weekday">MON</div>
+                <div class="cal-weekday">TUE</div>
+                <div class="cal-weekday">WED</div>
+                <div class="cal-weekday">THU</div>
+                <div class="cal-weekday">FRI</div>
+                <div class="cal-weekday sat">SAT</div>
+              </div>
+
+              <!-- Days Grid (Populated dynamically) -->
+              <div class="cal-grid" id="cal-days-grid" role="grid" aria-label="Month Dates Grid">
+                <div class="cal-day-cell cal-day-empty" aria-hidden="true"></div>
+                <div class="cal-day-cell cal-day-empty" aria-hidden="true"></div>
+                <div class="cal-day-cell cal-day-available" role="button" tabindex="0" data-date="2026-12-01" aria-label="Tuesday, December 1, 2026 - Available for Booking">
+                  <div class="cal-day-header">
+                    <span class="cal-day-num">1</span>
+                  </div>
+                  <div class="cal-day-bottom">
+                    <span class="cal-day-badge"><span class="badge-text-full">AVAILABLE</span><span class="badge-text-short">OPEN</span></span>
+                    <span class="cal-day-action-hint"><i class="fa-solid fa-arrow-pointer"></i> Tap to Lock</span>
+                  </div>
+                </div>
+                <div class="cal-day-cell cal-day-available" role="button" tabindex="0" data-date="2026-12-02" aria-label="Wednesday, December 2, 2026 - Available for Booking">
+                  <div class="cal-day-header">
+                    <span class="cal-day-num">2</span>
+                  </div>
+                  <div class="cal-day-bottom">
+                    <span class="cal-day-badge"><span class="badge-text-full">AVAILABLE</span><span class="badge-text-short">OPEN</span></span>
+                    <span class="cal-day-action-hint"><i class="fa-solid fa-arrow-pointer"></i> Tap to Lock</span>
+                  </div>
+                </div>
+                <div class="cal-day-cell cal-day-available" role="button" tabindex="0" data-date="2026-12-03" aria-label="Thursday, December 3, 2026 - Available for Booking">
+                  <div class="cal-day-header">
+                    <span class="cal-day-num">3</span>
+                  </div>
+                  <div class="cal-day-bottom">
+                    <span class="cal-day-badge"><span class="badge-text-full">AVAILABLE</span><span class="badge-text-short">OPEN</span></span>
+                    <span class="cal-day-action-hint"><i class="fa-solid fa-arrow-pointer"></i> Tap to Lock</span>
+                  </div>
+                </div>
+                <div class="cal-day-cell cal-day-available" role="button" tabindex="0" data-date="2026-12-04" aria-label="Friday, December 4, 2026 - Available for Booking">
+                  <div class="cal-day-header">
+                    <span class="cal-day-num">4</span>
+                  </div>
+                  <div class="cal-day-bottom">
+                    <span class="cal-day-badge"><span class="badge-text-full">AVAILABLE</span><span class="badge-text-short">OPEN</span></span>
+                    <span class="cal-day-action-hint"><i class="fa-solid fa-arrow-pointer"></i> Tap to Lock</span>
+                  </div>
+                </div>
+                <div class="cal-day-cell cal-day-available" role="button" tabindex="0" data-date="2026-12-05" aria-label="Saturday, December 5, 2026 - Available for Booking">
+                  <div class="cal-day-header">
+                    <span class="cal-day-num">5</span>
+                  </div>
+                  <div class="cal-day-bottom">
+                    <span class="cal-day-badge"><span class="badge-text-full">AVAILABLE</span><span class="badge-text-short">OPEN</span></span>
+                    <span class="cal-day-action-hint"><i class="fa-solid fa-arrow-pointer"></i> Tap to Lock</span>
+                  </div>
+                </div>
+                <div class="cal-day-cell cal-day-available" role="button" tabindex="0" data-date="2026-12-06" aria-label="Sunday, December 6, 2026 - Available for Booking">
+                  <div class="cal-day-header">
+                    <span class="cal-day-num">6</span>
+                  </div>
+                  <div class="cal-day-bottom">
+                    <span class="cal-day-badge"><span class="badge-text-full">AVAILABLE</span><span class="badge-text-short">OPEN</span></span>
+                    <span class="cal-day-action-hint"><i class="fa-solid fa-arrow-pointer"></i> Tap to Lock</span>
+                  </div>
+                </div>
+                <div class="cal-day-cell cal-day-available" role="button" tabindex="0" data-date="2026-12-07" aria-label="Monday, December 7, 2026 - Available for Booking">
+                  <div class="cal-day-header">
+                    <span class="cal-day-num">7</span>
+                  </div>
+                  <div class="cal-day-bottom">
+                    <span class="cal-day-badge"><span class="badge-text-full">AVAILABLE</span><span class="badge-text-short">OPEN</span></span>
+                    <span class="cal-day-action-hint"><i class="fa-solid fa-arrow-pointer"></i> Tap to Lock</span>
+                  </div>
+                </div>
+                <div class="cal-day-cell cal-day-available" role="button" tabindex="0" data-date="2026-12-08" aria-label="Tuesday, December 8, 2026 - Available for Booking">
+                  <div class="cal-day-header">
+                    <span class="cal-day-num">8</span>
+                  </div>
+                  <div class="cal-day-bottom">
+                    <span class="cal-day-badge"><span class="badge-text-full">AVAILABLE</span><span class="badge-text-short">OPEN</span></span>
+                    <span class="cal-day-action-hint"><i class="fa-solid fa-arrow-pointer"></i> Tap to Lock</span>
+                  </div>
+                </div>
+                <div class="cal-day-cell cal-day-available" role="button" tabindex="0" data-date="2026-12-09" aria-label="Wednesday, December 9, 2026 - Available for Booking">
+                  <div class="cal-day-header">
+                    <span class="cal-day-num">9</span>
+                  </div>
+                  <div class="cal-day-bottom">
+                    <span class="cal-day-badge"><span class="badge-text-full">AVAILABLE</span><span class="badge-text-short">OPEN</span></span>
+                    <span class="cal-day-action-hint"><i class="fa-solid fa-arrow-pointer"></i> Tap to Lock</span>
+                  </div>
+                </div>
+                <div class="cal-day-cell cal-day-available" role="button" tabindex="0" data-date="2026-12-10" aria-label="Thursday, December 10, 2026 - Available for Booking">
+                  <div class="cal-day-header">
+                    <span class="cal-day-num">10</span>
+                  </div>
+                  <div class="cal-day-bottom">
+                    <span class="cal-day-badge"><span class="badge-text-full">AVAILABLE</span><span class="badge-text-short">OPEN</span></span>
+                    <span class="cal-day-action-hint"><i class="fa-solid fa-arrow-pointer"></i> Tap to Lock</span>
+                  </div>
+                </div>
+                <div class="cal-day-cell cal-day-available" role="button" tabindex="0" data-date="2026-12-11" aria-label="Friday, December 11, 2026 - Available for Booking">
+                  <div class="cal-day-header">
+                    <span class="cal-day-num">11</span>
+                  </div>
+                  <div class="cal-day-bottom">
+                    <span class="cal-day-badge"><span class="badge-text-full">AVAILABLE</span><span class="badge-text-short">OPEN</span></span>
+                    <span class="cal-day-action-hint"><i class="fa-solid fa-arrow-pointer"></i> Tap to Lock</span>
+                  </div>
+                </div>
+                <div class="cal-day-cell cal-day-booked" role="button" tabindex="0" data-date="2026-12-12" aria-label="Saturday, December 12, 2026 - Booked: Grand Wedding Headline Act">
+                  <div class="cal-day-header">
+                    <span class="cal-day-num">12</span>
+                    <span class="cal-lock-icon"><i class="fa-solid fa-circle-check"></i></span>
+                  </div>
+                  <div class="cal-day-bottom">
+                    <span class="cal-day-badge"><i class="fa-solid fa-circle-check"></i> <span class="badge-text-full">BOOKED</span><span class="badge-text-short">BOOKED</span></span>
+                    <span class="cal-day-event" title="Grand Wedding Headline Act">Grand Wedding Headline Act</span>
+                  </div>
+                </div>
+                <div class="cal-day-cell cal-day-available" role="button" tabindex="0" data-date="2026-12-13" aria-label="Sunday, December 13, 2026 - Available for Booking">
+                  <div class="cal-day-header">
+                    <span class="cal-day-num">13</span>
+                  </div>
+                  <div class="cal-day-bottom">
+                    <span class="cal-day-badge"><span class="badge-text-full">AVAILABLE</span><span class="badge-text-short">OPEN</span></span>
+                    <span class="cal-day-action-hint"><i class="fa-solid fa-arrow-pointer"></i> Tap to Lock</span>
+                  </div>
+                </div>
+                <div class="cal-day-cell cal-day-available" role="button" tabindex="0" data-date="2026-12-14" aria-label="Monday, December 14, 2026 - Available for Booking">
+                  <div class="cal-day-header">
+                    <span class="cal-day-num">14</span>
+                  </div>
+                  <div class="cal-day-bottom">
+                    <span class="cal-day-badge"><span class="badge-text-full">AVAILABLE</span><span class="badge-text-short">OPEN</span></span>
+                    <span class="cal-day-action-hint"><i class="fa-solid fa-arrow-pointer"></i> Tap to Lock</span>
+                  </div>
+                </div>
+                <div class="cal-day-cell cal-day-available" role="button" tabindex="0" data-date="2026-12-15" aria-label="Tuesday, December 15, 2026 - Available for Booking">
+                  <div class="cal-day-header">
+                    <span class="cal-day-num">15</span>
+                  </div>
+                  <div class="cal-day-bottom">
+                    <span class="cal-day-badge"><span class="badge-text-full">AVAILABLE</span><span class="badge-text-short">OPEN</span></span>
+                    <span class="cal-day-action-hint"><i class="fa-solid fa-arrow-pointer"></i> Tap to Lock</span>
+                  </div>
+                </div>
+                <div class="cal-day-cell cal-day-available" role="button" tabindex="0" data-date="2026-12-16" aria-label="Wednesday, December 16, 2026 - Available for Booking">
+                  <div class="cal-day-header">
+                    <span class="cal-day-num">16</span>
+                  </div>
+                  <div class="cal-day-bottom">
+                    <span class="cal-day-badge"><span class="badge-text-full">AVAILABLE</span><span class="badge-text-short">OPEN</span></span>
+                    <span class="cal-day-action-hint"><i class="fa-solid fa-arrow-pointer"></i> Tap to Lock</span>
+                  </div>
+                </div>
+                <div class="cal-day-cell cal-day-available" role="button" tabindex="0" data-date="2026-12-17" aria-label="Thursday, December 17, 2026 - Available for Booking">
+                  <div class="cal-day-header">
+                    <span class="cal-day-num">17</span>
+                  </div>
+                  <div class="cal-day-bottom">
+                    <span class="cal-day-badge"><span class="badge-text-full">AVAILABLE</span><span class="badge-text-short">OPEN</span></span>
+                    <span class="cal-day-action-hint"><i class="fa-solid fa-arrow-pointer"></i> Tap to Lock</span>
+                  </div>
+                </div>
+                <div class="cal-day-cell cal-day-available" role="button" tabindex="0" data-date="2026-12-18" aria-label="Friday, December 18, 2026 - Available for Booking">
+                  <div class="cal-day-header">
+                    <span class="cal-day-num">18</span>
+                  </div>
+                  <div class="cal-day-bottom">
+                    <span class="cal-day-badge"><span class="badge-text-full">AVAILABLE</span><span class="badge-text-short">OPEN</span></span>
+                    <span class="cal-day-action-hint"><i class="fa-solid fa-arrow-pointer"></i> Tap to Lock</span>
+                  </div>
+                </div>
+                <div class="cal-day-cell cal-day-available" role="button" tabindex="0" data-date="2026-12-19" aria-label="Saturday, December 19, 2026 - Available for Booking">
+                  <div class="cal-day-header">
+                    <span class="cal-day-num">19</span>
+                  </div>
+                  <div class="cal-day-bottom">
+                    <span class="cal-day-badge"><span class="badge-text-full">AVAILABLE</span><span class="badge-text-short">OPEN</span></span>
+                    <span class="cal-day-action-hint"><i class="fa-solid fa-arrow-pointer"></i> Tap to Lock</span>
+                  </div>
+                </div>
+                <div class="cal-day-cell cal-day-available" role="button" tabindex="0" data-date="2026-12-20" aria-label="Sunday, December 20, 2026 - Available for Booking">
+                  <div class="cal-day-header">
+                    <span class="cal-day-num">20</span>
+                  </div>
+                  <div class="cal-day-bottom">
+                    <span class="cal-day-badge"><span class="badge-text-full">AVAILABLE</span><span class="badge-text-short">OPEN</span></span>
+                    <span class="cal-day-action-hint"><i class="fa-solid fa-arrow-pointer"></i> Tap to Lock</span>
+                  </div>
+                </div>
+                <div class="cal-day-cell cal-day-available" role="button" tabindex="0" data-date="2026-12-21" aria-label="Monday, December 21, 2026 - Available for Booking">
+                  <div class="cal-day-header">
+                    <span class="cal-day-num">21</span>
+                  </div>
+                  <div class="cal-day-bottom">
+                    <span class="cal-day-badge"><span class="badge-text-full">AVAILABLE</span><span class="badge-text-short">OPEN</span></span>
+                    <span class="cal-day-action-hint"><i class="fa-solid fa-arrow-pointer"></i> Tap to Lock</span>
+                  </div>
+                </div>
+                <div class="cal-day-cell cal-day-available" role="button" tabindex="0" data-date="2026-12-22" aria-label="Tuesday, December 22, 2026 - Available for Booking">
+                  <div class="cal-day-header">
+                    <span class="cal-day-num">22</span>
+                  </div>
+                  <div class="cal-day-bottom">
+                    <span class="cal-day-badge"><span class="badge-text-full">AVAILABLE</span><span class="badge-text-short">OPEN</span></span>
+                    <span class="cal-day-action-hint"><i class="fa-solid fa-arrow-pointer"></i> Tap to Lock</span>
+                  </div>
+                </div>
+                <div class="cal-day-cell cal-day-available" role="button" tabindex="0" data-date="2026-12-23" aria-label="Wednesday, December 23, 2026 - Available for Booking">
+                  <div class="cal-day-header">
+                    <span class="cal-day-num">23</span>
+                  </div>
+                  <div class="cal-day-bottom">
+                    <span class="cal-day-badge"><span class="badge-text-full">AVAILABLE</span><span class="badge-text-short">OPEN</span></span>
+                    <span class="cal-day-action-hint"><i class="fa-solid fa-arrow-pointer"></i> Tap to Lock</span>
+                  </div>
+                </div>
+                <div class="cal-day-cell cal-day-available" role="button" tabindex="0" data-date="2026-12-24" aria-label="Thursday, December 24, 2026 - Available for Booking">
+                  <div class="cal-day-header">
+                    <span class="cal-day-num">24</span>
+                  </div>
+                  <div class="cal-day-bottom">
+                    <span class="cal-day-badge"><span class="badge-text-full">AVAILABLE</span><span class="badge-text-short">OPEN</span></span>
+                    <span class="cal-day-action-hint"><i class="fa-solid fa-arrow-pointer"></i> Tap to Lock</span>
+                  </div>
+                </div>
+                <div class="cal-day-cell cal-day-booked" role="button" tabindex="0" data-date="2026-12-25" aria-label="Friday, December 25, 2026 - Booked: Christmas Arena Gala">
+                  <div class="cal-day-header">
+                    <span class="cal-day-num">25</span>
+                    <span class="cal-lock-icon"><i class="fa-solid fa-circle-check"></i></span>
+                  </div>
+                  <div class="cal-day-bottom">
+                    <span class="cal-day-badge"><i class="fa-solid fa-circle-check"></i> <span class="badge-text-full">BOOKED</span><span class="badge-text-short">BOOKED</span></span>
+                    <span class="cal-day-event" title="Christmas Arena Gala">Christmas Arena Gala</span>
+                  </div>
+                </div>
+                <div class="cal-day-cell cal-day-booked" role="button" tabindex="0" data-date="2026-12-26" aria-label="Saturday, December 26, 2026 - Booked: Grand Wedding Extravaganza">
+                  <div class="cal-day-header">
+                    <span class="cal-day-num">26</span>
+                    <span class="cal-lock-icon"><i class="fa-solid fa-circle-check"></i></span>
+                  </div>
+                  <div class="cal-day-bottom">
+                    <span class="cal-day-badge"><i class="fa-solid fa-circle-check"></i> <span class="badge-text-full">BOOKED</span><span class="badge-text-short">BOOKED</span></span>
+                    <span class="cal-day-event" title="Grand Wedding Extravaganza">Grand Wedding Extravaganza</span>
+                  </div>
+                </div>
+                <div class="cal-day-cell cal-day-available" role="button" tabindex="0" data-date="2026-12-27" aria-label="Sunday, December 27, 2026 - Available for Booking">
+                  <div class="cal-day-header">
+                    <span class="cal-day-num">27</span>
+                  </div>
+                  <div class="cal-day-bottom">
+                    <span class="cal-day-badge"><span class="badge-text-full">AVAILABLE</span><span class="badge-text-short">OPEN</span></span>
+                    <span class="cal-day-action-hint"><i class="fa-solid fa-arrow-pointer"></i> Tap to Lock</span>
+                  </div>
+                </div>
+                <div class="cal-day-cell cal-day-booked" role="button" tabindex="0" data-date="2026-12-28" aria-label="Monday, December 28, 2026 - Booked: Luxury Sangeet & Reception">
+                  <div class="cal-day-header">
+                    <span class="cal-day-num">28</span>
+                    <span class="cal-lock-icon"><i class="fa-solid fa-circle-check"></i></span>
+                  </div>
+                  <div class="cal-day-bottom">
+                    <span class="cal-day-badge"><i class="fa-solid fa-circle-check"></i> <span class="badge-text-full">BOOKED</span><span class="badge-text-short">BOOKED</span></span>
+                    <span class="cal-day-event" title="Luxury Sangeet & Reception">Luxury Sangeet & Reception</span>
+                  </div>
+                </div>
+                <div class="cal-day-cell cal-day-available" role="button" tabindex="0" data-date="2026-12-29" aria-label="Tuesday, December 29, 2026 - Available for Booking">
+                  <div class="cal-day-header">
+                    <span class="cal-day-num">29</span>
+                  </div>
+                  <div class="cal-day-bottom">
+                    <span class="cal-day-badge"><span class="badge-text-full">AVAILABLE</span><span class="badge-text-short">OPEN</span></span>
+                    <span class="cal-day-action-hint"><i class="fa-solid fa-arrow-pointer"></i> Tap to Lock</span>
+                  </div>
+                </div>
+                <div class="cal-day-cell cal-day-booked" role="button" tabindex="0" data-date="2026-12-30" aria-label="Wednesday, December 30, 2026 - Booked: Pre-New Year Festival Concert">
+                  <div class="cal-day-header">
+                    <span class="cal-day-num">30</span>
+                    <span class="cal-lock-icon"><i class="fa-solid fa-circle-check"></i></span>
+                  </div>
+                  <div class="cal-day-bottom">
+                    <span class="cal-day-badge"><i class="fa-solid fa-circle-check"></i> <span class="badge-text-full">BOOKED</span><span class="badge-text-short">BOOKED</span></span>
+                    <span class="cal-day-event" title="Pre-New Year Festival Concert">Pre-New Year Festival Concert</span>
+                  </div>
+                </div>
+                <div class="cal-day-cell cal-day-available" role="button" tabindex="0" data-date="2026-12-31" aria-label="Thursday, December 31, 2026 - Available for Booking">
+                  <div class="cal-day-header">
+                    <span class="cal-day-num">31</span>
+                  </div>
+                  <div class="cal-day-bottom">
+                    <span class="cal-day-badge"><span class="badge-text-full">AVAILABLE</span><span class="badge-text-short">OPEN</span></span>
+                    <span class="cal-day-action-hint"><i class="fa-solid fa-arrow-pointer"></i> Tap to Lock</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Calendar Card Bottom Footer -->
+              <div class="cal-footer-note">
+                <div class="footer-note-left">
+                  <i class="fa-solid fa-circle-check"></i>
+                  <span>Select an available date to view booking details or connect directly on WhatsApp.</span>
+                </div>
+                <div class="footer-note-right">
+                  <a href="https://wa.me/917349099787?text=Hi%20Alpha%20Rhythms,%20I%20am%20inquiring%20about%20booking%20availability%20for%20our%20event." target="_blank" rel="noopener noreferrer" class="btn btn-xs btn-whatsapp">
+                    <i class="fa-brands fa-whatsapp"></i> WhatsApp: +91 734 909 9787
+                  </a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+      </div>
+    </section>
+
+    <section id="band" class="section-block band-section reveal-section" aria-label="Alpha Rhythms Band Lineup">
+      <div class="container lineup-stage-container">
+        <div class="section-header text-center">
+          <span class="eyebrow"><i class="fa-solid fa-users"></i> MEET THE ARCHITECTS OF RHYTHM</span>
+          <h2 class="section-heading">THE LINEUP</h2>
+          <p class="section-sub">Seven distinct musical forces uniting to forge the Alpha Rhythms sound. Est. 2021.</p>
+        </div>
+
+        <!-- Desktop Kinetic Stage Accordion (>= 992px) -->
+        <div class="lineup-stage-accordion" id="lineup-stage-accordion" role="region" aria-label="Band Members Interactive Showcase">
+
+          <!-- Pillar 1: Shawn (Founder & Drummer) -->
+          <div class="stage-pillar" data-pillar="0" tabindex="0">
+            <img src="assets/band members/web/Shawn Drummer.jpg" alt="Shawn - Founder &amp; Drummer" class="pillar-bg-img" loading="lazy">
+            <div class="pillar-scrim"></div>
+            <div class="pillar-collapsed-label" aria-hidden="true">
+              <span class="collapsed-num"><i class="fa-solid fa-crown" style="color:#ffd700; margin-right:4px;"></i>01</span>
+              <span class="collapsed-name">Shawn</span>
+            </div>
+            <div class="pillar-expanded-content">
+              <div class="pillar-meta-row">
+                <span class="pillar-role-badge founder-badge"><i class="fa-solid fa-crown"></i> FOUNDER &bull; DRUMMER</span>
+                <span class="pillar-num-badge">#01 / 07</span>
+              </div>
+              <h3 class="pillar-hero-name">Shawn</h3>
+              <p class="pillar-bio">Founder and drummer of Alpha Rhythms. Shawn sets the pace with powerful grooves and rock-solid beats that drive the whole band.</p>
+              <blockquote class="pillar-quote">"We play with pure energy from the first beat to the last."</blockquote>
+            </div>
+          </div>
+
+          <!-- Pillar 2: Keerthan -->
+          <div class="stage-pillar" data-pillar="1" tabindex="0">
+            <img src="assets/band members/web/Keerthan Male Vocalist.jpg" alt="Keerthan - Lead Male Vocalist" class="pillar-bg-img" loading="lazy">
+            <div class="pillar-scrim"></div>
+            <div class="pillar-collapsed-label" aria-hidden="true">
+              <span class="collapsed-num">02</span>
+              <span class="collapsed-name">Keerthan</span>
+            </div>
+            <div class="pillar-expanded-content">
+              <div class="pillar-meta-row">
+                <span class="pillar-role-badge"><i class="fa-solid fa-microphone-lines"></i> LEAD MALE VOCALIST</span>
+                <span class="pillar-num-badge">#02 / 07</span>
+              </div>
+              <h3 class="pillar-hero-name">Keerthan</h3>
+              <p class="pillar-bio">Lead male vocalist and frontman. Keerthan brings big energy, high notes, and a soulful voice that gets every crowd singing along.</p>
+              <blockquote class="pillar-quote">"Every song is a chance to connect with the audience."</blockquote>
+            </div>
+          </div>
+
+          <!-- Pillar 3: Vinisha -->
+          <div class="stage-pillar" data-pillar="2" tabindex="0">
+            <img src="assets/band members/web/Vinisha Female Vocalist.jpg" alt="Vinisha - Lead Female Vocalist" class="pillar-bg-img" loading="lazy">
+            <div class="pillar-scrim"></div>
+            <div class="pillar-collapsed-label" aria-hidden="true">
+              <span class="collapsed-num">03</span>
+              <span class="collapsed-name">Vinisha</span>
+            </div>
+            <div class="pillar-expanded-content">
+              <div class="pillar-meta-row">
+                <span class="pillar-role-badge"><i class="fa-solid fa-microphone"></i> LEAD FEMALE VOCALIST</span>
+                <span class="pillar-num-badge">#03 / 07</span>
+              </div>
+              <h3 class="pillar-hero-name">Vinisha</h3>
+              <p class="pillar-bio">Lead female vocalist. Vinisha delivers rich melodies, beautiful harmonies, and strong vocals that light up every live show.</p>
+              <blockquote class="pillar-quote">"Music brings people together, and that's why we perform."</blockquote>
+            </div>
+          </div>
+
+          <!-- Pillar 4: Hans -->
+          <div class="stage-pillar" data-pillar="3" tabindex="0">
+            <img src="assets/band members/web/Hans Lead Guitarist.jpg" alt="Hans - Lead Guitarist" class="pillar-bg-img" loading="lazy">
+            <div class="pillar-scrim"></div>
+            <div class="pillar-collapsed-label" aria-hidden="true">
+              <span class="collapsed-num">04</span>
+              <span class="collapsed-name">Hans</span>
+            </div>
+            <div class="pillar-expanded-content">
+              <div class="pillar-meta-row">
+                <span class="pillar-role-badge"><i class="fa-solid fa-guitar"></i> LEAD GUITARIST</span>
+                <span class="pillar-num-badge">#04 / 07</span>
+              </div>
+              <h3 class="pillar-hero-name">Hans</h3>
+              <p class="pillar-bio">Lead guitarist. Hans plays catchy riffs and electric guitar solos that give Alpha Rhythms its rock sound.</p>
+              <blockquote class="pillar-quote">"Plug in, turn it up, and let the music speak."</blockquote>
+            </div>
+          </div>
+
+          <!-- Pillar 5: Joyston -->
+          <div class="stage-pillar" data-pillar="4" tabindex="0">
+            <img src="assets/band members/web/Joyston Bass Guitarist.jpg" alt="Joyston - Bass Guitarist" class="pillar-bg-img" loading="lazy">
+            <div class="pillar-scrim"></div>
+            <div class="pillar-collapsed-label" aria-hidden="true">
+              <span class="collapsed-num">05</span>
+              <span class="collapsed-name">Joyston</span>
+            </div>
+            <div class="pillar-expanded-content">
+              <div class="pillar-meta-row">
+                <span class="pillar-role-badge"><i class="fa-solid fa-wave-square"></i> BASS GUITARIST</span>
+                <span class="pillar-num-badge">#05 / 07</span>
+              </div>
+              <h3 class="pillar-hero-name">Joyston</h3>
+              <p class="pillar-bio">Bass guitarist. Joyston brings the deep rhythm and heavy basslines that keep the dance floor moving.</p>
+              <blockquote class="pillar-quote">"When the bass hits right, the whole room feels it."</blockquote>
+            </div>
+          </div>
+
+          <!-- Pillar 6: Ashton -->
+          <div class="stage-pillar" data-pillar="5" tabindex="0">
+            <img src="assets/band members/web/Ashton Keyboardist.png" alt="Ashton - Keyboardist &amp; Synth" class="pillar-bg-img" loading="lazy">
+            <div class="pillar-scrim"></div>
+            <div class="pillar-collapsed-label" aria-hidden="true">
+              <span class="collapsed-num">06</span>
+              <span class="collapsed-name">Ashton</span>
+            </div>
+            <div class="pillar-expanded-content">
+              <div class="pillar-meta-row">
+                <span class="pillar-role-badge"><i class="fa-solid fa-keyboard"></i> KEYBOARDIST &amp; SYNTH</span>
+                <span class="pillar-num-badge">#06 / 07</span>
+              </div>
+              <h3 class="pillar-hero-name">Ashton</h3>
+              <p class="pillar-bio">Keyboardist and synth player. Ashton adds smooth piano chords, catchy melodies, and rich sounds to every track.</p>
+              <blockquote class="pillar-quote">"Good melodies stay in your head long after the concert."</blockquote>
+            </div>
+          </div>
+
+          <!-- Pillar 7: Kenneth -->
+          <div class="stage-pillar" data-pillar="6" tabindex="0">
+            <img src="assets/band members/web/Kenneth Percussionist.jpg" alt="Kenneth - Percussionist" class="pillar-bg-img" loading="lazy">
+            <div class="pillar-scrim"></div>
+            <div class="pillar-collapsed-label" aria-hidden="true">
+              <span class="collapsed-num">07</span>
+              <span class="collapsed-name">Kenneth</span>
+            </div>
+            <div class="pillar-expanded-content">
+              <div class="pillar-meta-row">
+                <span class="pillar-role-badge"><i class="fa-solid fa-compact-disc"></i> PERCUSSIONIST</span>
+                <span class="pillar-num-badge">#07 / 07</span>
+              </div>
+              <h3 class="pillar-hero-name">Kenneth</h3>
+              <p class="pillar-bio">Percussionist. Kenneth adds energetic rhythms and lively beats that make every concert a celebration.</p>
+              <blockquote class="pillar-quote">"Rhythm is what turns a good song into a dance party."</blockquote>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Mobile & Tablet Dynamic Stage Experience (< 992px) -->
+        <div class="lineup-mobile-wrap" aria-label="Band Members Mobile Gallery">
+          <!-- Mobile Member Quick-Select Ribbon -->
+          <div class="mobile-ribbon-container">
+            <span class="mobile-ribbon-label"><i class="fa-solid fa-hand-pointer"></i> TAP ARTIST OR SWIPE CARDS</span>
+            <div class="mobile-ribbon-track" id="mobile-ribbon-track" role="tablist" aria-label="Band Member Avatars">
+              <button class="ribbon-avatar-btn active" data-ribbon-idx="0" role="tab" aria-selected="true" aria-label="Shawn - Founder &amp; Drummer">
+                <div class="avatar-ring is-founder">
+                  <img src="assets/band members/web/Shawn Drummer.jpg" alt="Shawn" class="avatar-thumb" />
+                  <span class="avatar-crown-badge" title="Founder &amp; Drummer"><i class="fa-solid fa-crown"></i></span>
+                </div>
+                <span class="avatar-label">Shawn</span>
+                <span class="avatar-sub-role">Founder</span>
+              </button>
+              <button class="ribbon-avatar-btn" data-ribbon-idx="1" role="tab" aria-selected="false" aria-label="Keerthan - Lead Male Vocalist">
+                <div class="avatar-ring">
+                  <img src="assets/band members/web/Keerthan Male Vocalist.jpg" alt="Keerthan" class="avatar-thumb" />
+                </div>
+                <span class="avatar-label">Keerthan</span>
+                <span class="avatar-sub-role">Vocals</span>
+              </button>
+              <button class="ribbon-avatar-btn" data-ribbon-idx="2" role="tab" aria-selected="false" aria-label="Vinisha - Lead Female Vocalist">
+                <div class="avatar-ring">
+                  <img src="assets/band members/web/Vinisha Female Vocalist.jpg" alt="Vinisha" class="avatar-thumb" />
+                </div>
+                <span class="avatar-label">Vinisha</span>
+                <span class="avatar-sub-role">Vocals</span>
+              </button>
+              <button class="ribbon-avatar-btn" data-ribbon-idx="3" role="tab" aria-selected="false" aria-label="Hans - Lead Guitarist">
+                <div class="avatar-ring">
+                  <img src="assets/band members/web/Hans Lead Guitarist.jpg" alt="Hans" class="avatar-thumb" />
+                </div>
+                <span class="avatar-label">Hans</span>
+                <span class="avatar-sub-role">Guitar</span>
+              </button>
+              <button class="ribbon-avatar-btn" data-ribbon-idx="4" role="tab" aria-selected="false" aria-label="Joyston - Bass Guitarist">
+                <div class="avatar-ring">
+                  <img src="assets/band members/web/Joyston Bass Guitarist.jpg" alt="Joyston" class="avatar-thumb" />
+                </div>
+                <span class="avatar-label">Joyston</span>
+                <span class="avatar-sub-role">Bass</span>
+              </button>
+              <button class="ribbon-avatar-btn" data-ribbon-idx="5" role="tab" aria-selected="false" aria-label="Ashton - Keyboardist &amp; Synth">
+                <div class="avatar-ring">
+                  <img src="assets/band members/web/Ashton Keyboardist.png" alt="Ashton" class="avatar-thumb" />
+                </div>
+                <span class="avatar-label">Ashton</span>
+                <span class="avatar-sub-role">Keys</span>
+              </button>
+              <button class="ribbon-avatar-btn" data-ribbon-idx="6" role="tab" aria-selected="false" aria-label="Kenneth - Percussionist">
+                <div class="avatar-ring">
+                  <img src="assets/band members/web/Kenneth Percussionist.jpg" alt="Kenneth" class="avatar-thumb" />
+                </div>
+                <span class="avatar-label">Kenneth</span>
+                <span class="avatar-sub-role">Percussion</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Cover-Flow Peek Card Deck with Touch Momentum Snap -->
+          <div class="lineup-mobile-deck" id="lineup-mobile-deck">
+            <!-- Mobile Card 1: Shawn (Founder) -->
+            <div class="mobile-member-card active is-founder-card" data-mobile-idx="0">
+              <img src="assets/band members/web/Shawn Drummer.jpg" alt="Shawn" class="mobile-card-img" loading="lazy">
+              <div class="mobile-card-scrim"></div>
+              <div class="mobile-card-content">
+                <div class="mobile-card-meta">
+                  <span class="mobile-role-pill founder-role-pill"><i class="fa-solid fa-crown"></i> FOUNDER &bull; DRUMMER</span>
+                  <span class="mobile-num">01 / 07</span>
+                </div>
+                <h3 class="mobile-name">Shawn</h3>
+                <p class="mobile-bio">Founder and drummer of Alpha Rhythms. Shawn sets the pace with powerful grooves and rock-solid beats that drive the whole band.</p>
+                <blockquote class="mobile-quote">"We play with pure energy from the first beat to the last."</blockquote>
+              </div>
+            </div>
+
+            <!-- Mobile Card 2: Keerthan -->
+            <div class="mobile-member-card" data-mobile-idx="1">
+              <img src="assets/band members/web/Keerthan Male Vocalist.jpg" alt="Keerthan" class="mobile-card-img" loading="lazy">
+              <div class="mobile-card-scrim"></div>
+              <div class="mobile-card-content">
+                <div class="mobile-card-meta">
+                  <span class="mobile-role-pill"><i class="fa-solid fa-microphone-lines"></i> LEAD MALE VOCALIST</span>
+                  <span class="mobile-num">02 / 07</span>
+                </div>
+                <h3 class="mobile-name">Keerthan</h3>
+                <p class="mobile-bio">Lead male vocalist and frontman. Keerthan brings big energy, high notes, and a soulful voice that gets every crowd singing along.</p>
+                <blockquote class="mobile-quote">"Every song is a chance to connect with the audience."</blockquote>
+              </div>
+            </div>
+
+            <!-- Mobile Card 3: Vinisha -->
+            <div class="mobile-member-card" data-mobile-idx="2">
+              <img src="assets/band members/web/Vinisha Female Vocalist.jpg" alt="Vinisha" class="mobile-card-img" loading="lazy">
+              <div class="mobile-card-scrim"></div>
+              <div class="mobile-card-content">
+                <div class="mobile-card-meta">
+                  <span class="mobile-role-pill"><i class="fa-solid fa-microphone"></i> LEAD FEMALE VOCALIST</span>
+                  <span class="mobile-num">03 / 07</span>
+                </div>
+                <h3 class="mobile-name">Vinisha</h3>
+                <p class="mobile-bio">Lead female vocalist. Vinisha delivers rich melodies, beautiful harmonies, and strong vocals that light up every live show.</p>
+                <blockquote class="mobile-quote">"Music brings people together, and that's why we perform."</blockquote>
+              </div>
+            </div>
+
+            <!-- Mobile Card 4: Hans -->
+            <div class="mobile-member-card" data-mobile-idx="3">
+              <img src="assets/band members/web/Hans Lead Guitarist.jpg" alt="Hans" class="mobile-card-img" loading="lazy">
+              <div class="mobile-card-scrim"></div>
+              <div class="mobile-card-content">
+                <div class="mobile-card-meta">
+                  <span class="mobile-role-pill"><i class="fa-solid fa-guitar"></i> LEAD GUITARIST</span>
+                  <span class="mobile-num">04 / 07</span>
+                </div>
+                <h3 class="mobile-name">Hans</h3>
+                <p class="mobile-bio">Lead guitarist. Hans plays catchy riffs and electric guitar solos that give Alpha Rhythms its rock sound.</p>
+                <blockquote class="mobile-quote">"Plug in, turn it up, and let the music speak."</blockquote>
+              </div>
+            </div>
+
+            <!-- Mobile Card 5: Joyston -->
+            <div class="mobile-member-card" data-mobile-idx="4">
+              <img src="assets/band members/web/Joyston Bass Guitarist.jpg" alt="Joyston" class="mobile-card-img" loading="lazy">
+              <div class="mobile-card-scrim"></div>
+              <div class="mobile-card-content">
+                <div class="mobile-card-meta">
+                  <span class="mobile-role-pill"><i class="fa-solid fa-wave-square"></i> BASS GUITARIST</span>
+                  <span class="mobile-num">05 / 07</span>
+                </div>
+                <h3 class="mobile-name">Joyston</h3>
+                <p class="mobile-bio">Bass guitarist. Joyston brings the deep rhythm and heavy basslines that keep the dance floor moving.</p>
+                <blockquote class="mobile-quote">"When the bass hits right, the whole room feels it."</blockquote>
+              </div>
+            </div>
+
+            <!-- Mobile Card 6: Ashton -->
+            <div class="mobile-member-card" data-mobile-idx="5">
+              <img src="assets/band members/web/Ashton Keyboardist.png" alt="Ashton" class="mobile-card-img" loading="lazy">
+              <div class="mobile-card-scrim"></div>
+              <div class="mobile-card-content">
+                <div class="mobile-card-meta">
+                  <span class="mobile-role-pill"><i class="fa-solid fa-keyboard"></i> KEYBOARDIST &amp; SYNTH</span>
+                  <span class="mobile-num">06 / 07</span>
+                </div>
+                <h3 class="mobile-name">Ashton</h3>
+                <p class="mobile-bio">Keyboardist and synth player. Ashton adds smooth piano chords, catchy melodies, and rich sounds to every track.</p>
+                <blockquote class="mobile-quote">"Good melodies stay in your head long after the concert."</blockquote>
+              </div>
+            </div>
+
+            <!-- Mobile Card 7: Kenneth -->
+            <div class="mobile-member-card" data-mobile-idx="6">
+              <img src="assets/band members/web/Kenneth Percussionist.jpg" alt="Kenneth" class="mobile-card-img" loading="lazy">
+              <div class="mobile-card-scrim"></div>
+              <div class="mobile-card-content">
+                <div class="mobile-card-meta">
+                  <span class="mobile-role-pill"><i class="fa-solid fa-compact-disc"></i> PERCUSSIONIST</span>
+                  <span class="mobile-num">07 / 07</span>
+                </div>
+                <h3 class="mobile-name">Kenneth</h3>
+                <p class="mobile-bio">Percussionist. Kenneth adds energetic rhythms and lively beats that make every concert a celebration.</p>
+                <blockquote class="mobile-quote">"Rhythm is what turns a good song into a dance party."</blockquote>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mobile Indicators & Controls -->
+          <div class="lineup-mobile-controls">
+            <button class="mobile-nav-btn" id="mobile-lineup-prev" aria-label="Previous artist"><i class="fa-solid fa-chevron-left"></i></button>
+            <div class="mobile-lineup-dots" id="mobile-lineup-dots">
+              <button class="mobile-dot active" data-dot="0" aria-label="Shawn - Founder"></button>
+              <button class="mobile-dot" data-dot="1" aria-label="Keerthan"></button>
+              <button class="mobile-dot" data-dot="2" aria-label="Vinisha"></button>
+              <button class="mobile-dot" data-dot="3" aria-label="Hans"></button>
+              <button class="mobile-dot" data-dot="4" aria-label="Joyston"></button>
+              <button class="mobile-dot" data-dot="5" aria-label="Ashton"></button>
+              <button class="mobile-dot" data-dot="6" aria-label="Kenneth"></button>
+            </div>
+            <button class="mobile-nav-btn" id="mobile-lineup-next" aria-label="Next artist"><i class="fa-solid fa-chevron-right"></i></button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================
+         CONTACT, BOOKING & NEWSLETTER
+         ======================================================== -->
+    <section id="contact" class="section-block contact-section reveal-section">
+      <div class="container">
+        <div class="contact-split-grid">
+          <!-- Left: Info & Press Kit -->
+          <div class="contact-info-col">
+            <span class="eyebrow"><i class="fa-solid fa-envelope"></i> GET IN TOUCH</span>
+            <h2 class="section-heading">BOOK ALPHA RHYTHMS</h2>
+            <p class="contact-lead">
+              Looking to book us for festivals, college concerts, stadium headliners, or private showcases? Connect directly with our tour management team.
+            </p>
+
+            <div class="contact-details-list">
+              <div class="contact-item">
+                <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
+                <div>
+                  <strong>Direct Call &amp; WhatsApp</strong>
+                  <a href="tel:+917349099787">+91 734 909 9787</a> &bull; <a href="https://wa.me/917349099787" target="_blank" rel="noopener noreferrer" style="color: #22c55e;"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-icon"><i class="fa-solid fa-envelope-open-text"></i></div>
+                <div>
+                  <strong>Booking &amp; Management</strong>
+                  <a href="mailto:bandalpharhythms@gmail.com">bandalpharhythms@gmail.com</a>
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-icon"><i class="fa-solid fa-bullhorn"></i></div>
+                <div>
+                  <strong>Press & Media Inquiries</strong>
+                  <a href="mailto:bandalpharhythms@gmail.com">bandalpharhythms@gmail.com</a>
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-icon"><i class="fa-solid fa-file-pdf"></i></div>
+                <div>
+                  <strong>Official EPK / Press Kit</strong>
+                  <button id="download-epk-btn" class="text-link-btn">Download Electronic Press Kit (PDF)</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Social Links -->
+            <div class="social-connect-block">
+              <h4>FOLLOW THE BAND</h4>
+              <div class="social-buttons">
+                <a href="https://www.instagram.com/alpha.rhythms/" target="_blank" rel="noopener noreferrer" class="social-pill" title="Instagram"><i class="fa-brands fa-instagram"></i> @alpha.rhythms</a>
+                <a href="https://wa.me/917349099787?text=Hi%20Alpha%20Rhythms,%20I%20would%20like%20to%20enquire%20about%20booking%20the%20band." target="_blank" rel="noopener noreferrer" class="social-pill" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+                <a href="https://www.youtube.com/results?search_query=Alpha+Rhythms+Band" target="_blank" rel="noopener noreferrer" class="social-pill" title="YouTube"><i class="fa-brands fa-youtube"></i> YouTube</a>
+                <a href="mailto:bandalpharhythms@gmail.com" class="social-pill" title="Email"><i class="fa-solid fa-envelope"></i> Email</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Direct Booking Inquiry Dialogue Card (WhatsApp & Local Call) -->
+          <div class="booking-form-card booking-direct-enquiry-card">
+            <div class="direct-contact-eyebrow">
+              <i class="fa-solid fa-bolt text-gold"></i> INSTANT EVENT &amp; SHOW ENQUIRY
+            </div>
+            <h3>Book Alpha Rhythms Live</h3>
+            <p class="form-sub">Connect directly for instant date confirmation, performance schedule, and live sound consultation.</p>
+
+            <div class="direct-contact-card enquiry-dialogue-box">
+              <div class="direct-phone-box">
+                <span class="phone-label"><i class="fa-solid fa-phone text-gold"></i> DIRECT CALL &amp; WHATSAPP</span>
+                <a href="tel:+917349099787" class="phone-number-display" title="Call Alpha Rhythms Directly">
+                  <i class="fa-solid fa-phone-volume"></i> +91 734 909 9787
+                </a>
+              </div>
+              
+              <p class="direct-contact-tip">
+                Reach out directly to enquire or lock dates for college fests, music festivals, weddings, and corporate galas.
+              </p>
+
+              <div class="direct-contact-actions">
+                <a href="https://wa.me/917349099787?text=Hi%20Alpha%20Rhythms%2C%20I%20would%20like%20to%20enquire%20about%20booking%20the%20band%20for%20an%20event." target="_blank" rel="noopener noreferrer" class="btn btn-wa-direct">
+                  <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp (Instant Reply)
+                </a>
+                <a href="tel:+917349099787" class="btn btn-call-direct">
+                  <i class="fa-solid fa-phone"></i> Make a Local Call (+91 734 909 9787)
+                </a>
+              </div>
+            </div>
+
+            <div class="booking-guarantee-strip">
+              <span><i class="fa-solid fa-shield-halved text-gold"></i> Verified Official Booking</span>
+              <span><i class="fa-solid fa-bolt text-gold"></i> Instant Response</span>
+              <span><i class="fa-solid fa-location-dot text-gold"></i> Performing Worldwide</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         FOOTER
+         ======================================================== -->
+    <footer class="site-footer">
+      <div class="container footer-content">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <img src="assets/logo_transparent.png" alt="Alpha Rhythms" class="footer-logo">
+            <span class="footer-title">ALPHA RHYTHMS</span>
+            <p>Forged with electricity and passion. Est. 2021.</p>
+          </div>
+
+          <div class="footer-links-col">
+            <h4>EXPLORE</h4>
+            <ul>
+              <li><a href="#hero">Home</a></li>
+              <li><a href="#music">Music & Discography</a></li>
+              <li><a href="#tour">Live Tour Dates</a></li>
+              <li><a href="#band">The Lineup</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-links-col">
+            <h4>COMMUNITY</h4>
+            <ul>
+              <li><a href="#gallery">Stage Moments</a></li>
+              <li><a href="#merch">Official Merch</a></li>
+              <li><a href="#contact">Press & Booking</a></li>
+              <li><a href="https://www.tiarasjec.com/" target="_blank" rel="noopener">Tiara SJEC Fest 2026</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-newsletter">
+            <h4>JOIN THE INNER CIRCLE</h4>
+            <p>Get early presale ticket access and unreleased demos.</p>
+            <form id="newsletter-form" class="newsletter-input-box">
+              <input type="email" placeholder="Enter your email" required aria-label="Newsletter Email">
+              <button type="submit" title="Subscribe"><i class="fa-solid fa-arrow-right"></i></button>
+            </form>
+            <span id="newsletter-msg" class="newsletter-success"></span>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; <span id="current-year">2026</span> ALPHA RHYTHMS BAND. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ========================================================
+       MODALS & SLIDEOUT DRAWERS
+       ======================================================== -->
+
+  <!-- 1. Ticket Checkout Modal -->
+  
+  <!-- ========================================================
+       REAL-TIME CALENDAR DATE BOOKING MODAL
+       ======================================================== -->
+  
+
+  <!-- ========================================================
+       SCHEDULE ADMIN PIN VERIFICATION MODAL
+       ======================================================== -->
+  <div id="band-leader-pin-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal-card modal-leader-pin">
+      <button class="modal-close-btn" id="leader-pin-close" aria-label="Close modal">&times;</button>
+      <div class="modal-header text-center">
+        <div class="leader-crown-badge"><i class="fa-solid fa-lock"></i></div>
+        <span class="modal-eyebrow">ADMIN ACCESS</span>
+        <h3>Schedule Admin Portal</h3>
+        <p class="modal-sub">Enter the PIN to manage date availability on the website.</p>
+      </div>
+
+      <form id="leader-pin-form" class="leader-pin-form">
+        <div class="form-group">
+          <label for="leader-pin-input"><i class="fa-solid fa-key"></i> Passcode / PIN:</label>
+          <input type="password" id="leader-pin-input" class="input-dark text-center" placeholder="Enter PIN (default: alpha2026)" autocomplete="current-password" required>
+          <small class="leader-pin-hint">Default Passcode: <strong>alpha2026</strong> or <strong>1234</strong></small>
+        </div>
+
+        <div id="leader-pin-error" class="leader-pin-error hidden">
+          <i class="fa-solid fa-circle-exclamation"></i> Incorrect PIN. Please try again.
+        </div>
+
+        <div class="modal-footer-actions">
+          <button type="button" class="btn btn-ghost" id="leader-pin-cancel">Cancel</button>
+          <button type="submit" class="btn btn-gold btn-glow">
+            <i class="fa-solid fa-unlock"></i> Unlock Admin Portal
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       SCHEDULE SINGLE DATE CONTROL MODAL
+       ======================================================== -->
+  <div id="band-leader-date-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal-card modal-leader-date">
+      <button class="modal-close-btn" id="leader-date-close" aria-label="Close modal">&times;</button>
+      <div class="modal-header">
+        <span class="modal-eyebrow"><i class="fa-solid fa-shield-halved"></i> DATE MANAGER</span>
+        <h3 id="leader-date-title">December 14, 2026</h3>
+        <p id="leader-date-sub" class="modal-sub">Configure availability status for this date.</p>
+      </div>
+
+      <form id="leader-date-form" class="leader-date-form">
+        <input type="hidden" id="leader-date-iso" value="">
+
+        <div class="leader-current-status-box">
+          <span class="status-label">Current Calendar Status:</span>
+          <span class="status-pill" id="leader-current-status-pill">AVAILABLE</span>
+        </div>
+
+        <div class="form-group">
+          <label for="leader-event-title"><i class="fa-solid fa-guitar"></i> Event / Booking Reason:</label>
+          <input type="text" id="leader-event-title" class="input-dark" placeholder="e.g. Wedding Headline / Sangeet / Off-Day / Rehearsal">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="leader-client-name"><i class="fa-solid fa-user"></i> Client / Organizer:</label>
+            <input type="text" id="leader-client-name" class="input-dark" placeholder="e.g. VIP Wedding / College Committee">
+          </div>
+          <div class="form-group">
+            <label for="leader-city-venue"><i class="fa-solid fa-map-pin"></i> City & Venue:</label>
+            <input type="text" id="leader-city-venue" class="input-dark" placeholder="e.g. Mangalore, Bangalore, Goa">
+          </div>
+        </div>
+
+        <div class="leader-actions-split">
+          <button type="button" id="btn-leader-do-lock" class="btn btn-crimson btn-glow">
+            <i class="fa-solid fa-lock"></i> Block / Lock This Date (Red)
+          </button>
+          <button type="button" id="btn-leader-do-unlock" class="btn btn-gold">
+            <i class="fa-solid fa-unlock"></i> Unlock / Set Available (Yellow)
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       SCHEDULE ADMIN MULTI-DATE BLOCKER MODAL
+       ======================================================== -->
+  <div id="band-leader-multiblock-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal-card modal-leader-multiblock">
+      <button class="modal-close-btn" id="leader-multi-close" aria-label="Close modal">&times;</button>
+      <div class="modal-header">
+        <span class="modal-eyebrow"><i class="fa-solid fa-calendar-days"></i> BATCH DATE BLOCKER</span>
+        <h3>Block Multiple Dates in Bulk</h3>
+        <p class="modal-sub">Block consecutive days for headline arena tours, out-of-state wedding tours, or studio recording weeks.</p>
+      </div>
+
+      <form id="leader-multiblock-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="multi-start-date"><i class="fa-solid fa-calendar"></i> Start Date:</label>
+            <input type="date" id="multi-start-date" class="input-dark" required>
+          </div>
+          <div class="form-group">
+            <label for="multi-end-date"><i class="fa-solid fa-calendar"></i> End Date:</label>
+            <input type="date" id="multi-end-date" class="input-dark" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="multi-event-title"><i class="fa-solid fa-tag"></i> Tour / Event Title:</label>
+          <input type="text" id="multi-event-title" class="input-dark" placeholder="e.g. Goa Wedding Tour / Studio Album Recording" required>
+        </div>
+
+        <div class="form-group">
+          <label for="multi-city"><i class="fa-solid fa-location-dot"></i> Location / City:</label>
+          <input type="text" id="multi-city" class="input-dark" placeholder="e.g. Goa / Bangalore / Mumbai">
+        </div>
+
+        <div class="modal-footer-actions">
+          <button type="button" class="btn btn-ghost" id="leader-multi-cancel">Cancel</button>
+          <button type="submit" class="btn btn-crimson btn-glow">
+            <i class="fa-solid fa-lock"></i> Block Date Range Now
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="calendar-booking-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="cal-booking-title">
+    <div class="modal-card modal-cal-direct-contact">
+      <button class="modal-close-btn" id="cal-booking-close" aria-label="Close modal">&times;</button>
+      
+      <div class="modal-header text-center">
+        <span class="modal-eyebrow"><i class="fa-solid fa-calendar-check"></i> DATE AVAILABLE</span>
+        <h3 id="cal-booking-title">DECEMBER 16, 2026</h3>
+        <p id="cal-booking-sub" class="modal-sub">Wednesday, December 16, 2026 is currently <strong class="text-gold">AVAILABLE</strong>.</p>
+      </div>
+
+      <div class="direct-contact-card">
+        <div class="direct-contact-eyebrow">
+          <i class="fa-solid fa-phone"></i> DIRECT CONTACT
+        </div>
+        
+        <div class="direct-phone-box">
+          <span class="phone-label">DIRECT CALL OR WHATSAPP NUMBER</span>
+          <a href="tel:+917349099787" class="phone-number-display" id="cal-booking-phone-display">
+            <i class="fa-solid fa-phone-volume"></i> +91 734 909 9787
+          </a>
+        </div>
+        
+        <p class="direct-contact-tip">Reach out directly to lock and confirm this date immediately for your wedding, gala, or concert.</p>
+
+        <div class="direct-contact-actions">
+          <a id="cal-booking-wa-btn" href="https://wa.me/917349099787" target="_blank" rel="noopener noreferrer" class="btn btn-wa-direct">
+            <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp
+          </a>
+          <a id="cal-booking-call-btn" href="tel:+917349099787" class="btn btn-call-direct">
+            <i class="fa-solid fa-phone"></i> Call Now (+91 734 909 9787)
+          </a>
+        </div>
+      </div>
+
+      <div class="modal-footer-dismiss text-center">
+        <button type="button" class="btn btn-ghost" id="cal-booking-cancel">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       DATE LOCKED INSPECTION MODAL
+       ======================================================== -->
+  <div id="calendar-locked-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="cal-locked-title">
+    <div class="modal-card modal-cal-locked">
+      <button class="modal-close-btn" id="cal-locked-close" aria-label="Close modal">&times;</button>
+      <div class="modal-header">
+        <span class="modal-eyebrow locked-eyebrow"><i class="fa-solid fa-circle-check"></i> DATE IS BOOKED</span>
+        <h3 id="cal-locked-title">December 12, 2026</h3>
+        <p class="modal-sub">This date is confirmed for a scheduled live performance.</p>
+      </div>
+
+      <div class="locked-info-card">
+        <div class="locked-badge-row">
+          <span class="locked-stamp"><i class="fa-solid fa-circle-check"></i> BOOKED</span>
+          <span class="locked-date-badge" id="locked-date-badge">SAT, DEC 12, 2026</span>
+        </div>
+        
+        <div class="locked-details-list">
+          <div class="locked-detail-row">
+            <span class="label"><i class="fa-solid fa-guitar"></i> Reserved Event:</span>
+            <strong id="locked-event-name">Wedding Performance</strong>
+          </div>
+          <div class="locked-detail-row">
+            <span class="label"><i class="fa-solid fa-map-pin"></i> City / Venue:</span>
+            <strong id="locked-city-name">Mangalore, Karnataka</strong>
+          </div>
+          <div class="locked-detail-row">
+            <span class="label"><i class="fa-solid fa-calendar-check"></i> Status:</span>
+            <span class="status-locked-text" id="locked-status-text">Confirmed Booking</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="locked-actions-box">
+        <p class="locked-inquiry-note">Need an adjacent date or want to check band availability for a nearby weekend?</p>
+        <div class="locked-btn-group">
+          <a id="locked-whatsapp-link" href="https://wa.me/917349099787" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">
+            <i class="fa-brands fa-whatsapp"></i> Inquire on WhatsApp
+          </a>
+          <button id="locked-release-btn" class="btn btn-ghost hidden" title="Release this date">
+            <i class="fa-solid fa-unlock"></i> Release Date
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Real-time Lock Toast -->
+  <div id="calendar-toast" class="cal-toast hidden" role="alert" aria-live="assertive">
+    <div class="cal-toast-icon"><i class="fa-solid fa-circle-check"></i></div>
+    <div class="cal-toast-content">
+      <strong id="cal-toast-title">Date Locked!</strong>
+      <span id="cal-toast-msg">December 18, 2026 is now locked in real-time.</span>
+    </div>
+  </div>
+
+
+  <div id="ticket-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <button class="modal-close-btn" id="ticket-modal-close" aria-label="Close modal">&times;</button>
+      <div class="modal-header">
+        <span class="modal-eyebrow"><i class="fa-solid fa-ticket"></i> OFFICIAL PASS</span>
+        <h3 id="modal-tour-title">Tour Tickets</h3>
+        <p id="modal-tour-sub" class="modal-sub">Venue & Date Details</p>
+      </div>
+
+      <div class="ticket-selection-body">
+        <div class="ticket-tier-option active" data-price="25">
+          <div class="tier-info">
+            <strong>General Admission</strong>
+            <small>Standing arena access, main floor view</small>
+          </div>
+          <span class="tier-price">$25</span>
+        </div>
+
+        <div class="ticket-tier-option" data-price="60">
+          <div class="tier-info">
+            <strong>VIP Golden Circle</strong>
+            <small>Front of stage barrier + early gate admission</small>
+          </div>
+          <span class="tier-price">$60</span>
+        </div>
+
+        <div class="ticket-tier-option" data-price="120">
+          <div class="tier-info">
+            <strong>Alpha Backstage Pass</strong>
+            <small>VIP Lounge, band meet & greet, exclusive signed poster</small>
+          </div>
+          <span class="tier-price">$120</span>
+        </div>
+
+        <div class="qty-control-row">
+          <span>Ticket Quantity:</span>
+          <div class="qty-stepper">
+            <button id="qty-minus">-</button>
+            <span id="qty-display">1</span>
+            <button id="qty-plus">+</button>
+          </div>
+        </div>
+
+        <div class="ticket-total-row">
+          <span>Total:</span>
+          <span id="ticket-total-price" class="total-val">$25.00</span>
+        </div>
+
+        <button id="confirm-ticket-btn" class="btn btn-primary btn-block">Confirm & Generate E-Pass</button>
+      </div>
+
+      <!-- Generated E-Pass Screen -->
+      <div id="epass-card" class="epass-container hidden">
+        <div class="epass-inner">
+          <div class="epass-header">
+            <img src="assets/logo_transparent.png" alt="Logo" class="epass-logo">
+            <span>ALPHA RHYTHMS PASS</span>
+          </div>
+          <h4 id="pass-event-name">Concert Event</h4>
+          <p id="pass-event-loc">Venue Location</p>
+          <div class="epass-details-grid">
+            <div><small>TIER</small><strong id="pass-tier">General</strong></div>
+            <div><small>QTY</small><strong id="pass-qty">1 Pass</strong></div>
+            <div><small>PASS ID</small><strong>#AR-2026-X9</strong></div>
+          </div>
+          <div class="epass-qr">
+            <i class="fa-solid fa-qrcode"></i>
+            <small>Scan at gate for instant entry</small>
+          </div>
+        </div>
+        <button id="epass-done-btn" class="btn btn-secondary btn-block mt-3">Back to Website</button>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- 3. Lyrics Modal -->
+  <div id="lyrics-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <button class="modal-close-btn" id="lyrics-modal-close">&times;</button>
+      <div class="modal-header">
+        <span class="modal-eyebrow">LYRICS ARCHIVE</span>
+        <h3 id="lyrics-title">Rhythm of Fire</h3>
+        <p class="modal-sub">Music & Words by Liam Cruz & Marcus Vance</p>
+      </div>
+      <div class="lyrics-scroll-box" id="lyrics-content">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Merch Cart Slideout Drawer -->
+  <div id="cart-drawer" class="cart-slideout" aria-hidden="true">
+    <div class="cart-header">
+      <h3><i class="fa-solid fa-bag-shopping"></i> Your Band Merch (<span id="drawer-cart-count">0</span>)</h3>
+      <button id="cart-close-btn" class="drawer-close-btn">&times;</button>
+    </div>
+
+    <div class="cart-items-list" id="cart-items-container">
+      <div class="empty-cart-state">
+        <i class="fa-solid fa-compact-disc fa-spin"></i>
+        <p>Your cart is empty. Grab some tour gear!</p>
+      </div>
+    </div>
+
+    <div class="cart-footer">
+      <div class="cart-subtotal-row">
+        <span>Subtotal</span>
+        <strong id="cart-subtotal">$0.00</strong>
+      </div>
+      <button id="checkout-btn" class="btn btn-primary btn-block">Proceed to Checkout</button>
+    </div>
+  </div>
+
+  <!-- 5. Gallery Lightbox Modal -->
+  <div id="lightbox-modal" class="lightbox-overlay hidden" role="dialog">
+    <button class="lightbox-close" id="lightbox-close">&times;</button>
+    <button class="lightbox-nav prev" id="lightbox-prev"><i class="fa-solid fa-chevron-left"></i></button>
+    <button class="lightbox-nav next" id="lightbox-next"><i class="fa-solid fa-chevron-right"></i></button>
+    <div class="lightbox-content">
+      <img id="lightbox-img" src="" alt="Enlarged view">
+      <p id="lightbox-caption" class="lightbox-caption-text"></p>
+    </div>
+  </div>
+
+
+
+  <!-- Toast Notification System -->
+  <div id="toast-container" class="toast-stack"></div>
+
+
+
+  <!-- Lenis Momentum Smooth Scroll Engine -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+  <script src="app.js?v=20261003_lineup_fix_v24"></script>
+</body>
+</html>
