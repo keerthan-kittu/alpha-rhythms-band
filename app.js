@@ -34,7 +34,7 @@ function initAlphaBandApp() {
   const state = {
     isLoading: true,
     loadProgress: 0,
-    activeLogoSrc: 'assets/logo_transparent.png',
+    activeLogoSrc: 'assets/logo_shield_black_transparent.png',
     liquidColor: '#f59e0b',
     isPlayingAudio: false,
     audioInitialized: false,
@@ -770,17 +770,17 @@ Alpha Rhythms on stage at Tiara!
   });
 
   resetDefaultLogoBtn.addEventListener('click', () => {
-    state.activeLogoSrc = 'assets/logo_transparent.png';
+    state.activeLogoSrc = 'assets/logo_shield_black_transparent.png';
     activeLogoPreview.src = state.activeLogoSrc;
     if (yellowOutlineImg) yellowOutlineImg.src = 'assets/logo_outline_yellow.png';
     if (whiteInnerImg) whiteInnerImg.src = 'assets/logo_inner_white.png';
     const baseLogo = document.getElementById('loader-base-logo');
-    if (baseLogo) baseLogo.src = 'assets/logo_transparent.png';
-    navBrandLogo.src = 'assets/logo_black_yellow.png';
+    if (baseLogo) baseLogo.src = 'assets/logo_shield_black_transparent.png';
+    if (navBrandLogo) navBrandLogo.src = 'assets/logo_shield_black_transparent.png';
     const heroInteractiveLogo = document.getElementById('hero-interactive-logo');
-    if (heroInteractiveLogo) heroInteractiveLogo.src = 'assets/logo_transparent.png';
+    if (heroInteractiveLogo) heroInteractiveLogo.src = 'assets/logo_shield_black_transparent.png';
     document.querySelectorAll('.mockup-logo, .footer-logo, .epass-logo').forEach(img => {
-      img.src = 'assets/logo_transparent.png';
+      img.src = 'assets/logo_shield_black_transparent.png';
     });
     showToast("Reset to Alpha Rhythms official logo", "fa-rotate-left");
   });
