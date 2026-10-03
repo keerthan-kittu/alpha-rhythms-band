@@ -1385,14 +1385,19 @@ Alpha Rhythms on stage at Tiara!
   // ==========================================================
   // 8. FORMS & HEADER INTERACTIVITY
   // ==========================================================
-  // Header scroll detection
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 40) {
-      mainHeader.classList.add('scrolled');
-    } else {
-      mainHeader.classList.remove('scrolled');
+  // Header scroll detection & theme synchronization
+  function syncHeaderScrollState(scrollPos) {
+    const y = typeof scrollPos === 'number' ? scrollPos : (window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0);
+    if (mainHeader) {
+      if (y > 30) {
+        mainHeader.classList.add('scrolled');
+      } else {
+        mainHeader.classList.remove('scrolled');
+      }
     }
-  });
+  }
+
+  window.addEventListener('scroll', () => syncHeaderScrollState(), { passive: true });
 
   // Mobile menu toggle
   mobileToggleBtn.addEventListener('click', () => {
@@ -2142,11 +2147,52 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
     cacheLayoutMetrics();
     window.addEventListener('resize', cacheLayoutMetrics, { passive: true });
 
+    function updateActiveNavLink(currentScroll) {
+      const y = (typeof currentScroll === 'number' ? currentScroll : (window.scrollY || window.pageYOffset || 0)) + 140;
+      const sectionIds = ['contact', 'band', 'tour', 'performances', 'hero'];
+      let activeId = 'hero';
+
+      for (const id of sectionIds) {
+        const sec = document.getElementById(id);
+        if (sec) {
+          const top = sec.offsetTop;
+          if (y >= top) {
+            activeId = id;
+            break;
+          }
+        }
+      }
+
+      const desktopNavLinks = document.querySelectorAll('.desktop-nav .nav-link');
+      desktopNavLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href === `#${activeId}`) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+    }
+
     function updateScrollMetrics(scrollY) {
+      const currentScroll = typeof scrollY === 'number' ? scrollY : (window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0);
+
+      // Instant toggle of header contrast mode: black at top hero, bright white on all other sections
+      if (mainHeader) {
+        if (currentScroll > 30) {
+          mainHeader.classList.add('scrolled');
+        } else {
+          mainHeader.classList.remove('scrolled');
+        }
+      }
+
+      // Synchronize active link to current section
+      updateActiveNavLink(currentScroll);
+
       // 1. Progress Bar
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       if (docHeight > 0 && progressBar) {
-        const pct = Math.min(100, Math.max(0, (scrollY / docHeight) * 100));
+        const pct = Math.min(100, Math.max(0, (currentScroll / docHeight) * 100));
         progressBar.style.width = pct + '%';
       }
     }
@@ -2194,6 +2240,19 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
         if (targetEl) {
           e.preventDefault();
           const targetOffset = (href === '#hero' || href === '#top') ? 0 : -70;
+
+          // Immediately toggle header contrast and active indicator on click
+          if (mainHeader) {
+            if (href === '#hero' || href === '#top') {
+              mainHeader.classList.remove('scrolled');
+            } else {
+              mainHeader.classList.add('scrolled');
+            }
+          }
+          document.querySelectorAll('.desktop-nav .nav-link').forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === href);
+          });
+
           if (lenis) {
             lenis.scrollTo(targetEl, {
               offset: targetOffset,
@@ -2219,6 +2278,11 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
         }
       });
     });
+
+    // Run initial sync
+    setTimeout(() => {
+      updateScrollMetrics(window.scrollY || 0);
+    }, 100);
   }
 
 
