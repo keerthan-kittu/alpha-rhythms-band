@@ -5971,87 +5971,11 @@ body.loading-locked {
   100% { transform: translateY(5px); }
 }
 
-/* Bottom Progress Dock */
+/* Bottom Progress Dock (Removed as requested) */
 .perf-progress-dock {
-  position: absolute;
-  bottom: 18px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  z-index: 25;
-  background: rgba(10, 10, 15, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  padding: 8px 20px;
-  border-radius: 30px;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.85);
+  display: none !important;
 }
 
-.perf-progress-track {
-  width: 200px;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.16);
-  border-radius: 4px;
-  overflow: hidden;
-  position: relative;
-}
-
-.perf-progress-fill {
-  width: 0%;
-  height: 100%;
-  background: linear-gradient(90deg, #ef4444, #fbbf24);
-  box-shadow: 0 0 10px rgba(239, 68, 68, 0.8);
-  border-radius: 4px;
-}
-
-.perf-progress-indicators {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.p-dot {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  color: #94a3b8;
-  font-family: var(--font-caps, 'Outfit', sans-serif);
-  font-size: 0.76rem;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  user-select: none;
-  -webkit-user-select: none;
-  outline: none;
-  padding: 0;
-  margin: 0;
-  line-height: 1;
-}
-
-.p-dot:hover {
-  background: rgba(255, 255, 255, 0.2);
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.5);
-  transform: scale(1.1);
-}
-
-.p-dot.active {
-  background: #ef4444 !important;
-  color: #ffffff !important;
-  border-color: #ef4444 !important;
-  box-shadow: 0 0 16px rgba(239, 68, 68, 0.95), 0 0 4px rgba(255, 255, 255, 0.8) !important;
-  transform: scale(1.18);
-  font-weight: 900;
-}
 
 /* Mobile Spotlight Navigation Bar (Hidden on Desktop) */
 .perf-mobile-nav {
@@ -6209,7 +6133,7 @@ body.loading-locked {
   /* Mobile Navigation Controls (< 992px) */
   .perf-mobile-nav {
     position: absolute;
-    bottom: 66px;
+    bottom: 22px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -6258,28 +6182,6 @@ body.loading-locked {
     min-width: 75px;
     text-align: center;
   }
-
-  /* Bottom Progress Dock on Mobile */
-  .perf-progress-dock {
-    bottom: 14px;
-    padding: 5px 12px;
-    gap: 6px;
-  }
-
-  .perf-progress-track {
-    width: 140px;
-    height: 3px;
-  }
-
-  .perf-progress-indicators {
-    gap: 5px;
-  }
-
-  .p-dot {
-    width: 24px;
-    height: 24px;
-    font-size: 0.62rem;
-  }
 }
 
 @media (max-width: 480px) {
@@ -6309,7 +6211,7 @@ body.loading-locked {
   }
 
   .perf-mobile-nav {
-    bottom: 58px;
+    bottom: 16px;
     padding: 5px 11px;
     gap: 10px;
   }
@@ -6323,11 +6225,8 @@ body.loading-locked {
     font-size: 0.66rem;
     min-width: 65px;
   }
-
-  .perf-progress-dock {
-    bottom: 10px;
-  }
 }
+
 
 
 
