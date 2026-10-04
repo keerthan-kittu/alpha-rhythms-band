@@ -55,8 +55,6 @@ body {
 html.loading-locked,
 body.loading-locked {
   overflow: hidden !important;
-  height: 100vh !important;
-  max-height: 100vh !important;
 }
 
 /* ========================================================
@@ -730,7 +728,12 @@ body.loading-locked {
   right: 0;
   z-index: 1000;
   padding: 16px 32px;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              backdrop-filter 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              -webkit-backdrop-filter 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              border-bottom 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              padding 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   background: transparent;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
@@ -738,58 +741,76 @@ body.loading-locked {
   box-shadow: none;
 }
 
-/* Scrolled Header (Applied across all sections after the 1st section) */
+/* Scrolled Header (Applied when entering Section 2 and all following sections; Section 1 remains transparent) */
 .site-header.scrolled,
 #main-header.scrolled {
-  background: rgba(10, 10, 16, 0.94) !important;
+  background: rgba(255, 255, 255, 0.96) !important;
   backdrop-filter: blur(20px) !important;
   -webkit-backdrop-filter: blur(20px) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.14) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
   padding: 10px 32px !important;
-  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.85) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
 }
 
 .site-header.scrolled .brand-name,
 #main-header.scrolled .brand-name {
-  color: #ffffff !important;
-  text-shadow: 0 0 14px rgba(255, 255, 255, 0.5) !important;
+  color: #000000 !important;
+  text-shadow: none !important;
 }
 
 .site-header.scrolled .brand-sub,
 #main-header.scrolled .brand-sub {
-  color: #fbbf24 !important;
-  text-shadow: 0 0 10px rgba(245, 158, 11, 0.6) !important;
+  color: #b45309 !important;
+  text-shadow: none !important;
 }
 
 .site-header.scrolled .nav-logo,
 #main-header.scrolled .nav-logo {
-  filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.6)) !important;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15)) !important;
 }
 
 .site-header.scrolled .nav-link,
 #main-header.scrolled .nav-link {
-  color: #f1f5f9 !important;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9) !important;
+  color: #0f172a !important;
+  text-shadow: none !important;
+  font-weight: 700 !important;
   opacity: 1 !important;
 }
 
 .site-header.scrolled .nav-link:hover,
 #main-header.scrolled .nav-link:hover {
-  color: #fbbf24 !important;
-  text-shadow: 0 0 12px rgba(245, 158, 11, 0.8) !important;
+  color: #d97706 !important;
+  text-shadow: none !important;
   opacity: 1 !important;
 }
 
 .site-header.scrolled .nav-link.active,
 #main-header.scrolled .nav-link.active {
-  color: #fbbf24 !important;
-  text-shadow: 0 0 14px rgba(245, 158, 11, 0.9) !important;
+  color: #b45309 !important;
+  text-shadow: none !important;
   opacity: 1 !important;
+  border-bottom: 2px solid #b45309 !important;
 }
 
 .site-header.scrolled .mobile-toggle span,
 #main-header.scrolled .mobile-toggle span {
-  background: #ffffff !important;
+  background: #000000 !important;
+}
+
+.site-header.scrolled .mobile-menu-drawer,
+#main-header.scrolled #mobile-menu {
+  background: rgba(255, 255, 255, 0.98) !important;
+  border-bottom: 2px solid #b45309 !important;
+}
+
+.site-header.scrolled .mobile-link,
+#main-header.scrolled .mobile-link {
+  color: #0f172a !important;
+}
+
+.site-header.scrolled .mobile-link:hover,
+#main-header.scrolled .mobile-link:hover {
+  color: #d97706 !important;
 }
 
 
@@ -5817,7 +5838,11 @@ body.loading-locked {
     bottom: auto;
     transform: translateX(-50%);
     width: clamp(185px, 14vw, 220px);
-    animation: card-float-2 6s ease-in-out infinite alternate;
+    animation: card-nights-float 6s ease-in-out infinite alternate;
+  }
+
+  .card-nights:hover {
+    transform: translateX(-50%) translateY(-10px) scale(1.05) !important;
   }
 
   /* Card 3: Top-Right (Festha Paus) */
@@ -5860,7 +5885,7 @@ body.loading-locked {
   }
 
   .card-nights.perf-spotlight {
-    transform: translateX(-50%) translateY(-8px) scale(1.06) !important;
+    transform: translateX(-50%) translateY(-10px) scale(1.06) !important;
   }
 }
 
@@ -5895,6 +5920,20 @@ body.loading-locked {
 @keyframes card-float-2 {
   0% { transform: translateY(0px); }
   100% { transform: translateY(5px); }
+}
+
+@keyframes card-nights-float {
+  0% { transform: translateX(-50%) translateY(0px); }
+  100% { transform: translateX(-50%) translateY(-6px); }
+}
+
+/* Entrance Animations when Section 2 enters view */
+.performances-section.perf-in-view .perf-headline-title {
+  animation: headlineEntrySlam 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.performances-section.perf-in-view .perf-tagline-kicker {
+  animation: kickerFadeSlide 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* Bottom Progress Dock (Removed as requested) */
