@@ -38,8 +38,24 @@
 }
 
 html {
-  scroll-behavior: smooth;
   color-scheme: dark;
+}
+
+/* Lenis Momentum Scroll Native Acceleration */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
 
 body {
@@ -57,6 +73,8 @@ body.loading-locked {
   overflow: hidden !important;
   height: 100vh !important;
   max-height: 100vh !important;
+  touch-action: none;
+  overscroll-behavior: none;
 }
 
 /* ========================================================
@@ -653,12 +671,14 @@ body.loading-locked {
 
 @keyframes hero-stage-push {
   0% {
-    transform: scale(1.08);
-    filter: brightness(1.25) contrast(1.1) saturate(1.1) blur(6px);
+    transform: scale(1.05);
+    filter: brightness(1.15) contrast(1.05);
+    opacity: 0.85;
   }
   100% {
     transform: scale(1);
-    filter: brightness(0.98) contrast(1.1) saturate(1.05) blur(0px);
+    filter: brightness(0.98) contrast(1.1) saturate(1.05);
+    opacity: 1;
   }
 }
 
@@ -6480,18 +6500,20 @@ html.lenis body {
   pointer-events: none;
 }
 
-/* 2. Top Scroll Progress Bar */
+/* 2. Top Scroll Progress Bar (Hardware GPU Accelerated) */
 .scroll-progress-bar {
   position: fixed;
   top: 0;
   left: 0;
-  width: 0%;
-  height: 3.5px;
+  width: 100%;
+  height: 3px;
   background: linear-gradient(90deg, #f59e0b 0%, #eb1c2c 50%, #ffd700 100%);
   box-shadow: 0 0 14px rgba(245, 158, 11, 0.8), 0 0 4px #eb1c2c;
   z-index: 999999;
   pointer-events: none;
-  transition: width 0.08s ease-out;
+  transform: scaleX(0);
+  transform-origin: left center;
+  will-change: transform;
 }
 
 

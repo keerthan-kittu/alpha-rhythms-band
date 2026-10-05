@@ -46,13 +46,8 @@ function initAlphaBandApp() {
     currentGalleryIndex: 0
   };
 
-  // Pin scroll position strictly to top while loading is active
-  function lockScrollWhileLoading() {
-    if (state.isLoading) {
-      window.scrollTo(0, 0);
-    }
-  }
-  window.addEventListener('scroll', lockScrollWhileLoading, { passive: true });
+  // Ensure scroll is at top on initialization
+  window.scrollTo(0, 0);
 
   // Music Tracks Data
   const tracks = [
@@ -348,12 +343,18 @@ Alpha Rhythms on stage at Tiara!
 
     function tickLoader(currentTime) {
       if (!state.isLoading) return;
-      const elapsed = currentTime - startTime;
-      const rawProgress = (elapsed / targetDuration) * 100;
-      const progress = Math.min(100, rawProgress + loaderBoost);
+      const elapsed = Math.max(0, currentTime - startTime);
+      const linearT = Math.min(1, elapsed / targetDuration);
       
-      state.loadProgress = Math.floor(progress);
-      if (loadPercentEl) loadPercentEl.textContent = state.loadProgress;
+      // High-precision smooth cubic easing: accelerates naturally, glides, settles softly at 100%
+      const easedT = 1 - Math.pow(1 - linearT, 3);
+      const progress = Math.min(100, (easedT * 100) + loaderBoost);
+      
+      const currentInt = Math.min(100, Math.floor(progress));
+      if (state.loadProgress !== currentInt) {
+        state.loadProgress = currentInt;
+        if (loadPercentEl) loadPercentEl.textContent = currentInt;
+      }
 
       // Sub-pixel smooth updates without integer stair-stepping
       const pClamped = Math.max(0, Math.min(100, progress));
@@ -395,7 +396,7 @@ Alpha Rhythms on stage at Tiara!
         // Distinct brief hold at 100% so user sees full load
         setTimeout(() => {
           triggerStageOpening();
-        }, 200);
+        }, 180);
       }
     }
 
@@ -406,14 +407,13 @@ Alpha Rhythms on stage at Tiara!
     state.isLoading = false;
     if (loaderRaf) cancelAnimationFrame(loaderRaf);
     if (loaderInterval) clearInterval(loaderInterval);
-    window.removeEventListener('scroll', lockScrollWhileLoading);
+    
+    // Unlock document scrolling
     document.body.classList.remove('loading-locked');
     document.documentElement.classList.remove('loading-locked');
 
     // Guarantee beginning strictly at the Hero section
     window.scrollTo(0, 0);
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
 
     // Refresh and sync Lenis momentum scroll engine with freshly unlocked document dimensions
     if (window.__alphaLenis) {
@@ -423,20 +423,21 @@ Alpha Rhythms on stage at Tiara!
     setTimeout(() => {
       if (window.__alphaLenis) window.__alphaLenis.resize();
     }, 400);
-    setTimeout(() => {
-      if (window.__alphaLenis) window.__alphaLenis.resize();
-    }, 900);
 
     // 1. Part the arena stage shutters with golden laser beam
     if (loaderEl) {
       loaderEl.classList.remove('portal-active');
       loaderEl.classList.add('shutters-opening');
+      
+      // Wait for CSS 0.85s shutter wipe to complete before concealing
       setTimeout(() => {
         loaderEl.style.display = 'none';
         loaderEl.style.opacity = '0';
         loaderEl.style.visibility = 'hidden';
         loaderEl.style.pointerEvents = 'none';
-      }, 700);
+        loaderEl.classList.add('fade-out');
+        if (window.__alphaLenis) window.__alphaLenis.resize();
+      }, 880);
     }
 
     // 2. Trigger the Awwwards-style hero section entrance
@@ -470,16 +471,6 @@ Alpha Rhythms on stage at Tiara!
       void heroDock.offsetWidth;
       heroDock.classList.add('hero-entrance');
     }
-
-    // 3. Once the shutters have completely cleared (950ms):
-    setTimeout(() => {
-      if (loaderEl) {
-        loaderEl.classList.add('fade-out');
-        loaderEl.style.display = 'none';
-        loaderEl.style.visibility = 'hidden';
-      }
-      window.scrollTo(0, 0);
-    }, 950);
 
     showToast("Welcome to Alpha Rhythms!", "fa-bolt");
   }
@@ -1404,8 +1395,6 @@ Alpha Rhythms on stage at Tiara!
     }
   }
 
-  window.addEventListener('scroll', () => syncHeaderScrollState(), { passive: true });
-
   // Mobile menu toggle
   if (mobileToggleBtn && mobileMenu) {
     mobileToggleBtn.addEventListener('click', () => {
@@ -1551,47 +1540,55 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
       });
     }
 
-    // Soft Spotlight tracking mouse
-    if (spotlightBeam) {
-      heroSection.addEventListener('mousemove', (e) => {
-        const rect = heroSection.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width) * 100;
-        const y = ((e.clientY - rect.top) / rect.height) * 100;
-        spotlightBeam.style.background = `radial-gradient(circle 380px at ${x.toFixed(1)}% ${y.toFixed(1)}%, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.04) 50%, transparent 80%)`;
-      });
-    }
-
-    // 8. 3D Mouse & Touch Parallax on Band Photo
+    // 8. 3D Mouse & Touch Parallax + Spotlight on Band Photo
     let targetX = 0;
     let targetY = 0;
     let currentX = 0;
     let currentY = 0;
     let isParallaxActive = false;
 
+    let heroRect = null;
+    function updateHeroRect() {
+      if (heroSection) heroRect = heroSection.getBoundingClientRect();
+    }
+    window.addEventListener('resize', updateHeroRect, { passive: true });
+
+    heroSection.addEventListener('mouseenter', () => {
+      updateHeroRect();
+    });
+
     heroSection.addEventListener('mousemove', (e) => {
-      const rect = heroSection.getBoundingClientRect();
-      targetX = (e.clientX - rect.left) / rect.width - 0.5;
-      targetY = (e.clientY - rect.top) / rect.height - 0.5;
+      if (!heroRect || heroRect.width === 0) updateHeroRect();
+      const xPct = (e.clientX - heroRect.left) / heroRect.width;
+      const yPct = (e.clientY - heroRect.top) / heroRect.height;
+
+      if (spotlightBeam) {
+        spotlightBeam.style.background = `radial-gradient(circle 380px at ${(xPct * 100).toFixed(1)}% ${(yPct * 100).toFixed(1)}%, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.04) 50%, transparent 80%)`;
+      }
+
+      targetX = xPct - 0.5;
+      targetY = yPct - 0.5;
       if (!isParallaxActive) {
         isParallaxActive = true;
         animateParallax();
       }
-    });
+    }, { passive: true });
 
     heroSection.addEventListener('touchmove', (e) => {
       if (e.touches && e.touches[0]) {
         const touch = e.touches[0];
-        const rect = heroSection.getBoundingClientRect();
-        targetX = (touch.clientX - rect.left) / rect.width - 0.5;
-        targetY = (touch.clientY - rect.top) / rect.height - 0.5;
+        if (!heroRect || heroRect.width === 0) updateHeroRect();
+        const xPct = (touch.clientX - heroRect.left) / heroRect.width;
+        const yPct = (touch.clientY - heroRect.top) / heroRect.height;
+
+        targetX = xPct - 0.5;
+        targetY = yPct - 0.5;
         if (!isParallaxActive) {
           isParallaxActive = true;
           animateParallax();
         }
         if (spotlightBeam) {
-          const x = ((touch.clientX - rect.left) / rect.width) * 100;
-          const y = ((touch.clientY - rect.top) / rect.height) * 100;
-          spotlightBeam.style.background = `radial-gradient(circle 380px at ${x.toFixed(1)}% ${y.toFixed(1)}%, rgba(255, 230, 160, 0.45) 0%, rgba(245, 158, 11, 0.14) 50%, transparent 80%)`;
+          spotlightBeam.style.background = `radial-gradient(circle 380px at ${(xPct * 100).toFixed(1)}% ${(yPct * 100).toFixed(1)}%, rgba(255, 230, 160, 0.45) 0%, rgba(245, 158, 11, 0.14) 50%, transparent 80%)`;
         }
       }
     }, { passive: true });
@@ -2171,14 +2168,28 @@ Please let me know availability and pricing for this date!`;
 
     // 1. Lenis Smooth Scroll Initialization with Zero-Lag Momentum
     let lenis = null;
+    let cachedMaxScroll = 1;
+    let cachedHeroBottom = 0;
+
+    function cacheLayoutMetrics() {
+      cachedMaxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      if (heroSection) {
+        cachedHeroBottom = heroSection.offsetTop + heroSection.offsetHeight;
+      }
+    }
+
     if (typeof Lenis !== 'undefined') {
       try {
         lenis = new Lenis({
-          lerp: 0.08, // Silky smooth inertia glide
-          wheelMultiplier: 1.0,
-          touchMultiplier: 1.5,
+          lerp: 0.082, // Silky smooth inertia glide with immediate response
+          duration: 1.2,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          orientation: 'vertical',
+          gestureOrientation: 'vertical',
           smoothWheel: true,
-          smoothTouch: false,
+          wheelMultiplier: 0.95,
+          touchMultiplier: 1.4,
+          smoothTouch: false, // Keep native 120Hz touch physics on mobile/iOS
           autoResize: true
         });
 
@@ -2193,6 +2204,8 @@ Please let me know availability and pricing for this date!`;
         lenis.on('scroll', (e) => {
           updateScrollMetrics(e.scroll);
         });
+
+        lenis.on('resize', cacheLayoutMetrics);
       } catch (err) {
         console.warn('Lenis initialization skipped:', err);
       }
@@ -2205,15 +2218,10 @@ Please let me know availability and pricing for this date!`;
       }
     }, { passive: true });
 
-    let cachedHeroBottom = 0;
-    function cacheLayoutMetrics() {
-      if (heroSection) {
-        cachedHeroBottom = heroSection.offsetTop + heroSection.offsetHeight;
-      }
-    }
     cacheLayoutMetrics();
     window.addEventListener('resize', cacheLayoutMetrics, { passive: true });
 
+    let lastActiveId = '';
     function updateActiveNavLink(currentScroll) {
       const y = (typeof currentScroll === 'number' ? currentScroll : (window.scrollY || window.pageYOffset || 0)) + 140;
       const sectionIds = ['contact', 'band', 'tour', 'performances', 'hero'];
@@ -2230,37 +2238,36 @@ Please let me know availability and pricing for this date!`;
         }
       }
 
-      const desktopNavLinks = document.querySelectorAll('.desktop-nav .nav-link');
-      desktopNavLinks.forEach(link => {
-        const href = link.getAttribute('href');
-        if (href === `#${activeId}`) {
-          link.classList.add('active');
-        } else {
-          link.classList.remove('active');
-        }
-      });
+      if (activeId !== lastActiveId) {
+        lastActiveId = activeId;
+        const desktopNavLinks = document.querySelectorAll('.desktop-nav .nav-link');
+        desktopNavLinks.forEach(link => {
+          const href = link.getAttribute('href');
+          link.classList.toggle('active', href === `#${activeId}`);
+        });
+      }
     }
 
+    let isHeaderScrolled = false;
     function updateScrollMetrics(scrollY) {
       const currentScroll = typeof scrollY === 'number' ? scrollY : (window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0);
 
       // Instant toggle of header contrast mode: black at top hero, bright white on all other sections
       if (mainHeader) {
-        if (currentScroll > 30) {
-          mainHeader.classList.add('scrolled');
-        } else {
-          mainHeader.classList.remove('scrolled');
+        const shouldBeScrolled = currentScroll > 35;
+        if (shouldBeScrolled !== isHeaderScrolled) {
+          isHeaderScrolled = shouldBeScrolled;
+          mainHeader.classList.toggle('scrolled', shouldBeScrolled);
         }
       }
 
       // Synchronize active link to current section
       updateActiveNavLink(currentScroll);
 
-      // 1. Progress Bar
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      if (docHeight > 0 && progressBar) {
-        const pct = Math.min(100, Math.max(0, (currentScroll / docHeight) * 100));
-        progressBar.style.width = pct + '%';
+      // 1. Progress Bar (Hardware GPU Accelerated with scaleX)
+      if (progressBar && cachedMaxScroll > 0) {
+        const pct = Math.min(1, Math.max(0, currentScroll / cachedMaxScroll));
+        progressBar.style.transform = `scaleX(${pct.toFixed(4)})`;
       }
     }
 
