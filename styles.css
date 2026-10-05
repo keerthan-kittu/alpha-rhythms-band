@@ -4537,55 +4537,101 @@ body.loading-locked {
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.82);
-  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.84);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   z-index: 99990;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
-  transition: opacity 0.3s ease;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.32s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .modal-backdrop.hidden {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+body.modal-open {
+  overflow: hidden !important;
+  touch-action: none;
 }
 
 .modal-card {
-  background: var(--bg-surface-elevated);
-  border: 1px solid var(--border-subtle);
-  border-radius: 16px;
+  background: var(--bg-surface-elevated, #121217);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.12));
+  border-radius: 20px;
   width: 100%;
   max-width: 520px;
   padding: 32px;
   position: relative;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
-  animation: modal-pop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 0, 0, 0.5);
   max-height: 90vh;
+  max-height: 90dvh;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  transform: scale(1) translateY(0);
+  opacity: 1;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.3s ease;
+}
+
+.modal-backdrop.hidden .modal-card {
+  transform: scale(0.92) translateY(20px);
+  opacity: 0;
 }
 
 @keyframes modal-pop {
-  from { transform: scale(0.92); opacity: 0; }
-  to   { transform: scale(1); opacity: 1; }
+  from { transform: scale(0.92) translateY(16px); opacity: 0; }
+  to   { transform: scale(1) translateY(0); opacity: 1; }
 }
 
 .modal-close-btn {
   position: absolute;
   top: 18px;
   right: 18px;
-  background: transparent;
-  border: none;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   color: var(--text-muted);
-  font-size: 1.8rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
   line-height: 1;
   cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 10;
 }
 
 .modal-close-btn:hover {
+  background: rgba(239, 68, 68, 0.25);
+  border-color: #ef4444;
   color: #fff;
+  transform: rotate(90deg) scale(1.08);
+}
+
+.modal-close-btn:active {
+  transform: rotate(90deg) scale(0.94);
+}
+
+@media (max-width: 600px) {
+  .modal-backdrop {
+    padding: 12px;
+  }
+  .modal-card {
+    padding: 24px 18px;
+    border-radius: 16px;
+    max-height: 88vh;
+    max-height: 88dvh;
+  }
 }
 
 .modal-header {
@@ -5882,10 +5928,12 @@ body.loading-locked {
     box-shadow: 0 20px 48px rgba(0, 0, 0, 0.95), 0 0 35px rgba(239, 68, 68, 0.75), 0 0 15px rgba(245, 158, 11, 0.6) !important;
     z-index: 35 !important;
     opacity: 1 !important;
+    animation-play-state: paused !important;
   }
 
   .card-nights.perf-spotlight {
     transform: translateX(-50%) translateY(-10px) scale(1.06) !important;
+    animation-play-state: paused !important;
   }
 }
 
@@ -6428,70 +6476,136 @@ html.lenis body {
 
 
 
-/* 4. Section Entry & Reveal System (Always Visible by Default) */
+/* 4. Section Entry & Reveal System */
 .reveal-section {
-  opacity: 1 !important;
-  transform: none !important;
-  will-change: auto;
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
 }
 
 .reveal-section.section-visible {
   opacity: 1 !important;
-  transform: none !important;
+  transform: translateY(0) !important;
 }
 
 /* Staggered Section Header Reveal */
-.reveal-section .section-header .eyebrow,
+.reveal-section .section-header .eyebrow {
+  opacity: 0;
+  transform: translateY(18px) scale(0.98);
+  transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.08s,
+              transform 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.08s;
+}
+
 .reveal-section.section-visible .section-header .eyebrow {
   opacity: 1 !important;
-  transform: none !important;
+  transform: translateY(0) scale(1) !important;
 }
 
-.reveal-section .section-header .section-heading,
+.reveal-section .section-header .section-heading {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.16s,
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.16s;
+}
+
 .reveal-section.section-visible .section-header .section-heading {
   opacity: 1 !important;
-  transform: none !important;
+  transform: translateY(0) !important;
 }
 
-.reveal-section .section-header .section-sub,
+.reveal-section .section-header .section-sub {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.24s,
+              transform 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.24s;
+}
+
 .reveal-section.section-visible .section-header .section-sub {
   opacity: 1 !important;
-  transform: none !important;
+  transform: translateY(0) !important;
 }
 
-/* 5. Section 3 (Live Calendar) */
-.reveal-section .tour-nav-tabs,
+/* 5. Section 3 (Live Calendar) 3D Entry Animation */
+.reveal-section .tour-nav-tabs {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.15s,
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
+}
+
 .reveal-section.section-visible .tour-nav-tabs {
   opacity: 1 !important;
-  transform: none !important;
+  transform: translateY(0) !important;
 }
 
-.reveal-section .live-calendar-wrapper,
+.reveal-section .live-calendar-wrapper {
+  opacity: 0;
+  transform: perspective(1200px) rotateX(3deg) translateY(35px) scale(0.98);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.2s,
+              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+}
+
 .reveal-section.section-visible .live-calendar-wrapper {
   opacity: 1 !important;
-  transform: none !important;
+  transform: perspective(1200px) rotateX(0deg) translateY(0) scale(1) !important;
 }
 
 /* Staggered ripple for calendar cells on initial entry */
-.reveal-section .cal-grid .cal-day-cell {
-  opacity: 1 !important;
-  transform: none !important;
+.reveal-section.section-visible .cal-grid .cal-day-cell {
+  animation: cellWavePop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) backwards;
 }
 
-/* 6. Section 4 (The Band) Card Grid */
-.reveal-section .band-grid .band-card,
-.reveal-section.section-visible .band-grid .band-card {
-  opacity: 1 !important;
-  transform: none !important;
+@keyframes cellWavePop {
+  0% { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
 }
 
-/* 7. Section 5 (Contact) */
-.reveal-section .contact-info-col,
-.reveal-section .contact-form-col,
+/* 6. Section 4 (The Band) Stage Accordion & Mobile Reveal */
+.reveal-section .lineup-stage-accordion {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s,
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+}
+
+.reveal-section.section-visible .lineup-stage-accordion {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+.reveal-section .lineup-mobile-wrap {
+  opacity: 0;
+  transform: translateY(25px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s,
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+}
+
+.reveal-section.section-visible .lineup-mobile-wrap {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* 7. Section 5 (Contact) Split Stagger Reveal */
+.reveal-section .contact-info-col {
+  opacity: 0;
+  transform: translateX(-35px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.2s,
+              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+}
+
+.reveal-section .contact-form-col {
+  opacity: 0;
+  transform: translateX(35px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.28s,
+              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.28s;
+}
+
 .reveal-section.section-visible .contact-info-col,
 .reveal-section.section-visible .contact-form-col {
   opacity: 1 !important;
-  transform: none !important;
+  transform: translateX(0) !important;
 }
 
 
