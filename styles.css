@@ -6478,16 +6478,8 @@ html.lenis body {
 
 /* 4. Section Entry & Reveal System */
 .reveal-section {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform, opacity;
-}
-
-.reveal-section.section-visible {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
+  opacity: 1;
+  position: relative;
 }
 
 /* Staggered Section Header Reveal */

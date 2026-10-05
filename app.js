@@ -2336,6 +2336,9 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
       // Synchronize active link to current section
       updateActiveNavLink();
 
+      // Trigger section entry reveals dynamically as sections enter viewport
+      syncSectionVisibility();
+
       // 1. Progress Bar
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       if (docHeight > 0 && progressBar) {
@@ -2351,14 +2354,14 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
       revealSections.forEach(sec => {
         if (!sec.classList.contains('section-visible')) {
           const rect = sec.getBoundingClientRect();
-          if (rect.top < vh + 120 && rect.bottom > -100) {
+          if (rect.top <= vh + 150 && rect.bottom >= -100) {
             sec.classList.add('section-visible');
           }
         }
       });
       if (perfSection) {
         const rect = perfSection.getBoundingClientRect();
-        if (rect.top < vh && rect.bottom > 0) {
+        if (rect.top <= vh + 50 && rect.bottom >= 0) {
           perfSection.classList.add('perf-in-view');
         }
       }
@@ -2367,14 +2370,14 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
     if ('IntersectionObserver' in window) {
       const sectionObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
-          if (entry.isIntersecting) {
+          if (entry.isIntersecting || entry.boundingClientRect.top < window.innerHeight + 100) {
             entry.target.classList.add('section-visible');
             observer.unobserve(entry.target);
           }
         });
       }, {
-        threshold: 0.05,
-        rootMargin: '0px 0px 50px 0px'
+        threshold: 0,
+        rootMargin: '150px 0px 150px 0px'
       });
 
       revealSections.forEach(sec => sectionObserver.observe(sec));
@@ -2389,7 +2392,7 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
               perfSection.classList.remove('perf-in-view');
             }
           });
-        }, { threshold: 0.08 });
+        }, { threshold: 0.05 });
         perfObserver.observe(perfSection);
       }
     } else {
