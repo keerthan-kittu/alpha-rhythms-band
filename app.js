@@ -247,7 +247,6 @@ Alpha Rhythms on stage at Tiara!
   function playCosmicChime(freq = 523.25) {}
 
   // Micro tactile tick (Disabled per request)
-  function playClickTick() {}
 
   function createClickRipple(x, y) {
     const wave = document.createElement('div');
@@ -270,7 +269,7 @@ Alpha Rhythms on stage at Tiara!
 
   function superchargeLoader(x, y) {
     if (!state.isLoading || state.loadProgress >= 100) return;
-    initAudioContext();
+    
     
     // Play cosmic chime
     playCosmicChime(440 + Math.random() * 260);
@@ -621,15 +620,8 @@ Alpha Rhythms on stage at Tiara!
 
     // Equalizer bars interaction (Desktop mouse + Mobile touch)
     const eqBars = document.querySelectorAll('.hud-tagline-bars span');
-    const pentatonicNotes = [293.66, 349.23, 392.00, 440.00, 523.25]; // D4, F4, G4, A4, C5
-    eqBars.forEach((bar, idx) => {
-      bar.addEventListener('mouseenter', () => {
-        initAudioContext();
-        playGuitarTone(pentatonicNotes[idx % pentatonicNotes.length], 0.22, 0);
-      });
+    eqBars.forEach((bar) => {
       const triggerBar = (clientX, clientY) => {
-        initAudioContext();
-        playGuitarTone(pentatonicNotes[idx % pentatonicNotes.length], 0.35, 0);
         superchargeLoader(clientX, clientY);
       };
       bar.addEventListener('click', (e) => {
@@ -709,11 +701,13 @@ Alpha Rhythms on stage at Tiara!
     });
   }
 
-  logoFileInput.addEventListener('change', (e) => {
-    if (e.target.files && e.target.files[0]) {
-      handleLogoFile(e.target.files[0]);
-    }
-  });
+  if (logoFileInput) {
+    logoFileInput.addEventListener('change', (e) => {
+      if (e.target.files && e.target.files[0]) {
+        handleLogoFile(e.target.files[0]);
+      }
+    });
+  }
 
   function handleLogoFile(file) {
     if (!file.type.startsWith('image/')) {
@@ -725,7 +719,7 @@ Alpha Rhythms on stage at Tiara!
     reader.onload = (e) => {
       const dataUrl = e.target.result;
       state.activeLogoSrc = dataUrl;
-      activeLogoPreview.src = dataUrl;
+      if (activeLogoPreview) activeLogoPreview.src = dataUrl;
       showToast("New band logo loaded into preview!", "fa-check");
     };
     reader.readAsDataURL(file);
@@ -749,50 +743,52 @@ Alpha Rhythms on stage at Tiara!
     });
   });
 
-  applyLogoBtn.addEventListener('click', () => {
-    // Update logo mask & display
-    if (yellowOutlineImg) yellowOutlineImg.src = state.activeLogoSrc;
-    if (whiteInnerImg) whiteInnerImg.src = state.activeLogoSrc;
-    const baseLogo = document.getElementById('loader-base-logo');
-    if (baseLogo) baseLogo.src = state.activeLogoSrc;
-    navBrandLogo.src = state.activeLogoSrc;
-    const heroInteractiveLogo = document.getElementById('hero-interactive-logo');
-    if (heroInteractiveLogo) heroInteractiveLogo.src = state.activeLogoSrc;
+  if (applyLogoBtn) {
+    applyLogoBtn.addEventListener('click', () => {
+      // Update logo mask & display
+      if (yellowOutlineImg) yellowOutlineImg.src = state.activeLogoSrc;
+      if (whiteInnerImg) whiteInnerImg.src = state.activeLogoSrc;
+      const baseLogo = document.getElementById('loader-base-logo');
+      if (baseLogo) baseLogo.src = state.activeLogoSrc;
+      if (navBrandLogo) navBrandLogo.src = state.activeLogoSrc;
+      const heroInteractiveLogo = document.getElementById('hero-interactive-logo');
+      if (heroInteractiveLogo) heroInteractiveLogo.src = state.activeLogoSrc;
 
-    // Also update all mockup logos across the site
-    document.querySelectorAll('.mockup-logo, .footer-logo, .epass-logo').forEach(img => {
-      img.src = state.activeLogoSrc;
+      // Also update all mockup logos across the site
+      document.querySelectorAll('.mockup-logo, .footer-logo, .epass-logo').forEach(img => {
+        img.src = state.activeLogoSrc;
+      });
+
+      closeLogoModal();
+      showToast("Band logo updated! Replaying intro...", "fa-wand-magic-sparkles");
+      replayLoader();
     });
+  }
 
-    closeLogoModal();
-    showToast("Band logo updated! Replaying intro...", "fa-wand-magic-sparkles");
-    replayLoader();
-  });
-
-  resetDefaultLogoBtn.addEventListener('click', () => {
-    state.activeLogoSrc = 'assets/logo_shield_black_transparent.png';
-    activeLogoPreview.src = state.activeLogoSrc;
-    if (yellowOutlineImg) yellowOutlineImg.src = 'assets/logo_outline_yellow.png';
-    if (whiteInnerImg) whiteInnerImg.src = 'assets/logo_inner_white.png';
-    const baseLogo = document.getElementById('loader-base-logo');
-    if (baseLogo) baseLogo.src = 'assets/logo_shield_black_transparent.png';
-    if (navBrandLogo) navBrandLogo.src = 'assets/logo_shield_black_transparent.png';
-    const heroInteractiveLogo = document.getElementById('hero-interactive-logo');
-    if (heroInteractiveLogo) heroInteractiveLogo.src = 'assets/logo_shield_black_transparent.png';
-    document.querySelectorAll('.mockup-logo, .footer-logo, .epass-logo').forEach(img => {
-      img.src = 'assets/logo_shield_black_transparent.png';
+  if (resetDefaultLogoBtn) {
+    resetDefaultLogoBtn.addEventListener('click', () => {
+      state.activeLogoSrc = 'assets/logo_shield_black_transparent.png';
+      if (activeLogoPreview) activeLogoPreview.src = state.activeLogoSrc;
+      if (yellowOutlineImg) yellowOutlineImg.src = 'assets/logo_outline_yellow.png';
+      if (whiteInnerImg) whiteInnerImg.src = 'assets/logo_inner_white.png';
+      const baseLogo = document.getElementById('loader-base-logo');
+      if (baseLogo) baseLogo.src = 'assets/logo_shield_black_transparent.png';
+      if (navBrandLogo) navBrandLogo.src = 'assets/logo_shield_black_transparent.png';
+      const heroInteractiveLogo = document.getElementById('hero-interactive-logo');
+      if (heroInteractiveLogo) heroInteractiveLogo.src = 'assets/logo_shield_black_transparent.png';
+      document.querySelectorAll('.mockup-logo, .footer-logo, .epass-logo').forEach(img => {
+        img.src = 'assets/logo_shield_black_transparent.png';
+      });
+      showToast("Reset to Alpha Rhythms official logo", "fa-rotate-left");
     });
-    showToast("Reset to Alpha Rhythms official logo", "fa-rotate-left");
-  });
+  }
 
   // ==========================================================
   // 4. AUDIO SYSTEM (SILENT / REMOVED PER USER INSTRUCTION)
   // ==========================================================
-  function initAudioContext() {}
   function playGuitarTone() {}
   function playDrumSound() {}
   function playAlphaRhythmsRiff() {}
-  function playClickTick() {}
   function startAudioPlayback() {}
   function pauseAudioPlayback() {}
   function toggleAudio() {}
@@ -919,8 +915,8 @@ Alpha Rhythms on stage at Tiara!
     // Click: toggle active or switch to this pillar
     pillar.addEventListener('click', (e) => {
       e.stopPropagation();
-      initAudioContext();
-      playClickTick();
+      
+      
 
       if (clickedPillar === pillar && pillar.classList.contains('active')) {
         // Toggle off: collapse back so no section is expanded
@@ -1055,8 +1051,8 @@ Alpha Rhythms on stage at Tiara!
     ribbonBtns.forEach((btn, idx) => {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
-        initAudioContext();
-        playClickTick();
+        
+        
         scrollMobileDeckToIndex(idx, true);
       });
     });
@@ -1065,8 +1061,8 @@ Alpha Rhythms on stage at Tiara!
     mobileDots.forEach((dot, idx) => {
       dot.addEventListener('click', (e) => {
         e.preventDefault();
-        initAudioContext();
-        playClickTick();
+        
+        
         scrollMobileDeckToIndex(idx, true);
       });
     });
@@ -1075,8 +1071,8 @@ Alpha Rhythms on stage at Tiara!
     if (mobilePrev) {
       mobilePrev.addEventListener('click', (e) => {
         e.preventDefault();
-        initAudioContext();
-        playClickTick();
+        
+        
         const prevIdx = Math.max(0, currentMobileIndex - 1);
         scrollMobileDeckToIndex(prevIdx, true);
       });
@@ -1085,8 +1081,8 @@ Alpha Rhythms on stage at Tiara!
     if (mobileNext) {
       mobileNext.addEventListener('click', (e) => {
         e.preventDefault();
-        initAudioContext();
-        playClickTick();
+        
+        
         const nextIdx = Math.min(mobileCards.length - 1, currentMobileIndex + 1);
         scrollMobileDeckToIndex(nextIdx, true);
       });
@@ -1095,13 +1091,10 @@ Alpha Rhythms on stage at Tiara!
     // Card tap interaction
     mobileCards.forEach((card, idx) => {
       card.addEventListener('click', () => {
-        initAudioContext();
+        
         if (idx !== currentMobileIndex) {
-          playClickTick();
           scrollMobileDeckToIndex(idx, true);
         } else {
-          // Play a light signature note when tapping the active card
-          playGuitarTone(293.66 + idx * 32, 0.22, 0);
           card.style.transform = 'scale(0.97)';
           setTimeout(() => { card.style.transform = ''; }, 200);
         }
@@ -1130,8 +1123,8 @@ Alpha Rhythms on stage at Tiara!
   const passQty = document.getElementById('pass-qty');
 
   function openTourModal(idx) {
-    initAudioContext();
-    playClickTick();
+    
+    
     state.selectedTourIndex = idx;
     const stop = tourStops[idx];
 
@@ -1175,51 +1168,65 @@ Alpha Rhythms on stage at Tiara!
     });
   });
 
-  qtyMinus.addEventListener('click', () => {
-    if (state.ticketQty > 1) {
-      state.ticketQty--;
-      qtyDisplay.textContent = state.ticketQty;
-      updateTicketTotal();
-    }
-  });
+  if (qtyMinus) {
+    qtyMinus.addEventListener('click', () => {
+      if (state.ticketQty > 1) {
+        state.ticketQty--;
+        if (qtyDisplay) qtyDisplay.textContent = state.ticketQty;
+        updateTicketTotal();
+      }
+    });
+  }
 
-  qtyPlus.addEventListener('click', () => {
-    if (state.ticketQty < 10) {
-      state.ticketQty++;
-      qtyDisplay.textContent = state.ticketQty;
-      updateTicketTotal();
-    }
-  });
+  if (qtyPlus) {
+    qtyPlus.addEventListener('click', () => {
+      if (state.ticketQty < 10) {
+        state.ticketQty++;
+        if (qtyDisplay) qtyDisplay.textContent = state.ticketQty;
+        updateTicketTotal();
+      }
+    });
+  }
 
   function updateTicketTotal() {
     const total = state.ticketTierPrice * state.ticketQty;
-    ticketTotalPrice.textContent = `$${total.toFixed(2)}`;
+    if (ticketTotalPrice) ticketTotalPrice.textContent = `$${total.toFixed(2)}`;
   }
 
-  confirmTicketBtn.addEventListener('click', () => {
-    const stop = tourStops[state.selectedTourIndex];
-    const activeTierName = document.querySelector('.ticket-tier-option.active .tier-info strong').textContent;
+  if (confirmTicketBtn) {
+    confirmTicketBtn.addEventListener('click', () => {
+      const stop = tourStops[state.selectedTourIndex];
+      const activeTierEl = document.querySelector('.ticket-tier-option.active .tier-info strong');
+      const activeTierName = activeTierEl ? activeTierEl.textContent : 'General Admission';
 
-    passEventName.textContent = stop.venue;
-    passEventLoc.textContent = `${stop.city} • ${stop.date}`;
-    passTier.textContent = activeTierName;
-    passQty.textContent = `${state.ticketQty} Pass${state.ticketQty > 1 ? 'es' : ''}`;
+      if (passEventName && stop) passEventName.textContent = stop.venue;
+      if (passEventLoc && stop) passEventLoc.textContent = `${stop.city} • ${stop.date}`;
+      if (passTier) passTier.textContent = activeTierName;
+      if (passQty) passQty.textContent = `${state.ticketQty} Pass${state.ticketQty > 1 ? 'es' : ''}`;
 
-    document.querySelector('.ticket-selection-body').classList.add('hidden');
-    epassCard.classList.remove('hidden');
-    showToast("Tickets Confirmed! E-Pass generated.", "fa-ticket");
-  });
+      const selBody = document.querySelector('.ticket-selection-body');
+      if (selBody) selBody.classList.add('hidden');
+      if (epassCard) epassCard.classList.remove('hidden');
+      showToast("Tickets Confirmed! E-Pass generated.", "fa-ticket");
+    });
+  }
 
-  epassDoneBtn.addEventListener('click', () => {
-    ticketModal.classList.add('hidden');
-  });
+  if (epassDoneBtn && ticketModal) {
+    epassDoneBtn.addEventListener('click', () => {
+      ticketModal.classList.add('hidden');
+    });
+  }
 
-  ticketModalClose.addEventListener('click', () => {
-    ticketModal.classList.add('hidden');
-  });
-  ticketModal.addEventListener('click', (e) => {
-    if (e.target === ticketModal) ticketModal.classList.add('hidden');
-  });
+  if (ticketModalClose && ticketModal) {
+    ticketModalClose.addEventListener('click', () => {
+      ticketModal.classList.add('hidden');
+    });
+  }
+  if (ticketModal) {
+    ticketModal.addEventListener('click', (e) => {
+      if (e.target === ticketModal) ticketModal.classList.add('hidden');
+    });
+  }
 
   // ==========================================================
   // 6. GALLERY & LIGHTBOX
@@ -1400,24 +1407,26 @@ Alpha Rhythms on stage at Tiara!
   window.addEventListener('scroll', () => syncHeaderScrollState(), { passive: true });
 
   // Mobile menu toggle
-  mobileToggleBtn.addEventListener('click', () => {
-    mobileMenu.classList.toggle('open');
-  });
+  if (mobileToggleBtn && mobileMenu) {
+    mobileToggleBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
+  }
 
   document.querySelectorAll('.mobile-link').forEach(link => {
     link.addEventListener('click', () => {
-      mobileMenu.classList.remove('open');
+      if (mobileMenu) mobileMenu.classList.remove('open');
     });
   });
 
-  // Booking Form Submission (if form is present)
+  // Booking Form Submission (if legacy form is present)
   const bookingForm = document.getElementById('booking-form');
   const bookingSuccess = document.getElementById('booking-success');
 
   if (bookingForm) {
     bookingForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const name = document.getElementById('book-name').value;
+      const name = document.getElementById('book-name')?.value || 'Guest';
       bookingForm.reset();
       if (bookingSuccess) bookingSuccess.classList.remove('hidden');
       showToast(`Booking inquiry sent for ${name}!`, "fa-envelope");
@@ -1430,23 +1439,25 @@ Alpha Rhythms on stage at Tiara!
   // Newsletter Form
   const newsletterForm = document.getElementById('newsletter-form');
   const newsletterMsg = document.getElementById('newsletter-msg');
-  newsletterForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    newsletterForm.reset();
-    newsletterMsg.textContent = "✓ You are now subscribed to the Alpha Inner Circle!";
-    showToast("Subscribed to Alpha Rhythms newsletter!", "fa-circle-check");
-    setTimeout(() => {
-      newsletterMsg.textContent = "";
-    }, 5000);
-  });
+  if (newsletterForm) {
+    newsletterForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      newsletterForm.reset();
+      if (newsletterMsg) newsletterMsg.textContent = "✓ You are now subscribed to the Alpha Inner Circle!";
+      showToast("Subscribed to Alpha Rhythms newsletter!", "fa-circle-check");
+      setTimeout(() => {
+        if (newsletterMsg) newsletterMsg.textContent = "";
+      }, 5000);
+    });
+  }
 
   // EPK Download (Real File Generation & Download across all devices)
   const epkBtn = document.getElementById('download-epk-btn');
   if (epkBtn) {
     epkBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      initAudioContext();
-      playClickTick();
+      
+      
 
       const epkContent = `=====================================================
 ALPHA RHYTHMS — OFFICIAL ELECTRONIC PRESS KIT (EPK)
@@ -1624,205 +1635,58 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
   initHeroArenaStage();
 
   // ==========================================================
-  // PERFORMANCES SHOWCASE
+  // PERFORMANCES SHOWCASE (CATEGORY FILTERING & INTERACTIONS)
   // ==========================================================
   function initPerformancesShowcase() {
-    const section = document.getElementById('performances');
-    const cards = Array.from(document.querySelectorAll('.perf-card'));
-    const dots = Array.from(document.querySelectorAll('.p-dot'));
-    const mobilePrevBtn = document.getElementById('perf-mobile-prev-btn');
-    const mobileNextBtn = document.getElementById('perf-mobile-next-btn');
-    const mobileCounter = document.getElementById('perf-mobile-counter');
-    const bgCanvas = document.getElementById('performances-bg');
-    const progressFill = document.getElementById('perf-progress-fill');
+    const filterBtns = document.querySelectorAll('.perf-filter-btn');
+    const featuredCardWrapper = document.querySelector('.perf-featured-card-wrapper');
+    const gridCards = document.querySelectorAll('.perf-grid-card');
 
-    if (!section || cards.length === 0) return;
+    if (!filterBtns.length) return;
 
-    let activeIdx = 0;
-    let timerRaf = null;
-    let progressStartTime = performance.now();
-    let currentElapsed = 0;
-    let isPaused = false;
-    let pauseTimeout = null;
-    const CYCLE_DURATION = 3500; // 3.5s per card
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.getAttribute('data-filter') || 'all';
 
-    function setActivePerformance(idx, playSound = false) {
-      if (idx < 0) idx = cards.length - 1;
-      if (idx >= cards.length) idx = 0;
-      activeIdx = idx;
-
-      cards.forEach((card, i) => {
-        if (i === activeIdx) {
-          card.classList.add('perf-spotlight');
-          card.classList.add('mobile-active');
-        } else {
-          card.classList.remove('perf-spotlight');
-          card.classList.remove('mobile-active');
-        }
-      });
-
-      dots.forEach((dot, i) => {
-        dot.textContent = `${i + 1}`;
-        if (i === activeIdx) {
-          dot.classList.add('active');
-        } else {
-          dot.classList.remove('active');
-        }
-      });
-
-      if (mobileCounter) {
-        mobileCounter.textContent = `CARD ${activeIdx + 1} OF ${cards.length}`;
-      }
-
-      if (playSound && typeof playClickTick === 'function') {
-        playClickTick();
-      }
-
-      resetProgressTimer();
-    }
-
-    function resetProgressTimer() {
-      if (timerRaf) cancelAnimationFrame(timerRaf);
-      currentElapsed = 0;
-      progressStartTime = performance.now();
-      if (progressFill) progressFill.style.width = '0%';
-
-      function stepProgress(now) {
-        if (!isPaused) {
-          currentElapsed = now - progressStartTime;
-          const pct = Math.min(100, Math.max(0, (currentElapsed / CYCLE_DURATION) * 100));
-          if (progressFill) {
-            progressFill.style.width = pct.toFixed(1) + '%';
-          }
-          if (currentElapsed >= CYCLE_DURATION) {
-            setActivePerformance(activeIdx + 1, false);
-            return;
-          }
-        } else {
-          progressStartTime = now - currentElapsed;
-        }
-        timerRaf = requestAnimationFrame(stepProgress);
-      }
-      timerRaf = requestAnimationFrame(stepProgress);
-    }
-
-    // Initialize Card 1
-    setActivePerformance(0, false);
-
-    // Only allow hover pause on true pointer devices (desktop with mouse)
-    const canHover = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-
-    if (canHover) {
-      cards.forEach((card) => {
-        card.addEventListener('mouseenter', () => {
-          isPaused = true;
-          if (pauseTimeout) clearTimeout(pauseTimeout);
-          // Auto-resume after 5 seconds even if mouse stays hovered
-          pauseTimeout = setTimeout(() => { isPaused = false; }, 5000);
+        // Update active filter button
+        filterBtns.forEach(b => {
+          const isActive = (b === btn);
+          b.classList.toggle('active', isActive);
+          b.setAttribute('aria-selected', isActive ? 'true' : 'false');
         });
-        card.addEventListener('mouseleave', () => {
-          isPaused = false;
-          if (pauseTimeout) clearTimeout(pauseTimeout);
-        });
-      });
 
-      const dock = document.querySelector('.perf-progress-dock');
-      if (dock) {
-        dock.addEventListener('mouseenter', () => {
-          isPaused = true;
-          if (pauseTimeout) clearTimeout(pauseTimeout);
-          pauseTimeout = setTimeout(() => { isPaused = false; }, 5000);
-        });
-        dock.addEventListener('mouseleave', () => {
-          isPaused = false;
-          if (pauseTimeout) clearTimeout(pauseTimeout);
-        });
-      }
-    }
-
-    cards.forEach((card, idx) => {
-      card.addEventListener('click', (e) => {
-        const isMobile = window.innerWidth < 992;
-        if (isMobile && activeIdx !== idx) {
-          e.preventDefault();
-          isPaused = false;
-          setActivePerformance(idx, true);
-        } else {
-          isPaused = false;
-          setActivePerformance(idx, true);
-        }
-      });
-    });
-
-    // Dots Click Handler
-    dots.forEach((dot, idx) => {
-      dot.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        isPaused = false;
-        if (typeof initAudioContext === 'function') initAudioContext();
-        setActivePerformance(idx, true);
-      });
-    });
-
-    // Mobile Navigation Controls
-    if (mobilePrevBtn) {
-      mobilePrevBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        isPaused = false;
-        if (typeof initAudioContext === 'function') initAudioContext();
-        setActivePerformance(activeIdx - 1, true);
-      });
-    }
-
-    if (mobileNextBtn) {
-      mobileNextBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        isPaused = false;
-        if (typeof initAudioContext === 'function') initAudioContext();
-        setActivePerformance(activeIdx + 1, true);
-      });
-    }
-
-    // Touch swipe for mobile spotlight
-    let touchStartX = 0;
-    let touchStartY = 0;
-    section.addEventListener('touchstart', (e) => {
-      if (e.touches && e.touches[0]) {
-        touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
-      }
-    }, { passive: true });
-
-    section.addEventListener('touchend', (e) => {
-      if (e.changedTouches && e.changedTouches[0]) {
-        const deltaX = e.changedTouches[0].clientX - touchStartX;
-        const deltaY = e.changedTouches[0].clientY - touchStartY;
-        if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY)) {
-          isPaused = false;
-          if (deltaX < 0) {
-            setActivePerformance(activeIdx + 1, true);
+        // Filter featured card
+        if (featuredCardWrapper) {
+          const featCat = featuredCardWrapper.getAttribute('data-category');
+          if (filter === 'all' || filter === featCat) {
+            featuredCardWrapper.style.display = '';
+            featuredCardWrapper.style.opacity = '1';
           } else {
-            setActivePerformance(activeIdx - 1, true);
+            featuredCardWrapper.style.display = 'none';
           }
         }
-      }
-    }, { passive: true });
 
-    // Subtle background parallax on scroll
-    window.addEventListener('scroll', () => {
-      if (!bgCanvas) return;
-      const rect = section.getBoundingClientRect();
-      if (rect.top < window.innerHeight && rect.bottom > 0) {
-        const progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
-        bgCanvas.style.transform = `scale(${1.05 - progress * 0.05}) translateY(${progress * 25}px)`;
-      }
-    }, { passive: true });
+        // Filter grid cards
+        gridCards.forEach(card => {
+          const cardCat = card.getAttribute('data-category');
+          if (filter === 'all' || filter === cardCat) {
+            card.classList.remove('filtered-out');
+            card.style.display = '';
+            card.style.opacity = '1';
+          } else {
+            card.classList.add('filtered-out');
+            card.style.display = 'none';
+          }
+        });
+
+        // Refresh Lenis scroll dimensions
+        if (window.__alphaLenis) {
+          window.__alphaLenis.resize();
+        }
+      });
+    });
   }
 
-  
   /* ========================================================
      SECTION 3: REAL-TIME LIVE BOOKING CALENDAR ENGINE
      Matches official @alpha.rhythms Instagram December 2026 poster:
@@ -2163,6 +2027,38 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
       }
     });
 
+    // Tour View Switcher (Shows List vs Calendar View)
+    const btnViewShows = document.getElementById('btn-view-shows');
+    const btnViewCalendar = document.getElementById('btn-view-calendar');
+    const tourShowsView = document.getElementById('tour-shows-view');
+    const tourCalendarView = document.getElementById('tour-calendar-view');
+
+    if (btnViewShows && btnViewCalendar && tourShowsView && tourCalendarView) {
+      btnViewShows.addEventListener('click', () => {
+        btnViewShows.classList.add('active');
+        btnViewShows.setAttribute('aria-selected', 'true');
+        btnViewCalendar.classList.remove('active');
+        btnViewCalendar.setAttribute('aria-selected', 'false');
+
+        tourShowsView.classList.remove('hidden');
+        tourCalendarView.classList.add('hidden');
+
+        if (window.__alphaLenis) window.__alphaLenis.resize();
+      });
+
+      btnViewCalendar.addEventListener('click', () => {
+        btnViewCalendar.classList.add('active');
+        btnViewCalendar.setAttribute('aria-selected', 'true');
+        btnViewShows.classList.remove('active');
+        btnViewShows.setAttribute('aria-selected', 'false');
+
+        tourCalendarView.classList.remove('hidden');
+        tourShowsView.classList.add('hidden');
+
+        if (window.__alphaLenis) window.__alphaLenis.resize();
+      });
+    }
+
     // Check if grid already has static cells populated
     const existingDays = calDaysGrid.querySelectorAll('.cal-day-cell:not(.cal-day-empty)');
     if (existingDays.length === 31) {
@@ -2185,6 +2081,89 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
      - High-performance IntersectionObserver section entry reveals
      - Smooth anchor link navigation with deceleration curves
      ======================================================== */
+  // ==========================================================
+  // 11. VIP BOOKING INQUIRY FORM (WHATSAPP DIRECT INTEGRATION)
+  // ==========================================================
+  function initBookingForm() {
+    const form = document.getElementById('contact-booking-form');
+    if (!form) return;
+
+    const dateInput = document.getElementById('book-date');
+    if (dateInput) {
+      const today = new Date().toISOString().split('T')[0];
+      dateInput.min = today;
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('book-name')?.value?.trim() || '';
+      const phone = document.getElementById('book-phone')?.value?.trim() || '';
+      const date = document.getElementById('book-date')?.value || '';
+      const type = document.getElementById('book-type')?.value || '';
+      const venue = document.getElementById('book-venue')?.value?.trim() || '';
+      const message = document.getElementById('book-message')?.value?.trim() || 'No additional notes';
+
+      if (!name || !phone || !date || !type || !venue) {
+        showToast("Please fill in all required fields", "fa-circle-exclamation");
+        return;
+      }
+
+      const waText = `*VIP EVENT BOOKING INQUIRY — ALPHA RHYTHMS BAND*
+---------------------------------------
+*Client / Org:* ${name}
+*Phone / WhatsApp:* ${phone}
+*Event Date:* ${date}
+*Event Type:* ${type}
+*Location / Venue:* ${venue}
+*Special Requests:* ${message}
+---------------------------------------
+Please let me know availability and pricing for this date!`;
+
+      const encoded = encodeURIComponent(waText);
+      const waUrl = `https://wa.me/917349099787?text=${encoded}`;
+
+      showToast("Opening WhatsApp with your booking details...", "fa-brands fa-whatsapp");
+
+      setTimeout(() => {
+        window.open(waUrl, '_blank', 'noopener,noreferrer');
+      }, 300);
+    });
+  }
+
+  // ==========================================================
+  // 12. ELECTRONIC PRESS KIT (EPK) MODAL
+  // ==========================================================
+  function initEpkModal() {
+    const epkBtn = document.getElementById('download-epk-btn');
+    const epkModal = document.getElementById('epk-modal');
+    const epkClose = document.getElementById('epk-modal-close');
+
+    if (!epkBtn || !epkModal) return;
+
+    epkBtn.addEventListener('click', () => {
+      epkModal.classList.remove('hidden');
+    });
+
+    if (epkClose) {
+      epkClose.addEventListener('click', () => {
+        epkModal.classList.add('hidden');
+      });
+    }
+
+    epkModal.addEventListener('click', (e) => {
+      if (e.target === epkModal) {
+        epkModal.classList.add('hidden');
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !epkModal.classList.contains('hidden')) {
+        epkModal.classList.add('hidden');
+      }
+    });
+  }
+
   function initSmoothScrollAndSectionEntryEngine() {
     const progressBar = document.getElementById('scroll-progress-bar');
     const heroSection = document.getElementById('hero');
@@ -2301,6 +2280,10 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
       });
 
       revealSections.forEach(sec => sectionObserver.observe(sec));
+      // Guaranteed visibility fallback after 350ms to ensure zero blank screens
+      setTimeout(() => {
+        revealSections.forEach(sec => sec.classList.add('section-visible'));
+      }, 350);
 
       // Also observe Performances section entry
       if (perfSection) {
@@ -2374,48 +2357,14 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
   }
 
 
+  // Initialize VIP Booking Form & EPK Modal
+  initBookingForm();
+  initEpkModal();
   // Initialize Smooth Scrolling & Section Entry Engine!
   initSmoothScrollAndSectionEntryEngine();
 
     // Initialize Performances Section!
   initPerformancesShowcase();
-
-  // Universal Audio Unlock on First Touch / Click on Any Mobile & Desktop Device
-  const unlockAudio = () => {
-    initAudioContext();
-  };
-  window.addEventListener('touchstart', unlockAudio, { once: true, passive: true });
-  window.addEventListener('click', unlockAudio, { once: true, passive: true });
-
-  // Universal Tactile Feedback (Click & Touch) on All Action Buttons Across All Devices
-  const interactiveSelectors = [
-    '.btn',
-    '.social-pill',
-    '#mobile-toggle-btn',
-    '#audio-toggle-btn',
-    '#skip-intro-btn',
-    '#replay-intro-btn',
-    '#mobile-replay-btn',
-    '#footer-replay-btn',
-    '#swap-logo-btn',
-    '#mobile-swap-btn',
-    '.theme-btn',
-    '.modal-close-btn',
-    '#qty-minus',
-    '#qty-plus',
-    '#confirm-ticket-btn',
-    '#epass-done-btn',
-    '.nav-link',
-    '.mobile-link',
-    '.brand-link'
-  ];
-
-  document.querySelectorAll(interactiveSelectors.join(',')).forEach(el => {
-    el.addEventListener('click', () => {
-      initAudioContext();
-      playClickTick();
-    });
-  });
 
   // Screen Orientation Lock for Mobile View
   try {
