@@ -2396,12 +2396,9 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
       revealSections.forEach(sec => sec.classList.add('section-visible'));
     }
 
-    // Run synchronous check on scroll & load, plus fail-safe timer
+    // Synchronous viewport entry check on scroll and load
     syncSectionVisibility();
     window.addEventListener('scroll', syncSectionVisibility, { passive: true });
-    setTimeout(() => {
-      revealSections.forEach(sec => sec.classList.add('section-visible'));
-    }, 1200);
 
     // 3. Smooth Anchor Link Scrolling (Lenis + Native fallback)
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
