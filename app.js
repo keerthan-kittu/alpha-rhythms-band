@@ -410,47 +410,34 @@ Alpha Rhythms on stage at Tiara!
     window.removeEventListener('scroll', lockScrollWhileLoading);
     document.body.classList.remove('loading-locked');
     document.documentElement.classList.remove('loading-locked');
-    // Explicitly clear any height constraints so Lenis and the browser
-    // recalculate full document height correctly after the loader exits
-    document.body.style.height = '';
-    document.body.style.maxHeight = '';
-    document.documentElement.style.height = '';
-    document.documentElement.style.maxHeight = '';
 
-    // Guarantee beginning strictly at the Hero section.
-    // Always use native scrollTo for the reset — Lenis.scrollTo with immediate:true
-    // can inadvertently stop the Lenis engine. We then call lenis.resize/start
-    // to sync Lenis with the new scroll position.
+    // Guarantee beginning strictly at the Hero section
     window.scrollTo(0, 0);
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
+
+    // Refresh and sync Lenis momentum scroll engine with freshly unlocked document dimensions
     if (window.__alphaLenis) {
       window.__alphaLenis.resize();
       window.__alphaLenis.start();
     }
-
-    // Header starts transparent on hero — scrolled class removed.
-    // syncHeaderScrollState + updateScrollMetrics handle it from here on scroll.
-    if (mainHeader) mainHeader.classList.remove('scrolled');
-
-    // Lenis resize passes so it re-measures the full document height
-    // once all entrance animations have settled.
-    setTimeout(() => { if (window.__alphaLenis) window.__alphaLenis.resize(); }, 450);
-    setTimeout(() => { if (window.__alphaLenis) window.__alphaLenis.resize(); }, 950);
+    setTimeout(() => {
+      if (window.__alphaLenis) window.__alphaLenis.resize();
+    }, 400);
+    setTimeout(() => {
+      if (window.__alphaLenis) window.__alphaLenis.resize();
+    }, 900);
 
     // 1. Part the arena stage shutters with golden laser beam
     if (loaderEl) {
       loaderEl.classList.remove('portal-active');
       loaderEl.classList.add('shutters-opening');
-      // Wait for the full shutter transition (0.88s) to complete before hiding.
-      // Setting display:none before the transition ends kills it mid-way.
       setTimeout(() => {
+        loaderEl.style.display = 'none';
         loaderEl.style.opacity = '0';
         loaderEl.style.visibility = 'hidden';
         loaderEl.style.pointerEvents = 'none';
-        loaderEl.style.display = 'none';
-        loaderEl.classList.add('fade-out');
-      }, 920);
+      }, 700);
     }
 
     // 2. Trigger the Awwwards-style hero section entrance
@@ -460,7 +447,7 @@ Alpha Rhythms on stage at Tiara!
     }
 
     const heroBandImg = document.getElementById('hero-band-photo');
-    const headerEl = document.getElementById('main-header');
+    const mainHeader = document.getElementById('main-header');
     const mobileCrest = document.getElementById('hero-mobile-crest');
     const heroDock = document.querySelector('.hero-stage-dock');
 
@@ -469,15 +456,10 @@ Alpha Rhythms on stage at Tiara!
       void heroBandImg.offsetWidth;
       heroBandImg.classList.add('hero-entrance');
     }
-    if (headerEl) {
-      headerEl.classList.remove('hero-entrance', 'scrolled');
-      void headerEl.offsetWidth;
-      headerEl.classList.add('hero-entrance');
-      // Remove hero-entrance after animation fully completes (0.85s duration + 0.15s delay = 1s).
-      // setTimeout is reliable; animationend can fail if the class is removed mid-play.
-      setTimeout(() => {
-        headerEl.classList.remove('hero-entrance');
-      }, 1050);
+    if (mainHeader) {
+      mainHeader.classList.remove('hero-entrance');
+      void mainHeader.offsetWidth;
+      mainHeader.classList.add('hero-entrance');
     }
     if (mobileCrest) {
       mobileCrest.classList.remove('hero-entrance');
@@ -490,8 +472,15 @@ Alpha Rhythms on stage at Tiara!
       heroDock.classList.add('hero-entrance');
     }
 
-    // 3. Once the shutters have completely cleared (920ms — matches shutter hide above):
-    // Nothing more needed here; loader is already hidden by the 920ms timeout above.
+    // 3. Once the shutters have completely cleared (950ms):
+    setTimeout(() => {
+      if (loaderEl) {
+        loaderEl.classList.add('fade-out');
+        loaderEl.style.display = 'none';
+        loaderEl.style.visibility = 'hidden';
+      }
+      window.scrollTo(0, 0);
+    }, 950);
 
     showToast("Welcome to Alpha Rhythms!", "fa-bolt");
   }
@@ -676,73 +665,12 @@ Alpha Rhythms on stage at Tiara!
   const themeBtns = document.querySelectorAll('.theme-btn');
   const navBrandLogo = document.getElementById('nav-brand-logo');
 
-  // ==========================================================
-  // UNIVERSAL MODAL CONTROLLER & DIALOGUE ANIMATION ENGINE
-  // ==========================================================
-  function alphaOpenModal(modalEl) {
-    if (!modalEl) return;
-    modalEl.classList.remove('hidden');
-    document.body.classList.add('modal-open');
-    if (window.__alphaLenis) {
-      window.__alphaLenis.stop();
-    }
-  }
-
-  function alphaCloseModal(modalEl) {
-    if (!modalEl) return;
-    modalEl.classList.add('hidden');
-    const remainingOpen = document.querySelectorAll('.modal-backdrop:not(.hidden)');
-    if (remainingOpen.length === 0) {
-      document.body.classList.remove('modal-open');
-      if (window.__alphaLenis) {
-        window.__alphaLenis.start();
-      }
-    }
-  }
-
-  function alphaCloseAllModals() {
-    document.querySelectorAll('.modal-backdrop:not(.hidden)').forEach(m => {
-      m.classList.add('hidden');
-    });
-    document.body.classList.remove('modal-open');
-    if (window.__alphaLenis) {
-      window.__alphaLenis.start();
-    }
-  }
-
-  // Universal ESC key dismissal for all modals and dialogs
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      alphaCloseAllModals();
-    }
-  });
-
-  // Universal backdrop click to close
-  document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
-    backdrop.addEventListener('click', (e) => {
-      if (e.target === backdrop) {
-        alphaCloseModal(backdrop);
-      }
-    });
-  });
-
-  // Universal close button click
-  document.querySelectorAll('.modal-close-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const modal = btn.closest('.modal-backdrop');
-      if (modal) {
-        alphaCloseModal(modal);
-      }
-    });
-  });
-
   function openLogoModal() {
-    alphaOpenModal(logoSwapModal);
+    logoSwapModal.classList.remove('hidden');
   }
 
   function closeLogoModal() {
-    alphaCloseModal(logoSwapModal);
+    logoSwapModal.classList.add('hidden');
   }
 
   if (swapLogoBtn) swapLogoBtn.addEventListener('click', openLogoModal);
@@ -961,14 +889,14 @@ Alpha Rhythms on stage at Tiara!
     const track = tracks[state.currentTrackIndex];
     lyricsTitle.textContent = track.title;
     lyricsContent.textContent = track.lyrics;
-    alphaOpenModal(lyricsModal);
+    lyricsModal.classList.remove('hidden');
   });
 
   if (lyricsModalClose) lyricsModalClose.addEventListener('click', () => {
-    alphaCloseModal(lyricsModal);
+    lyricsModal.classList.add('hidden');
   });
   if (lyricsModal) lyricsModal.addEventListener('click', (e) => {
-    if (e.target === lyricsModal) alphaCloseModal(lyricsModal);
+    if (e.target === lyricsModal) lyricsModal.classList.add('hidden');
   });
 
   // ==========================================================
@@ -1215,7 +1143,7 @@ Alpha Rhythms on stage at Tiara!
 
     epassCard.classList.add('hidden');
     document.querySelector('.ticket-selection-body').classList.remove('hidden');
-    alphaOpenModal(ticketModal);
+    ticketModal.classList.remove('hidden');
   }
 
   // Open ticket modal via ticket buttons
@@ -1283,14 +1211,14 @@ Alpha Rhythms on stage at Tiara!
   });
 
   epassDoneBtn.addEventListener('click', () => {
-    alphaCloseModal(ticketModal);
+    ticketModal.classList.add('hidden');
   });
 
   ticketModalClose.addEventListener('click', () => {
-    alphaCloseModal(ticketModal);
+    ticketModal.classList.add('hidden');
   });
   ticketModal.addEventListener('click', (e) => {
-    if (e.target === ticketModal) alphaCloseModal(ticketModal);
+    if (e.target === ticketModal) ticketModal.classList.add('hidden');
   });
 
   // ==========================================================
@@ -1457,26 +1385,11 @@ Alpha Rhythms on stage at Tiara!
   // ==========================================================
   // 8. FORMS & HEADER INTERACTIVITY
   // ==========================================================
-  // Header background theme controller:
-  // - Hero (Section 1): Transparent background (no white bg)
-  // - Performances (Section 2) & all following sections (Tour, Band, Contact): White background
-  function updateHeaderTheme() {
-    if (!mainHeader) return;
-    const perfSection = document.getElementById('performances');
-    if (perfSection) {
-      const rect = perfSection.getBoundingClientRect();
-      // When the top of Section 2 reaches the header (within 70px of viewport top)
-      // rect.top <= 70 is TRUE when entering Section 2, throughout Section 2, and throughout all later sections!
-      if (rect.top <= 70) {
-        mainHeader.classList.add('scrolled');
-      } else {
-        mainHeader.classList.remove('scrolled');
-      }
-    } else {
-      const heroSection = document.getElementById('hero');
-      const heroHeight = heroSection ? heroSection.offsetHeight : window.innerHeight;
-      const scrollY = window.__alphaLenis ? window.__alphaLenis.scroll : (window.scrollY || window.pageYOffset || 0);
-      if (scrollY >= heroHeight - 70) {
+  // Header scroll detection & theme synchronization
+  function syncHeaderScrollState(scrollPos) {
+    const y = typeof scrollPos === 'number' ? scrollPos : (window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0);
+    if (mainHeader) {
+      if (y > 30) {
         mainHeader.classList.add('scrolled');
       } else {
         mainHeader.classList.remove('scrolled');
@@ -1484,7 +1397,7 @@ Alpha Rhythms on stage at Tiara!
     }
   }
 
-  window.addEventListener('scroll', updateHeaderTheme, { passive: true });
+  window.addEventListener('scroll', () => syncHeaderScrollState(), { passive: true });
 
   // Mobile menu toggle
   mobileToggleBtn.addEventListener('click', () => {
@@ -1514,21 +1427,18 @@ Alpha Rhythms on stage at Tiara!
     });
   }
 
-  // Newsletter Form (if present)
+  // Newsletter Form
   const newsletterForm = document.getElementById('newsletter-form');
   const newsletterMsg = document.getElementById('newsletter-msg');
-  if (newsletterForm) {
-    newsletterForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      newsletterForm.reset();
-      if (newsletterMsg) newsletterMsg.textContent = "✓ You are now subscribed to the Alpha Inner Circle!";
-      showToast("Subscribed to Alpha Rhythms newsletter!", "fa-circle-check");
-      setTimeout(() => {
-        if (newsletterMsg) newsletterMsg.textContent = "";
-      }, 5000);
-    });
-  }
-
+  newsletterForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    newsletterForm.reset();
+    newsletterMsg.textContent = "✓ You are now subscribed to the Alpha Inner Circle!";
+    showToast("Subscribed to Alpha Rhythms newsletter!", "fa-circle-check");
+    setTimeout(() => {
+      newsletterMsg.textContent = "";
+    }, 5000);
+  });
 
   // EPK Download (Real File Generation & Download across all devices)
   const epkBtn = document.getElementById('download-epk-btn');
@@ -1771,15 +1681,29 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
       resetProgressTimer();
     }
 
-    let autoCycleTimer = null;
-
     function resetProgressTimer() {
-      if (autoCycleTimer) clearInterval(autoCycleTimer);
-      autoCycleTimer = setInterval(() => {
+      if (timerRaf) cancelAnimationFrame(timerRaf);
+      currentElapsed = 0;
+      progressStartTime = performance.now();
+      if (progressFill) progressFill.style.width = '0%';
+
+      function stepProgress(now) {
         if (!isPaused) {
-          setActivePerformance(activeIdx + 1, false);
+          currentElapsed = now - progressStartTime;
+          const pct = Math.min(100, Math.max(0, (currentElapsed / CYCLE_DURATION) * 100));
+          if (progressFill) {
+            progressFill.style.width = pct.toFixed(1) + '%';
+          }
+          if (currentElapsed >= CYCLE_DURATION) {
+            setActivePerformance(activeIdx + 1, false);
+            return;
+          }
+        } else {
+          progressStartTime = now - currentElapsed;
         }
-      }, CYCLE_DURATION);
+        timerRaf = requestAnimationFrame(stepProgress);
+      }
+      timerRaf = requestAnimationFrame(stepProgress);
     }
 
     // Initialize Card 1
@@ -1799,9 +1723,21 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
         card.addEventListener('mouseleave', () => {
           isPaused = false;
           if (pauseTimeout) clearTimeout(pauseTimeout);
-          resetProgressTimer();
         });
       });
+
+      const dock = document.querySelector('.perf-progress-dock');
+      if (dock) {
+        dock.addEventListener('mouseenter', () => {
+          isPaused = true;
+          if (pauseTimeout) clearTimeout(pauseTimeout);
+          pauseTimeout = setTimeout(() => { isPaused = false; }, 5000);
+        });
+        dock.addEventListener('mouseleave', () => {
+          isPaused = false;
+          if (pauseTimeout) clearTimeout(pauseTimeout);
+        });
+      }
     }
 
     cards.forEach((card, idx) => {
@@ -2014,13 +1950,15 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
         callBtn.href = 'tel:+917349099787';
       }
       if (bookingModal) {
-        alphaOpenModal(bookingModal);
+        bookingModal.classList.remove('hidden');
+        document.body.classList.add('modal-open');
       }
     }
 
     function closeBookingModal() {
       if (bookingModal) {
-        alphaCloseModal(bookingModal);
+        bookingModal.classList.add('hidden');
+        document.body.classList.remove('modal-open');
       }
     }
 
@@ -2040,13 +1978,15 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
       }
 
       if (lockedModal) {
-        alphaOpenModal(lockedModal);
+        lockedModal.classList.remove('hidden');
+        document.body.classList.add('modal-open');
       }
     }
 
     function closeLockedModal() {
       if (lockedModal) {
-        alphaCloseModal(lockedModal);
+        lockedModal.classList.add('hidden');
+        document.body.classList.remove('modal-open');
       }
     }
 
@@ -2279,18 +2219,12 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
       }
     }
 
-    // Scroll tracker - update header, nav, and progress metrics unconditionally.
-    // When Lenis is active, use its internal scroll position (e.scroll) which is
-    // authoritative. The native window scroll event fires with a lagging window.scrollY
-    // that can be behind Lenis's virtual position — reading Lenis directly avoids the
-    // race condition where one handler adds 'scrolled' and the other removes it.
+    // Native scroll fallback / backup tracker
     window.addEventListener('scroll', () => {
-      const y = window.__alphaLenis ? window.__alphaLenis.scroll : window.scrollY;
-      updateScrollMetrics(y);
+      if (!lenis) {
+        updateScrollMetrics(window.scrollY);
+      }
     }, { passive: true });
-
-    // Initial check on load
-    updateScrollMetrics(window.scrollY || 0);
 
     let cachedHeroBottom = 0;
     function cacheLayoutMetrics() {
@@ -2301,15 +2235,16 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
     cacheLayoutMetrics();
     window.addEventListener('resize', cacheLayoutMetrics, { passive: true });
 
-    function updateActiveNavLink() {
+    function updateActiveNavLink(currentScroll) {
+      const y = (typeof currentScroll === 'number' ? currentScroll : (window.scrollY || window.pageYOffset || 0)) + 140;
       const sectionIds = ['contact', 'band', 'tour', 'performances', 'hero'];
       let activeId = 'hero';
 
       for (const id of sectionIds) {
         const sec = document.getElementById(id);
         if (sec) {
-          const rect = sec.getBoundingClientRect();
-          if (rect.top <= 160 && rect.bottom > 80) {
+          const top = sec.offsetTop;
+          if (y >= top) {
             activeId = id;
             break;
           }
@@ -2330,14 +2265,17 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
     function updateScrollMetrics(scrollY) {
       const currentScroll = typeof scrollY === 'number' ? scrollY : (window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0);
 
-      // Header white/transparent state: transparent on hero, white on Section 2 and all following sections
-      updateHeaderTheme();
+      // Instant toggle of header contrast mode: black at top hero, bright white on all other sections
+      if (mainHeader) {
+        if (currentScroll > 30) {
+          mainHeader.classList.add('scrolled');
+        } else {
+          mainHeader.classList.remove('scrolled');
+        }
+      }
 
       // Synchronize active link to current section
-      updateActiveNavLink();
-
-      // Trigger section entry reveals dynamically as sections enter viewport
-      syncSectionVisibility();
+      updateActiveNavLink(currentScroll);
 
       // 1. Progress Bar
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -2349,35 +2287,17 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
 
     // 2. IntersectionObserver for Section Entry Animations (immediate reveal, no waiting)
     const revealSections = document.querySelectorAll('.reveal-section');
-    function syncSectionVisibility() {
-      const vh = window.innerHeight || document.documentElement.clientHeight;
-      revealSections.forEach(sec => {
-        if (!sec.classList.contains('section-visible')) {
-          const rect = sec.getBoundingClientRect();
-          if (rect.top <= vh + 150 && rect.bottom >= -100) {
-            sec.classList.add('section-visible');
-          }
-        }
-      });
-      if (perfSection) {
-        const rect = perfSection.getBoundingClientRect();
-        if (rect.top <= vh + 50 && rect.bottom >= 0) {
-          perfSection.classList.add('perf-in-view');
-        }
-      }
-    }
-
     if ('IntersectionObserver' in window) {
       const sectionObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
-          if (entry.isIntersecting || entry.boundingClientRect.top < window.innerHeight + 100) {
+          if (entry.isIntersecting) {
             entry.target.classList.add('section-visible');
             observer.unobserve(entry.target);
           }
         });
       }, {
-        threshold: 0,
-        rootMargin: '150px 0px 150px 0px'
+        threshold: 0.05,
+        rootMargin: '0px 0px 50px 0px'
       });
 
       revealSections.forEach(sec => sectionObserver.observe(sec));
@@ -2392,16 +2312,12 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
               perfSection.classList.remove('perf-in-view');
             }
           });
-        }, { threshold: 0.05 });
+        }, { threshold: 0.08 });
         perfObserver.observe(perfSection);
       }
     } else {
       revealSections.forEach(sec => sec.classList.add('section-visible'));
     }
-
-    // Synchronous viewport entry check on scroll and load
-    syncSectionVisibility();
-    window.addEventListener('scroll', syncSectionVisibility, { passive: true });
 
     // 3. Smooth Anchor Link Scrolling (Lenis + Native fallback)
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -2413,7 +2329,7 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
           e.preventDefault();
           const targetOffset = (href === '#hero' || href === '#top') ? 0 : -70;
 
-          // Immediate header background toggle on nav click
+          // Immediately toggle header contrast and active indicator on click
           if (mainHeader) {
             if (href === '#hero' || href === '#top') {
               mainHeader.classList.remove('scrolled');
@@ -2421,8 +2337,6 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
               mainHeader.classList.add('scrolled');
             }
           }
-
-          // Update active nav indicator on click
           document.querySelectorAll('.desktop-nav .nav-link').forEach(link => {
             link.classList.toggle('active', link.getAttribute('href') === href);
           });
