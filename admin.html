@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alpha Rhythms | Schedule Manager (Private Portal)</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="assets/LogoALPHA.png">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Outfit:wght@300;400;500;600;700;800&family=Syne:wght@700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    /* Dedicated Admin Page Styles */
+    body.admin-body {
+      background: #09090b;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: #f3f4f6;
+    }
+
+    .admin-top-bar {
+      background: rgba(15, 15, 18, 0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(250, 204, 21, 0.25);
+      padding: 16px 28px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .admin-bar-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .admin-bar-logo {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 10px rgba(250, 204, 21, 0.4));
+    }
+
+    .admin-bar-titles h1 {
+      font-family: var(--font-display, 'Syne', sans-serif);
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: 0.04em;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .admin-badge-private {
+      font-size: 0.65rem;
+      font-family: var(--font-mono, monospace);
+      background: rgba(220, 38, 38, 0.2);
+      color: #f87171;
+      border: 1px solid rgba(220, 38, 38, 0.4);
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .admin-bar-sub {
+      font-size: 0.8rem;
+      color: #9ca3af;
+      margin: 2px 0 0;
+    }
+
+    .admin-bar-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .admin-sync-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      font-family: var(--font-mono, monospace);
+      color: #34d399;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 6px 14px;
+      border-radius: 999px;
+    }
+
+    .sync-dot {
+      width: 8px;
+      height: 8px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #10b981;
+      animation: pulseSync 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseSync {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    .admin-main-wrapper {
+      flex: 1;
+      max-width: 1040px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 32px 20px 60px;
+    }
+
+    .admin-instructions-card {
+      background: linear-gradient(135deg, rgba(24, 24, 27, 0.95), rgba(15, 15, 18, 0.95));
+      border: 1px solid rgba(250, 204, 21, 0.3);
+      border-radius: 14px;
+      padding: 18px 24px;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .instruct-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .instruct-icon {
+      font-size: 1.8rem;
+      color: #facc15;
+    }
+
+    .instruct-text h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 0 4px;
+    }
+
+    .instruct-text p {
+      font-size: 0.85rem;
+      color: #d1d5db;
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    .instruct-stats {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .stat-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-family: var(--font-mono, monospace);
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .stat-pill.stat-booked {
+      background: rgba(220, 38, 38, 0.2);
+      border: 1px solid rgba(220, 38, 38, 0.5);
+      color: #fca5a5;
+    }
+
+    .stat-pill.stat-available {
+      background: rgba(250, 204, 21, 0.2);
+      border: 1px solid rgba(250, 204, 21, 0.5);
+      color: #fef08a;
+    }
+
+    /* Cell Admin Hover Effect */
+    .admin-body .poster-cell[data-date] {
+      cursor: pointer !important;
+      position: relative;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s, filter 0.2s;
+    }
+
+    .admin-body .poster-cell[data-date]:hover {
+      transform: translateY(-4px) scale(1.05);
+      z-index: 10;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.8);
+      filter: brightness(1.15);
+    }
+
+    .admin-body .poster-cell[data-date]::after {
+      content: 'Toggle';
+      position: absolute;
+      bottom: 2px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-mono, monospace);
+      font-size: 0.55rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      opacity: 0;
+      transition: opacity 0.2s;
+      letter-spacing: 0.05em;
+    }
+
+    .admin-body .poster-cell[data-date]:hover::after {
+      opacity: 0.85;
+    }
+
+    .admin-body .poster-cell.cell-booked::after {
+      color: #fecaca;
+    }
+
+    .admin-body .poster-cell.cell-available::after {
+      color: #451a03;
+    }
+
+    /* Toast Notification */
+    .admin-toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #18181b;
+      border: 1.5px solid #facc15;
+      color: #ffffff;
+      padding: 14px 22px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(250, 204, 21, 0.3);
+      z-index: 9999;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+
+    .admin-toast.show {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .admin-toast-icon {
+      font-size: 1.3rem;
+      color: #facc15;
+    }
+
+    .admin-toast-content strong {
+      display: block;
+      font-size: 0.9rem;
+      color: #ffffff;
+    }
+
+    .admin-toast-content span {
+      display: block;
+      font-size: 0.8rem;
+      color: #9ca3af;
+    }
+
+    @media (max-width: 768px) {
+      .admin-top-bar {
+        padding: 12px 16px;
+      }
+      .admin-bar-brand {
+        gap: 10px;
+      }
+      .admin-bar-logo {
+        width: 36px;
+        height: 36px;
+      }
+      .admin-bar-titles h1 {
+        font-size: 1rem;
+      }
+      .admin-bar-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .admin-main-wrapper {
+        padding: 16px 12px 40px;
+      }
+      .admin-instructions-card {
+        padding: 14px 16px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .instruct-stats {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .admin-toast {
+        left: 16px;
+        right: 16px;
+        bottom: 16px;
+        padding: 12px 16px;
+      }
+    }
+  </style>
+</head>
+<body class="admin-body">
+
+  <!-- Top Admin Control Bar -->
+  <header class="admin-top-bar">
+    <div class="admin-bar-brand">
+      <img src="assets/logo_shield_black_transparent.png" alt="Alpha Rhythms Crest" class="admin-bar-logo">
+      <div class="admin-bar-titles">
+        <h1>ALPHA RHYTHMS <span class="admin-badge-private"><i class="fa-solid fa-lock"></i> PRIVATE</span></h1>
+        <p class="admin-bar-sub">Band Manager Schedule Portal &bull; Manual Date Blocker</p>
+      </div>
+    </div>
+
+    <div class="admin-bar-actions">
+      <span class="admin-sync-indicator" title="Connected to main website storage">
+        <span class="sync-dot"></span> Live Sync Active
+      </span>
+      <button type="button" id="btn-admin-reset" class="btn btn-sm btn-ghost" title="Reset to original poster schedule">
+        <i class="fa-solid fa-rotate-left"></i> Reset Defaults
+      </button>
+      <a href="index.html#tour" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-gold btn-glow">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i> View Live Website
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Content: ONLY the Calendar Section -->
+  <main class="admin-main-wrapper">
+
+    <!-- Instructions & Live Statistics Card -->
+    <div class="admin-instructions-card">
+      <div class="instruct-left">
+        <i class="fa-solid fa-hand-pointer instruct-icon"></i>
+        <div class="instruct-text">
+          <h3>Click Any Date to Toggle Availability</h3>
+          <p>Tap a date to switch between <strong style="color:#ef4444;">Booked (Red)</strong> and <strong style="color:#facc15;">Available (Yellow)</strong>. Changes sync to the live website instantly.</p>
+        </div>
+      </div>
+
+      <div class="instruct-stats">
+        <div class="stat-pill stat-booked">
+          <i class="fa-solid fa-lock"></i> Booked: <span id="stat-count-booked">5</span>
+        </div>
+        <div class="stat-pill stat-available">
+          <i class="fa-solid fa-check"></i> Available: <span id="stat-count-available">26</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- The Calendar Section -->
+    <section id="tour" class="tour-section" aria-label="Alpha Rhythms December 2026 Live Booking Calendar">
+      <div class="poster-calendar-frame" id="poster-calendar-frame">
+        
+        <!-- Poster Top Header -->
+        <div class="poster-head-wrap">
+          <div class="poster-head-top">
+            <div class="poster-brand-badge">
+              <img src="assets/logo_shield_black_transparent.png" alt="Alpha Rhythms Crest" class="poster-crest-img">
+              <div class="poster-brand-text">
+                <span class="poster-est">EST. 2021</span>
+                <span class="poster-brand-title">ALPHA RHYTHMS</span>
+                <div class="poster-stars">★★★</div>
+              </div>
+            </div>
+            <div class="poster-sponsor-block">
+              <span class="poster-sponsor-domain">CoastalColors.in</span>
+              <span class="poster-sponsor-sub">Coastal Karnataka's only digital directory of Event vendors</span>
+            </div>
+          </div>
+
+          <div class="poster-title-center">
+            <div class="poster-event-eyebrow"><i class="fa-solid fa-bolt text-gold"></i> FEATURED TOUR HEADLINE</div>
+            <h2 class="poster-main-title">KONKAN FIESTA SEASON 6</h2>
+            <div class="poster-month-badge">
+              <span class="poster-month-stripes">///</span>
+              <span class="poster-month-text">7TH NOVEMBER • SOORYA WOODS, MAROLI</span>
+            </div>
+            <span class="poster-schedule-note">DECEMBER 2026 LIVE TOUR &amp; WEDDING AVAILABILITY CALENDAR</span>
+          </div>
+
+          <!-- Legend: Booked | Available -->
+          <div class="poster-legend-pill">
+            <div class="legend-chip legend-chip-booked">
+              <span class="chip-swatch swatch-red"></span>
+              <span class="chip-text">Booked (Click to Unlock)</span>
+            </div>
+            <span class="legend-divider">|</span>
+            <div class="legend-chip legend-chip-available">
+              <span class="chip-swatch swatch-yellow"></span>
+              <span class="chip-text">Available (Click to Block)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Weekdays Row -->
+        <div class="poster-weekdays-grid">
+          <div class="poster-weekday">Sun</div>
+          <div class="poster-weekday">Mon</div>
+          <div class="poster-weekday">Tue</div>
+          <div class="poster-weekday">Wed</div>
+          <div class="poster-weekday">Thu</div>
+          <div class="poster-weekday">Fri</div>
+          <div class="poster-weekday">Sat</div>
+        </div>
+
+        <!-- Calendar Days Grid (Exact 35 cells matching Poster: 3 empty, Wed 1 to Fri 31, 1 empty) -->
+        <div class="poster-days-grid" id="admin-days-grid" role="grid" aria-label="December 2026 Availability Calendar Editor">
+          <!-- Row 1: Wed 1 to Sat 4 -->
+          <div class="poster-cell cell-empty" aria-hidden="true"></div>
+          <div class="poster-cell cell-empty" aria-hidden="true"></div>
+          <div class="poster-cell cell-empty" aria-hidden="true"></div>
+          <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-01">
+            <span class="cell-num">1</span>
+          </div>
+          <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-02">
+            <span class="cell-num">2</span>
+          </div>
+          <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-03">
+            <span class="cell-num">3</span>
+          </div>
+          <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-04">
+            <span class="cell-num">4</span>
+          </div>
+
+          <!-- Row 2: Sun 5 to Sat 11 -->
+          <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-05">
+            <span class="cell-num">5</span>
+          </div>
+          <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-06">
+            <span class="cell-num">6</span>
+          </div>
+          <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-07">
+            <span class="cell-num">7</span>
+          </div>
+          <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-08">
+            <span class="cell-num">8</span>
+          </div>
+          <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-09">
+            <span class="cell-num">9</span>
+          </div>
+          <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-10">
+            <span class="cell-num">10</span>
+          </div>
+          <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-11">
+            <span class="cell-num">11</span>
+          </div>
+
+          <!-- Row 3: Sun 12 (RED) to Sat 18 -->
+          <div class="poster-cell cell-booked" role="button" tabindex="0" data-date="2026-12-12">
+            <span class="cell-num">12</span>
+          </div>
+          <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-13">
+            <span class="cell-num">13</span>
+          </div>
+          <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-14">
+            <span class="cell-num">14</span>
+          </div>
+          <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-15">
+            <span class="cell-num">15</span>
+          </div>
+          <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-16">
+            <span class="cell-num">16</span>
+          </div>
+          <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-17">
+            <span class="cell-num">17</span>
+          </div>
+          <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-18">
+            <span class="cell-num">18</span>
+          </div>
+
+          <!-- Row 4: Sun 19 to Sat 25 (RED) -->
+          <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-19">
+            <span class="cell-num">19</span>
+          </div>
+          <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-20">
+            <span class="cell-num">20</span>
+          </div>
+          <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-21">
+            <span class="cell-num">21</span>
+          </div>
+          <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-22">
+            <span class="cell-num">22</span>
+          </div>
+          <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-23">
+            <span class="cell-num">23</span>
+          </div>
+          <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-24">
+            <span class="cell-num">24</span>
+          </div>
+          <div class="poster-cell cell-booked" role="button" tabindex="0" data-date="2026-12-25">
+            <span class="cell-num">25</span>
+          </div>
+
+          <!-- Row 5: Sun 26 (RED) to Fri 31 -->
+          <div class="poster-cell cell-booked" role="button" tabindex="0" data-date="2026-12-26">
+            <span class="cell-num">26</span>
+          </div>
+          <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-27">
+            <span class="cell-num">27</span>
+          </div>
+          <div class="poster-cell cell-booked" role="button" tabindex="0" data-date="2026-12-28">
+            <span class="cell-num">28</span>
+          </div>
+          <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-29">
+            <span class="cell-num">29</span>
+          </div>
+          <div class="poster-cell cell-booked" role="button" tabindex="0" data-date="2026-12-30">
+            <span class="cell-num">30</span>
+          </div>
+          <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-31">
+            <span class="cell-num">31</span>
+          </div>
+          <div class="poster-cell cell-empty" aria-hidden="true"></div>
+        </div>
+
+        <!-- Poster Bottom Footer -->
+        <div class="poster-footer-wrap">
+          <div class="poster-footer-reach">
+            <span class="reach-text">Reach them out on </span>
+            <a href="https://www.coastalcolors.in" target="_blank" rel="noopener noreferrer" class="reach-link">www.coastalcolors.in</a>
+          </div>
+          <div class="poster-footer-triad">
+            <span>MUSIC</span> &bull; <span>ENERGY</span> &bull; <span>UNFORGETTABLE MOMENTS</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Live Toast Alert -->
+  <div id="admin-toast" class="admin-toast" role="alert" aria-live="assertive">
+    <i class="fa-solid fa-circle-check admin-toast-icon"></i>
+    <div class="admin-toast-content">
+      <strong id="toast-title">Date Updated!</strong>
+      <span id="toast-msg">December 15 status changed.</span>
+    </div>
+  </div>
+
+  <!-- Admin Controller Script -->
+  <script>
+    (function() {
+      const STORAGE_KEY = 'alpha_booked_dates_2026';
+      const DEFAULT_BOOKED_DATES = [
+        '2026-12-12',
+        '2026-12-25',
+        '2026-12-26',
+        '2026-12-28',
+        '2026-12-30'
+      ];
+
+      function getBookedDates() {
+        try {
+          const stored = localStorage.getItem(STORAGE_KEY);
+          if (stored) {
+            const parsed = JSON.parse(stored);
+            if (Array.isArray(parsed)) return parsed;
+          }
+        } catch (e) {
+          console.warn('Storage read error:', e);
+        }
+        return [...DEFAULT_BOOKED_DATES];
+      }
+
+      function saveBookedDates(dates) {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(dates));
+          // Broadcast channel for instantaneous cross-tab reflection
+          if ('BroadcastChannel' in window) {
+            const bc = new BroadcastChannel('alpha_calendar_sync');
+            bc.postMessage({ type: 'DATES_UPDATED', dates: dates });
+            bc.close();
+          }
+        } catch (e) {
+          console.warn('Storage write error:', e);
+        }
+      }
+
+      let bookedDates = getBookedDates();
+
+      const grid = document.getElementById('admin-days-grid');
+      const statBooked = document.getElementById('stat-count-booked');
+      const statAvailable = document.getElementById('stat-count-available');
+      const btnReset = document.getElementById('btn-admin-reset');
+      const toastEl = document.getElementById('admin-toast');
+      const toastTitle = document.getElementById('toast-title');
+      const toastMsg = document.getElementById('toast-msg');
+
+      let toastTimeout = null;
+      function showToast(title, msg, iconClass = 'fa-circle-check') {
+        if (!toastEl) return;
+        if (toastTimeout) clearTimeout(toastTimeout);
+        toastTitle.textContent = title;
+        toastMsg.textContent = msg;
+        const icon = toastEl.querySelector('.admin-toast-icon');
+        if (icon) icon.className = `fa-solid ${iconClass} admin-toast-icon`;
+
+        toastEl.classList.add('show');
+        toastTimeout = setTimeout(() => {
+          toastEl.classList.remove('show');
+        }, 2800);
+      }
+
+      function updateStats() {
+        if (statBooked) statBooked.textContent = bookedDates.length;
+        if (statAvailable) statAvailable.textContent = (31 - bookedDates.length);
+      }
+
+      function renderGrid() {
+        if (!grid) return;
+        const cells = grid.querySelectorAll('.poster-cell[data-date]');
+        cells.forEach(cell => {
+          const dateIso = cell.getAttribute('data-date');
+          if (!dateIso) return;
+          const dayNum = parseInt(dateIso.split('-')[2], 10);
+          const isBooked = bookedDates.includes(dateIso);
+
+          cell.classList.remove('cell-available', 'cell-booked');
+          if (isBooked) {
+            cell.classList.add('cell-booked');
+            cell.setAttribute('title', `Dec ${dayNum}: BOOKED (Click to set Available)`);
+          } else {
+            cell.classList.add('cell-available');
+            cell.setAttribute('title', `Dec ${dayNum}: AVAILABLE (Click to set Booked)`);
+          }
+
+          cell.onclick = (e) => {
+            e.preventDefault();
+            if (bookedDates.includes(dateIso)) {
+              bookedDates = bookedDates.filter(d => d !== dateIso);
+              saveBookedDates(bookedDates);
+              renderGrid();
+              showToast(`December ${dayNum} Unlocked!`, `Status set to AVAILABLE (Yellow). Live site updated.`, 'fa-unlock');
+            } else {
+              bookedDates.push(dateIso);
+              saveBookedDates(bookedDates);
+              renderGrid();
+              showToast(`December ${dayNum} Blocked!`, `Status set to BOOKED (Red). Live site updated.`, 'fa-lock');
+            }
+          };
+
+          cell.onkeydown = (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              cell.click();
+            }
+          };
+        });
+
+        updateStats();
+      }
+
+      if (btnReset) {
+        btnReset.addEventListener('click', () => {
+          if (confirm('Reset December 2026 schedule back to official defaults (Dec 12, 25, 26, 28, 30)?')) {
+            bookedDates = [...DEFAULT_BOOKED_DATES];
+            saveBookedDates(bookedDates);
+            renderGrid();
+            showToast('Schedule Reset!', 'Default poster dates restored across all pages.', 'fa-rotate-left');
+          }
+        });
+      }
+
+      // Cross-tab synchronization
+      window.addEventListener('storage', (e) => {
+        if (e.key === STORAGE_KEY) {
+          bookedDates = getBookedDates();
+          renderGrid();
+        }
+      });
+
+      renderGrid();
+    })();
+  </script>
+</body>
+</html>

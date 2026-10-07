@@ -1691,197 +1691,150 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
      - Yellow cells: Available dates (Tap to Lock & Reserve)
      - WhatsApp direct band manager inquiry
      ======================================================== */
+  /* ========================================================
+     SECTION 3: AUTHENTIC POSTER AVAILABILITY CALENDAR & ADMIN SYSTEM
+     Features:
+     - Exact CoastalColors.in December 2026 poster layout & styling
+     - Baseline official booked dates: Dec 12, 25, 26, 28, 30
+     - Minimalist Date Dialogue Modal: Contains ONLY Phone number, Call button, WhatsApp button, and Close
+     - Private Admin Mode (?admin=alpha2026 or #admin or footer admin trigger):
+       - Manager can click any date to toggle between Booked (Red) & Available (Yellow)
+       - Automatically saved to localStorage ('alpha_booked_dates_2026')
+       - One-click copy admin link & reset to defaults
+     ======================================================== */
   function initLiveBookingCalendar() {
-    const calDaysGrid = document.getElementById('cal-days-grid');
-    if (!calDaysGrid) return;
+    const posterGrid = document.getElementById('poster-days-grid');
+    if (!posterGrid) return;
 
-    // Official Dec 2026 baseline bookings from Instagram poster
-    const OFFICIAL_BOOKINGS = {
-      '2026-12-12': {
-        date: '2026-12-12',
-        title: 'Grand Wedding Headline Act',
-        client: 'Mangalore VIP Wedding Gala',
-        city: 'Mangalore, Karnataka',
-        venue: 'Ocean View Grounds',
-        status: 'Official Dec 2026 Schedule',
-        isOfficial: true
-      },
-      '2026-12-25': {
-        date: '2026-12-25',
-        title: 'Christmas Arena Gala',
-        client: 'Bangalore Concert Showcase',
-        city: 'Bangalore, Karnataka',
-        venue: 'Whitefield Arena',
-        status: 'Official Dec 2026 Schedule',
-        isOfficial: true
-      },
-      '2026-12-26': {
-        date: '2026-12-26',
-        title: 'Grand Wedding Extravaganza',
-        client: 'Grand Wedding Reception',
-        city: 'Udupi, Karnataka',
-        venue: 'Manipal Country Club',
-        status: 'Official Dec 2026 Schedule',
-        isOfficial: true
-      },
-      '2026-12-28': {
-        date: '2026-12-28',
-        title: 'Luxury Sangeet & Reception',
-        client: 'Goa Coastal Celebration',
-        city: 'Goa',
-        venue: 'Vagator Grand Ballroom',
-        status: 'Official Dec 2026 Schedule',
-        isOfficial: true
-      },
-      '2026-12-30': {
-        date: '2026-12-30',
-        title: 'Pre-New Year Festival Concert',
-        client: 'Coastal Karnataka Festival',
-        city: 'Coastal Karnataka',
-        venue: 'Main Festival Stage',
-        status: 'Official Dec 2026 Schedule',
-        isOfficial: true
-      }
-    };
-
-    const MONTH_NAMES = [
-      'JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE',
-      'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'
+    // Default official booked dates matching the Instagram/CoastalColors poster
+    const DEFAULT_BOOKED_DATES = [
+      '2026-12-12',
+      '2026-12-25',
+      '2026-12-26',
+      '2026-12-28',
+      '2026-12-30'
     ];
 
-    const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-    // Start on December 2026 (Month 11 in 0-indexed JS Date)
-    let currentYear = 2026;
-    let currentMonth = 11;
-
-    // Elements
-    const monthTitleEl = document.getElementById('cal-month-title');
-    const bannerMonthEl = document.getElementById('cal-banner-month');
-    const scheduleTagEl = document.getElementById('cal-schedule-tag');
-    const prevBtn = document.getElementById('cal-prev-btn');
-    const nextBtn = document.getElementById('cal-next-btn');
-
-    // Modals
-    const bookingModal = document.getElementById('calendar-booking-modal');
-    const bookingCloseBtn = document.getElementById('cal-booking-close');
-    const bookingCancelBtn = document.getElementById('cal-booking-cancel');
-    const bookingTitleEl = document.getElementById('cal-booking-title');
-    const bookingSubEl = document.getElementById('cal-booking-sub');
-
-    const lockedModal = document.getElementById('calendar-locked-modal');
-    const lockedCloseBtn = document.getElementById('cal-locked-close');
-    const lockedTitleEl = document.getElementById('cal-locked-title');
-    const lockedDateBadge = document.getElementById('locked-date-badge');
-    const lockedEventName = document.getElementById('locked-event-name');
-    const lockedCityName = document.getElementById('locked-city-name');
-    const lockedStatusText = document.getElementById('locked-status-text');
-    const lockedWhatsAppLink = document.getElementById('locked-whatsapp-link');
-
-    // Format Date string helper
-    function formatDateDisplay(year, month, day) {
-      const dateObj = new Date(year, month, day);
-      const dayName = DAY_NAMES[dateObj.getDay()];
-      const monthName = MONTH_NAMES[month];
-      return {
-        year,
-        month,
-        day,
-        monthName,
-        dayName,
-        full: `${monthName} ${day}, ${year}`,
-        withDay: `${dayName}, ${monthName} ${day}, ${year}`,
-        iso: `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`
-      };
+    // Load custom booked dates from localStorage if available
+    function getBookedDates() {
+      try {
+        const stored = localStorage.getItem('alpha_booked_dates_2026');
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed)) return parsed;
+        }
+      } catch (e) {
+        console.warn('Could not read booked dates from storage', e);
+      }
+      return [...DEFAULT_BOOKED_DATES];
     }
 
-    // Open Direct Contact Modal for an available date
-    function openBookingModal(dateInfo) {
-      if (bookingTitleEl) bookingTitleEl.textContent = dateInfo.full.toUpperCase();
-      if (bookingSubEl) {
-        bookingSubEl.innerHTML = `<strong>${dateInfo.withDay}</strong> is currently <strong class="text-gold">AVAILABLE</strong>.`;
-      }
-      const waBtn = document.getElementById('cal-booking-wa-btn');
-      if (waBtn) {
-        const msg = encodeURIComponent(`Hi Alpha Rhythms, I am inquiring to book the band for ${dateInfo.full} (${dateInfo.withDay}). Please confirm availability and lock the date.`);
-        waBtn.href = `https://wa.me/917349099787?text=${msg}`;
-      }
-      const callBtn = document.getElementById('cal-booking-call-btn');
-      if (callBtn) {
-        callBtn.href = 'tel:+917349099787';
-      }
-      if (bookingModal) {
-        bookingModal.classList.remove('hidden');
-        document.body.classList.add('modal-open');
+    function saveBookedDates(dates) {
+      try {
+        localStorage.setItem('alpha_booked_dates_2026', JSON.stringify(dates));
+      } catch (e) {
+        console.warn('Could not save booked dates to storage', e);
       }
     }
 
-    function closeBookingModal() {
-      if (bookingModal) {
-        bookingModal.classList.add('hidden');
+    let bookedDates = getBookedDates();
+
+    // Modal elements (Minimalist dialogue box)
+    const dateModal = document.getElementById('date-dialog-modal');
+    const dateModalClose = document.getElementById('date-dialog-close');
+    const dateModalCancel = document.getElementById('date-dialog-cancel');
+    const dateModalTitle = document.getElementById('date-dialog-title');
+    const dateModalStatus = document.getElementById('date-dialog-status');
+    const dateModalCallBtn = document.getElementById('date-dialog-call-btn');
+    const dateModalWaBtn = document.getElementById('date-dialog-wa-btn');
+
+    function openMinimalDateModal(dateIso, isBooked, dayNum) {
+      if (!dateModal) return;
+
+      const dateObj = new Date(2026, 11, dayNum);
+      const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const dayName = dayNames[dateObj.getDay()];
+      const displayTitle = `DECEMBER ${dayNum}, 2026`;
+
+      if (dateModalTitle) {
+        dateModalTitle.textContent = displayTitle;
+      }
+
+      if (dateModalStatus) {
+        if (isBooked) {
+          dateModalStatus.textContent = 'BOOKED';
+          dateModalStatus.className = 'dialog-status-pill status-booked';
+        } else {
+          dateModalStatus.textContent = 'AVAILABLE';
+          dateModalStatus.className = 'dialog-status-pill status-available';
+        }
+      }
+
+      if (dateModalCallBtn) {
+        dateModalCallBtn.href = 'tel:+917349099787';
+      }
+
+      if (dateModalWaBtn) {
+        let msg = '';
+        if (isBooked) {
+          msg = encodeURIComponent(`Hi Alpha Rhythms, I saw that December ${dayNum}, 2026 (${dayName}) is booked on your schedule. Are there any nearby dates or slots available?`);
+        } else {
+          msg = encodeURIComponent(`Hi Alpha Rhythms, I would like to inquire about booking the band on December ${dayNum}, 2026 (${dayName}). Please let me know availability and pricing.`);
+        }
+        dateModalWaBtn.href = `https://wa.me/917349099787?text=${msg}`;
+      }
+
+      dateModal.classList.remove('hidden');
+      document.body.classList.add('modal-open');
+    }
+
+    function closeMinimalDateModal() {
+      if (dateModal) {
+        dateModal.classList.add('hidden');
         document.body.classList.remove('modal-open');
       }
     }
 
-    // Open Locked Modal for inspecting booked date
-    function openLockedModal(dateInfo, booking) {
-      if (lockedTitleEl) lockedTitleEl.textContent = dateInfo.full;
-      if (lockedDateBadge) lockedDateBadge.textContent = dateInfo.withDay.toUpperCase();
-      if (lockedEventName) lockedEventName.textContent = (booking && booking.title) ? booking.title : 'Wedding Headline & Arena Set';
-      if (lockedCityName) lockedCityName.textContent = (booking && (booking.city || booking.venue)) ? `${booking.city || booking.venue}` : 'Mangalore / Bangalore';
-      if (lockedStatusText) {
-        lockedStatusText.textContent = (booking && booking.status) ? booking.status : 'Confirmed Booking (Dec 2026 Schedule)';
-      }
-
-      if (lockedWhatsAppLink) {
-        const text = encodeURIComponent(`Hi Alpha Rhythms, I saw that ${dateInfo.full} is booked for an event. Are there nearby dates or alternate slots available?`);
-        lockedWhatsAppLink.href = `https://wa.me/917349099787?text=${text}`;
-      }
-
-      if (lockedModal) {
-        lockedModal.classList.remove('hidden');
-        document.body.classList.add('modal-open');
-      }
+    if (dateModalClose) dateModalClose.addEventListener('click', closeMinimalDateModal);
+    if (dateModalCancel) dateModalCancel.addEventListener('click', closeMinimalDateModal);
+    if (dateModal) {
+      dateModal.addEventListener('click', (e) => {
+        if (e.target === dateModal) closeMinimalDateModal();
+      });
     }
 
-    function closeLockedModal() {
-      if (lockedModal) {
-        lockedModal.classList.add('hidden');
-        document.body.classList.remove('modal-open');
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && dateModal && !dateModal.classList.contains('hidden')) {
+        closeMinimalDateModal();
       }
-    }
+    });
 
-    // Bind event listeners to existing static or newly rendered cells
-    function bindGridCellListeners() {
-      const cells = calDaysGrid.querySelectorAll('.cal-day-cell');
+    // Sync all cell states and click handlers
+    function syncGridCells() {
+      const cells = posterGrid.querySelectorAll('.poster-cell[data-date]');
       cells.forEach(cell => {
-        if (cell.classList.contains('cal-day-empty')) return;
         const dateIso = cell.getAttribute('data-date');
         if (!dateIso) return;
+        const dayNum = parseInt(dateIso.split('-')[2], 10);
+        const isBooked = bookedDates.includes(dateIso);
 
-        const parts = dateIso.split('-');
-        if (parts.length !== 3) return;
-        const y = parseInt(parts[0], 10);
-        const m = parseInt(parts[1], 10) - 1;
-        const d = parseInt(parts[2], 10);
-        const dateInfo = formatDateDisplay(y, m, d);
+        // Update classes
+        cell.classList.remove('cell-available', 'cell-booked');
+        if (isBooked) {
+          cell.classList.add('cell-booked');
+          cell.setAttribute('aria-label', `December ${dayNum}, 2026 - Booked`);
+        } else {
+          cell.classList.add('cell-available');
+          cell.setAttribute('aria-label', `December ${dayNum}, 2026 - Available`);
+        }
 
-        // Replace click handler cleanly
+        // Attach click handler -> ALWAYS opens minimal contact dialogue
         cell.onclick = (e) => {
           e.preventDefault();
-          if (cell.classList.contains('cal-day-booked')) {
-            const booking = OFFICIAL_BOOKINGS[dateIso] || {
-              title: cell.querySelector('.cal-day-event')?.textContent || 'Wedding Performance',
-              city: 'Mangalore / Bangalore',
-              status: 'Confirmed Booking'
-            };
-            openLockedModal(dateInfo, booking);
-          } else {
-            openBookingModal(dateInfo);
-          }
+          openMinimalDateModal(dateIso, isBooked, dayNum);
         };
 
-        // Keyboard enter / space support
+        // Keyboard navigation
         cell.onkeydown = (e) => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
@@ -1891,178 +1844,26 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
       });
     }
 
-    // Render Calendar for currentYear & currentMonth
-    function renderCalendar() {
-      const monthName = MONTH_NAMES[currentMonth];
-      if (monthTitleEl) monthTitleEl.textContent = `${monthName} ${currentYear}`;
-      if (bannerMonthEl) bannerMonthEl.textContent = `${monthName} ${currentYear}`;
-
-      if (scheduleTagEl) {
-        if (currentYear === 2026 && currentMonth === 11) {
-          scheduleTagEl.innerHTML = '<i class="fa-solid fa-circle-check"></i> WEDDING SCHEDULE';
-          scheduleTagEl.style.color = 'var(--accent-gold)';
-        } else {
-          scheduleTagEl.innerHTML = '<i class="fa-solid fa-calendar-check"></i> TOUR & BOOKING DATES';
-          scheduleTagEl.style.color = '#38bdf8';
-        }
-      }
-
-      calDaysGrid.innerHTML = '';
-
-      const firstDayIndex = new Date(currentYear, currentMonth, 1).getDay();
-      const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-
-      // Leading empty padding cells for preceding month days
-      for (let i = 0; i < firstDayIndex; i++) {
-        const emptyCell = document.createElement('div');
-        emptyCell.className = 'cal-day-cell cal-day-empty';
-        emptyCell.setAttribute('aria-hidden', 'true');
-        calDaysGrid.appendChild(emptyCell);
-      }
-
-      // Populate Month Days
-      for (let day = 1; day <= daysInMonth; day++) {
-        const dateInfo = formatDateDisplay(currentYear, currentMonth, day);
-        const dateKey = dateInfo.iso;
-        const booking = OFFICIAL_BOOKINGS[dateKey];
-        const isBooked = !!booking;
-
-        const cell = document.createElement('div');
-        cell.className = 'cal-day-cell ' + (isBooked ? 'cal-day-booked' : 'cal-day-available');
-        cell.setAttribute('role', 'button');
-        cell.setAttribute('tabindex', '0');
-        cell.setAttribute('data-date', dateKey);
-
-        if (isBooked) {
-          cell.setAttribute('aria-label', `${dateInfo.withDay} - Booked: ${booking.title}`);
-          cell.innerHTML = `
-            <div class="cal-day-header">
-              <span class="cal-day-num">${day}</span>
-              <span class="cal-lock-icon"><i class="fa-solid fa-circle-check"></i></span>
-            </div>
-            <div class="cal-day-bottom">
-              <span class="cal-day-badge"><i class="fa-solid fa-circle-check"></i> <span class="badge-text-full">BOOKED</span><span class="badge-text-short">BOOKED</span></span>
-              <span class="cal-day-event" title="${booking.title}">${booking.title}</span>
-            </div>
-          `;
-          cell.addEventListener('click', (e) => {
-            e.preventDefault();
-            openLockedModal(dateInfo, booking);
-          });
-        } else {
-          cell.setAttribute('aria-label', `${dateInfo.withDay} - Available for Booking`);
-          cell.innerHTML = `
-            <div class="cal-day-header">
-              <span class="cal-day-num">${day}</span>
-            </div>
-            <div class="cal-day-bottom">
-              <span class="cal-day-badge"><span class="badge-text-full">AVAILABLE</span><span class="badge-text-short">OPEN</span></span>
-              <span class="cal-day-action-hint"><i class="fa-solid fa-arrow-pointer"></i> Tap to Lock</span>
-            </div>
-          `;
-          cell.addEventListener('click', (e) => {
-            e.preventDefault();
-            openBookingModal(dateInfo);
-          });
-        }
-
-        cell.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            cell.click();
-          }
-        });
-
-        calDaysGrid.appendChild(cell);
-      }
-    }
-
-    // Modal Close Events
-    if (bookingCloseBtn) bookingCloseBtn.addEventListener('click', closeBookingModal);
-    if (bookingCancelBtn) bookingCancelBtn.addEventListener('click', closeBookingModal);
-    if (bookingModal) {
-      bookingModal.addEventListener('click', (e) => {
-        if (e.target === bookingModal) closeBookingModal();
-      });
-    }
-
-    if (lockedCloseBtn) lockedCloseBtn.addEventListener('click', closeLockedModal);
-    if (lockedModal) {
-      lockedModal.addEventListener('click', (e) => {
-        if (e.target === lockedModal) closeLockedModal();
-      });
-    }
-
-    // Navigation Controls
-    if (prevBtn) {
-      prevBtn.addEventListener('click', () => {
-        currentMonth--;
-        if (currentMonth < 0) {
-          currentMonth = 11;
-          currentYear--;
-        }
-        renderCalendar();
-      });
-    }
-
-    if (nextBtn) {
-      nextBtn.addEventListener('click', () => {
-        currentMonth++;
-        if (currentMonth > 11) {
-          currentMonth = 0;
-          currentYear++;
-        }
-        renderCalendar();
-      });
-    }
-
-    // Keyboard ESC to close modals
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        closeBookingModal();
-        closeLockedModal();
+    // Real-time synchronization with admin.html (via localStorage storage event & BroadcastChannel)
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'alpha_booked_dates_2026') {
+        bookedDates = getBookedDates();
+        syncGridCells();
       }
     });
 
-    // Tour View Switcher (Shows List vs Calendar View)
-    const btnViewShows = document.getElementById('btn-view-shows');
-    const btnViewCalendar = document.getElementById('btn-view-calendar');
-    const tourShowsView = document.getElementById('tour-shows-view');
-    const tourCalendarView = document.getElementById('tour-calendar-view');
-
-    if (btnViewShows && btnViewCalendar && tourShowsView && tourCalendarView) {
-      btnViewShows.addEventListener('click', () => {
-        btnViewShows.classList.add('active');
-        btnViewShows.setAttribute('aria-selected', 'true');
-        btnViewCalendar.classList.remove('active');
-        btnViewCalendar.setAttribute('aria-selected', 'false');
-
-        tourShowsView.classList.remove('hidden');
-        tourCalendarView.classList.add('hidden');
-
-        if (window.__alphaLenis) window.__alphaLenis.resize();
-      });
-
-      btnViewCalendar.addEventListener('click', () => {
-        btnViewCalendar.classList.add('active');
-        btnViewCalendar.setAttribute('aria-selected', 'true');
-        btnViewShows.classList.remove('active');
-        btnViewShows.setAttribute('aria-selected', 'false');
-
-        tourCalendarView.classList.remove('hidden');
-        tourShowsView.classList.add('hidden');
-
-        if (window.__alphaLenis) window.__alphaLenis.resize();
-      });
+    if ('BroadcastChannel' in window) {
+      const bc = new BroadcastChannel('alpha_calendar_sync');
+      bc.onmessage = (e) => {
+        if (e.data && e.data.type === 'DATES_UPDATED' && Array.isArray(e.data.dates)) {
+          bookedDates = e.data.dates;
+          syncGridCells();
+        }
+      };
     }
 
-    // Check if grid already has static cells populated
-    const existingDays = calDaysGrid.querySelectorAll('.cal-day-cell:not(.cal-day-empty)');
-    if (existingDays.length === 31) {
-      bindGridCellListeners();
-    } else {
-      renderCalendar();
-    }
+    // Initial render
+    syncGridCells();
   }
 
   // Initialize Live Booking Calendar in 3rd Section!
@@ -2166,29 +1967,35 @@ Please let me know availability and pricing for this date!`;
     const heroSection = document.getElementById('hero');
     const perfSection = document.getElementById('performances');
 
-    // 1. Lenis Smooth Scroll Initialization with Zero-Lag Momentum
+    // 1. Smooth Scroll Initialization with Zero-Lag Momentum
     let lenis = null;
     let cachedMaxScroll = 1;
     let cachedHeroBottom = 0;
+    let cachedSectionOffsets = [];
 
     function cacheLayoutMetrics() {
       cachedMaxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
       if (heroSection) {
         cachedHeroBottom = heroSection.offsetTop + heroSection.offsetHeight;
       }
+      const sectionIds = ['contact', 'band', 'tour', 'performances', 'hero'];
+      cachedSectionOffsets = sectionIds.map(id => {
+        const el = document.getElementById(id);
+        return { id, top: el ? el.offsetTop : 0 };
+      });
     }
 
     if (typeof Lenis !== 'undefined') {
       try {
         lenis = new Lenis({
-          lerp: 0.082, // Silky smooth inertia glide with immediate response
-          duration: 1.2,
+          lerp: 0.16, // Snappy, buttery smooth, instant feedback, no floaty lag
+          duration: 0.5,
           easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
           orientation: 'vertical',
           gestureOrientation: 'vertical',
           smoothWheel: true,
-          wheelMultiplier: 0.95,
-          touchMultiplier: 1.4,
+          wheelMultiplier: 1.0,
+          touchMultiplier: 1.0,
           smoothTouch: false, // Keep native 120Hz touch physics on mobile/iOS
           autoResize: true
         });
@@ -2211,10 +2018,17 @@ Please let me know availability and pricing for this date!`;
       }
     }
 
-    // Native scroll fallback / backup tracker
+    // Native scroll fallback / backup tracker with RAF debouncing
+    let isNativeScrollTicking = false;
     window.addEventListener('scroll', () => {
       if (!lenis) {
-        updateScrollMetrics(window.scrollY);
+        if (!isNativeScrollTicking) {
+          isNativeScrollTicking = true;
+          requestAnimationFrame(() => {
+            updateScrollMetrics(window.scrollY);
+            isNativeScrollTicking = false;
+          });
+        }
       }
     }, { passive: true });
 
@@ -2224,17 +2038,12 @@ Please let me know availability and pricing for this date!`;
     let lastActiveId = '';
     function updateActiveNavLink(currentScroll) {
       const y = (typeof currentScroll === 'number' ? currentScroll : (window.scrollY || window.pageYOffset || 0)) + 140;
-      const sectionIds = ['contact', 'band', 'tour', 'performances', 'hero'];
       let activeId = 'hero';
 
-      for (const id of sectionIds) {
-        const sec = document.getElementById(id);
-        if (sec) {
-          const top = sec.offsetTop;
-          if (y >= top) {
-            activeId = id;
-            break;
-          }
+      for (const item of cachedSectionOffsets) {
+        if (y >= item.top) {
+          activeId = item.id;
+          break;
         }
       }
 
