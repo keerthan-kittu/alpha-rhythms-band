@@ -23,9 +23,66 @@ const MIME_TYPES = {
   '.ttf': 'font/ttf'
 };
 
+// Load .env.local if present
+try {
+  const envPath = path.join(ROOT, '.env.local');
+  if (fs.existsSync(envPath)) {
+    const envContent = fs.readFileSync(envPath, 'utf8');
+    envContent.split('\n').forEach(line => {
+      const [k, ...v] = line.split('=');
+      if (k && v.length) process.env[k.trim()] = v.join('=').trim().replace(/^\"|\"$/g, '');
+    });
+  }
+} catch (e) {}
+
+let calendarHandler = null;
+try {
+  calendarHandler = require('./api/calendar.js');
+} catch (e) {}
+
 const server = http.createServer((req, res) => {
   // Strip query string
   let reqPath = req.url.split('?')[0];
+
+  // Route API requests
+  if (reqPath === '/api/calendar' && calendarHandler) {
+    if (req.method === 'POST') {
+      let bodyStr = '';
+      req.on('data', chunk => { bodyStr += chunk; });
+      req.on('end', () => {
+        try { req.body = JSON.parse(bodyStr); } catch (e) { req.body = bodyStr; }
+        calendarHandler(req, {
+          setHeader: (name, val) => res.setHeader(name, val),
+          status: (code) => {
+            res.statusCode = code;
+            return {
+              json: (data) => {
+                res.setHeader('Content-Type', 'application/json');
+                res.end(JSON.stringify(data));
+              },
+              end: () => res.end()
+            };
+          }
+        });
+      });
+      return;
+    } else {
+      return calendarHandler(req, {
+        setHeader: (name, val) => res.setHeader(name, val),
+        status: (code) => {
+          res.statusCode = code;
+          return {
+            json: (data) => {
+              res.setHeader('Content-Type', 'application/json');
+              res.end(JSON.stringify(data));
+            },
+            end: () => res.end()
+          };
+        }
+      });
+    }
+  }
+
   if (reqPath === '/' || reqPath === '') {
     reqPath = '/index.html';
   }

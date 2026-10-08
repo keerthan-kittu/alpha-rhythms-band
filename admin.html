@@ -115,6 +115,17 @@
       border-radius: 50%;
       box-shadow: 0 0 8px #10b981;
       animation: pulseSync 2s infinite ease-in-out;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .sync-dot.sync-saving {
+      background: #facc15;
+      box-shadow: 0 0 8px #facc15;
+    }
+
+    .sync-dot.sync-error {
+      background: #ef4444;
+      box-shadow: 0 0 8px #ef4444;
     }
 
     @keyframes pulseSync {
@@ -335,8 +346,8 @@
     </div>
 
     <div class="admin-bar-actions">
-      <span class="admin-sync-indicator" title="Connected to main website storage">
-        <span class="sync-dot"></span> Live Sync Active
+      <span class="admin-sync-indicator" id="admin-sync-indicator" title="Connected to Central Cloud Database">
+        <span class="sync-dot" id="sync-dot"></span> <span id="sync-text">Cloud Sync Active</span>
       </span>
       <button type="button" id="btn-admin-reset" class="btn btn-sm btn-ghost" title="Reset to original poster schedule">
         <i class="fa-solid fa-rotate-left"></i> Reset Defaults
@@ -572,6 +583,27 @@
         '2026-12-30'
       ];
 
+      const CLOUD_ENDPOINTS = [
+        '/api/calendar',
+        'https://alpha-rhythms-band.vercel.app/api/calendar'
+      ];
+
+      function updateSyncStatus(status, text) {
+        const dot = document.getElementById('sync-dot');
+        const txt = document.getElementById('sync-text');
+        if (!dot || !txt) return;
+        dot.className = 'sync-dot';
+        if (status === 'saving') {
+          dot.classList.add('sync-saving');
+          txt.textContent = text || 'Saving to Cloud...';
+        } else if (status === 'error') {
+          dot.classList.add('sync-error');
+          txt.textContent = text || 'Sync Error (Retrying)';
+        } else {
+          txt.textContent = text || 'Cloud Synced ✓';
+        }
+      }
+
       function getBookedDates() {
         try {
           const stored = localStorage.getItem(STORAGE_KEY);
@@ -583,6 +615,48 @@
           console.warn('Storage read error:', e);
         }
         return [...DEFAULT_BOOKED_DATES];
+      }
+
+      async function syncDatesToCloud(dates) {
+        updateSyncStatus('saving', 'Saving to Cloud...');
+        for (const endpoint of CLOUD_ENDPOINTS) {
+          try {
+            const res = await fetch(endpoint, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ dates })
+            });
+            if (res.ok) {
+              updateSyncStatus('ready', 'Cloud Synced ✓');
+              return true;
+            }
+          } catch (err) {
+            console.warn(`Failed saving to ${endpoint}:`, err);
+          }
+        }
+        updateSyncStatus('error', 'Cloud Sync Pending');
+        return false;
+      }
+
+      async function fetchDatesFromCloud() {
+        for (const endpoint of CLOUD_ENDPOINTS) {
+          try {
+            const freshUrl = `${endpoint}${endpoint.includes('?') ? '&' : '?'}t=${Date.now()}`;
+            const res = await fetch(freshUrl, { cache: 'no-store' });
+            if (res.ok) {
+              const data = await res.json();
+              if (Array.isArray(data.dates)) {
+                bookedDates = data.dates;
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(bookedDates));
+                renderGrid();
+                updateSyncStatus('ready', 'Cloud Synced ✓');
+                return;
+              }
+            }
+          } catch (err) {
+            console.warn(`Failed fetching from ${endpoint}:`, err);
+          }
+        }
       }
 
       function saveBookedDates(dates) {
@@ -597,6 +671,7 @@
         } catch (e) {
           console.warn('Storage write error:', e);
         }
+        syncDatesToCloud(dates);
       }
 
       let bookedDates = getBookedDates();
@@ -693,6 +768,7 @@
       });
 
       renderGrid();
+      fetchDatesFromCloud();
     })();
   </script>
 </body>

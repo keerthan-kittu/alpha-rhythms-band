@@ -1862,8 +1862,42 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
       };
     }
 
-    // Initial render
+    // Real-time cloud synchronization
+    async function syncWithCloudCalendar() {
+      const endpoints = [
+        '/api/calendar',
+        'https://alpha-rhythms-band.vercel.app/api/calendar'
+      ];
+      for (const endpoint of endpoints) {
+        try {
+          const freshUrl = `${endpoint}${endpoint.includes('?') ? '&' : '?'}t=${Date.now()}`;
+          const res = await fetch(freshUrl, { cache: 'no-store' });
+          if (res.ok) {
+            const data = await res.json();
+            if (Array.isArray(data.dates)) {
+              bookedDates = data.dates;
+              saveBookedDates(bookedDates);
+              syncGridCells();
+              return;
+            }
+          }
+        } catch (err) {
+          // Network fallback to local/cached state
+        }
+      }
+    }
+
+    // Initial render & cloud sync
     syncGridCells();
+    syncWithCloudCalendar();
+
+    // Re-check cloud when tab regains focus or every 20 seconds
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') {
+        syncWithCloudCalendar();
+      }
+    });
+    setInterval(syncWithCloudCalendar, 20000);
   }
 
   // Initialize Live Booking Calendar in 3rd Section!
