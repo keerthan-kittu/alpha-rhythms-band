@@ -225,11 +225,13 @@ Alpha Rhythms on stage at Tiara!
   // 2. TIARA INTRO LOADER ANIMATION LIFECYCLE & INTERACTIVITY
   // ==========================================================
   const hudStatuses = [
-    "Concert sound system pre-heating...",
-    "Equalizing 44.1 kHz master audio bus...",
-    "Igniting liquid gold stage illumination...",
-    "Harmonics aligned • Concert stage ready...",
-    "100% Resonance Locked • Arena Gates Opening!"
+    "Injecting dual-frequency resonance...",
+    "Yellow outline descending from crown...",
+    "White rhythm matrix ascending from base...",
+    "Harmonics colliding at nexus...",
+    "Natural colors united • Locked in resonance...",
+    "Full band power ignited • 100% resonance!",
+    "Alpha Rhythms portal opening..."
   ];
 
   let loaderInterval = null;
@@ -318,25 +320,13 @@ Alpha Rhythms on stage at Tiara!
 
     if (shockwaveRing) shockwaveRing.classList.remove('pulse');
 
-    // Reset yellow outline & white inner (liquid masks)
-    if (yellowOutlineImg) {
-      yellowOutlineImg.style.setProperty('--reveal-y', '0%');
-      yellowOutlineImg.style.clipPath = 'inset(0 0 100% 0)';
-      yellowOutlineImg.style.maskImage = '';
-      yellowOutlineImg.style.webkitMaskImage = '';
-    }
-    if (whiteInnerImg) {
-      whiteInnerImg.style.setProperty('--reveal-w', '0%');
-      whiteInnerImg.style.clipPath = 'inset(100% 0 0 0)';
-      whiteInnerImg.style.maskImage = '';
-      whiteInnerImg.style.webkitMaskImage = '';
-    }
+    // Reset yellow outline (descends from above: initially inset 100% from bottom)
+    if (yellowOutlineImg) yellowOutlineImg.style.clipPath = 'inset(0 0 100% 0)';
+    if (whiteInnerImg) whiteInnerImg.style.clipPath = 'inset(100% 0 0 0)';
 
     if (meterFillEl) meterFillEl.style.width = `0%`;
     if (loadPercentEl) loadPercentEl.textContent = '0';
-    const statusLabelInit = document.getElementById('hud-status-label');
-    if (statusLabelInit) statusLabelInit.textContent = hudStatuses[0];
-    else if (hudStatusEl) hudStatusEl.textContent = hudStatuses[0];
+    if (hudStatusEl) hudStatusEl.textContent = hudStatuses[0];
 
     if (loaderRaf) cancelAnimationFrame(loaderRaf);
     if (loaderInterval) clearInterval(loaderInterval);
@@ -370,26 +360,19 @@ Alpha Rhythms on stage at Tiara!
       const pClamped = Math.max(0, Math.min(100, progress));
       if (meterFillEl) meterFillEl.style.width = `${pClamped.toFixed(2)}%`;
 
-      // 1. Yellow Outline reveals from top to bottom (with liquid gradient mask)
+      // 1. Yellow Outline reveals from top to bottom (descends from above)
       if (yellowOutlineImg) {
-        yellowOutlineImg.style.setProperty('--reveal-y', `${pClamped.toFixed(1)}%`);
-        yellowOutlineImg.style.clipPath = `inset(0 0 ${(100 - pClamped).toFixed(1)}% 0)`;
+        yellowOutlineImg.style.clipPath = `inset(0 0 ${(100 - pClamped).toFixed(2)}% 0)`;
       }
 
-      // 2. White Inner Art reveals from bottom to top (with liquid gradient mask)
+      // 2. White Inner Art reveals from bottom to top (ascends from below)
       if (whiteInnerImg) {
-        whiteInnerImg.style.setProperty('--reveal-w', `${pClamped.toFixed(1)}%`);
-        whiteInnerImg.style.clipPath = `inset(${(100 - pClamped).toFixed(1)}% 0 0 0)`;
+        whiteInnerImg.style.clipPath = `inset(${(100 - pClamped).toFixed(2)}% 0 0 0)`;
       }
 
       // Update status text
       const statusIndex = Math.min(hudStatuses.length - 1, Math.floor((progress / 100) * hudStatuses.length));
-      const statusLabel = document.getElementById('hud-status-label');
-      if (statusLabel) {
-        if (statusLabel.textContent !== hudStatuses[statusIndex]) {
-          statusLabel.textContent = hudStatuses[statusIndex];
-        }
-      } else if (hudStatusEl && hudStatusEl.textContent !== hudStatuses[statusIndex]) {
+      if (hudStatusEl && hudStatusEl.textContent !== hudStatuses[statusIndex]) {
         hudStatusEl.textContent = hudStatuses[statusIndex];
       }
 
@@ -400,18 +383,8 @@ Alpha Rhythms on stage at Tiara!
         state.loadProgress = 100;
         if (loadPercentEl) loadPercentEl.textContent = '100';
         if (meterFillEl) meterFillEl.style.width = '100%';
-        if (yellowOutlineImg) {
-          yellowOutlineImg.style.setProperty('--reveal-y', '100%');
-          yellowOutlineImg.style.clipPath = 'none';
-          yellowOutlineImg.style.maskImage = 'none';
-          yellowOutlineImg.style.webkitMaskImage = 'none';
-        }
-        if (whiteInnerImg) {
-          whiteInnerImg.style.setProperty('--reveal-w', '100%');
-          whiteInnerImg.style.clipPath = 'none';
-          whiteInnerImg.style.maskImage = 'none';
-          whiteInnerImg.style.webkitMaskImage = 'none';
-        }
+        if (yellowOutlineImg) yellowOutlineImg.style.clipPath = 'inset(0 0 0 0)';
+        if (whiteInnerImg) whiteInnerImg.style.clipPath = 'inset(0 0 0 0)';
 
         // Trigger luminous shockwave pulse
         if (shockwaveRing) {

@@ -48,63 +48,43 @@
     <!-- Interactive Cosmic Sparkles Canvas -->
     <canvas id="loader-interactive-canvas" class="loader-canvas"></canvas>
 
-    <!-- Concert Stage Atmosphere & Spotlights -->
-    <div class="loader-stage-atmosphere">
-      <div class="stage-spotlight spotlight-left"></div>
-      <div class="stage-spotlight spotlight-right"></div>
-      <div class="stage-spotlight spotlight-center"></div>
-      <div class="stage-haze-ambient"></div>
-    </div>
-
     <!-- Starfield Background -->
     <div class="stars-backdrop">
       <div id="twinkle-container" class="twinkle-stars"></div>
       <div id="shooting-container" class="shooting-stars-layer"></div>
     </div>
 
-    <!-- Center Stage Logo with Liquid Gold Pulse & Sonic Waves -->
+    <!-- Center Stage Logo with Dual-Wave Liquid Fill -->
     <div class="loader-center-stage">
       <div class="logo-aura-glow" id="loader-aura"></div>
-      
-      <!-- Concentric Pulsing Audio Waves -->
-      <div class="sonic-waves-container" id="sonic-waves-container">
-        <div class="sonic-wave sonic-wave-1"></div>
-        <div class="sonic-wave sonic-wave-2"></div>
-        <div class="sonic-wave sonic-wave-3"></div>
-      </div>
-
       <div class="shockwave-ring" id="shockwave-ring"></div>
 
       <!-- Master Emblem Box: Absolute 1:1 Coordinate Lock -->
       <div id="loader-emblem-box" class="loader-emblem-container">
-        <!-- 1. Background Uncharged Base Wireframe (Deep subtle metallic silhouette) -->
+        <!-- 1. Background Uncharged Base Wireframe (Ultra-light subtle guide) -->
         <img id="loader-base-logo" src="assets/logo_white.png" alt="Alpha Rhythms Base" class="emblem-base-logo">
 
-        <!-- 2. Dual Direction Opposing Natural Color Stages with Liquid Energy -->
+        <!-- 2. Dual Direction Opposing Natural Color Stages -->
         <div id="band-natural-stage" class="emblem-natural-stage">
-          <!-- Layer A: Authentic Yellow Outline (Descends with luminous contour glow) -->
+          <!-- Layer A: Authentic Yellow Outline (Descends from ABOVE) -->
           <div id="layer-yellow-outline" class="emblem-natural-layer layer-yellow">
             <img id="yellow-outline-img" src="assets/logo_outline_yellow.png" alt="Alpha Rhythms Yellow Outline" class="natural-layer-img">
           </div>
 
-          <!-- Layer B: Authentic White Inner Art (Ascends with brilliant silver brilliance) -->
+          <!-- Layer B: Authentic White Inner Art (Ascends from BELOW) -->
           <div id="layer-white-inner" class="emblem-natural-layer layer-white">
             <img id="white-inner-img" src="assets/logo_inner_white.png" alt="Alpha Rhythms White Inner" class="natural-layer-img">
           </div>
-
-          <!-- Shimmer Sweep Reflection Beam across Gold Contours -->
-          <div class="emblem-shimmer-sweep" id="emblem-shimmer"></div>
         </div>
       </div>
 
-      <!-- Live Loading HUD with Sound System Equalizer -->
+      <!-- Live Loading HUD -->
       <div class="loader-hud">
         <div class="hud-brand">ALPHA RHYTHMS</div>
         <div class="hud-tagline">
-          <i class="fa-solid fa-bolt-lightning text-gold"></i>
-          <span class="hud-tagline-text">CONCERT SOUND SYSTEM</span>
-          <span class="hud-equalizer-bars" aria-hidden="true">
-            <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          <span class="hud-tagline-text">IGNITING SOUND SYSTEM</span>
+          <span class="hud-tagline-bars">
+            <span></span><span></span><span></span><span></span><span></span>
           </span>
         </div>
         
@@ -113,16 +93,11 @@
             <span id="load-percent">0</span><span class="pct-symbol">%</span>
           </div>
           <div class="meter-bar-track">
-            <div id="meter-fill" class="meter-fill-bar">
-              <span class="meter-fill-glow-head"></span>
-            </div>
+            <div id="meter-fill" class="meter-fill-bar"></div>
           </div>
         </div>
 
-        <div class="hud-status" id="hud-status-text">
-          <span class="status-pulse-dot"></span>
-          <span id="hud-status-label">Synchronizing resonance...</span>
-        </div>
+        <div class="hud-status" id="hud-status-text">Synchronizing resonance...</div>
       </div>
 
       <!-- Quick Skip Button (Subtle & Non-Intrusive) -->

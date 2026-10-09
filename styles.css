@@ -85,28 +85,19 @@ body.loading-locked {
 /* ========================================================
    1. TIARA INTRO LOADER OVERLAY
    ======================================================== */
-/* ========================================================
-   1. CONCERT STAGE INTRO LOADER OVERLAY
-   Features:
-   - Concert Stage Volumetric Spotlights & Atmospheric Haze
-   - Concentric Pulsing Sonic Audio Waves
-   - Radiant Liquid Gold Contour Tracing & Shimmer Reflection
-   - Live Acoustic Sound System Equalizer & Frequency HUD
-   - Stage Shutter Aperture Parting & Golden Horizon Burst
-   ======================================================== */
 .loader-overlay {
   position: fixed;
   inset: 0;
   width: 100vw;
   height: 100vh;
   height: 100dvh;
-  background: #060608 !important;
+  background: transparent !important;
   z-index: 99999;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  transition: opacity 0.5s ease, visibility 0.5s ease;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
 }
 
 .loader-overlay.fade-out {
@@ -116,78 +107,12 @@ body.loading-locked {
   display: none !important;
 }
 
-/* Concert Stage Volumetric Atmosphere & Spotlights */
-.loader-stage-atmosphere {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 1;
-}
-
-.stage-spotlight {
-  position: absolute;
-  pointer-events: none;
-}
-
-.spotlight-left {
-  top: -20%;
-  left: 5%;
-  width: 60vw;
-  height: 110vh;
-  background: radial-gradient(ellipse at top, rgba(250, 204, 21, 0.14) 0%, rgba(245, 158, 11, 0.04) 45%, transparent 70%);
-  transform: rotate(20deg);
-  filter: blur(35px);
-  animation: spotlight-sway-left 7s ease-in-out infinite alternate;
-}
-
-.spotlight-right {
-  top: -20%;
-  right: 5%;
-  width: 60vw;
-  height: 110vh;
-  background: radial-gradient(ellipse at top, rgba(239, 68, 68, 0.12) 0%, rgba(245, 158, 11, 0.03) 45%, transparent 70%);
-  transform: rotate(-20deg);
-  filter: blur(35px);
-  animation: spotlight-sway-right 7s ease-in-out infinite alternate;
-}
-
-.spotlight-center {
-  top: -15%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 75vw;
-  height: 95vh;
-  background: radial-gradient(ellipse at top, rgba(255, 235, 150, 0.10) 0%, rgba(250, 204, 21, 0.03) 50%, transparent 70%);
-  filter: blur(45px);
-}
-
-.stage-haze-ambient {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 60vh;
-  background: radial-gradient(ellipse at bottom, rgba(250, 204, 21, 0.06) 0%, rgba(15, 15, 18, 0.4) 60%, transparent 100%);
-  filter: blur(40px);
-}
-
-@keyframes spotlight-sway-left {
-  0% { transform: rotate(16deg) scale(0.95); opacity: 0.8; }
-  100% { transform: rotate(24deg) scale(1.05); opacity: 1; }
-}
-
-@keyframes spotlight-sway-right {
-  0% { transform: rotate(-16deg) scale(0.95); opacity: 0.8; }
-  100% { transform: rotate(-24deg) scale(1.05); opacity: 1; }
-}
-
 /* Cosmic Starfield Backdrop */
 .stars-backdrop {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  z-index: 2;
+  z-index: 1;
   overflow: hidden;
 }
 
@@ -196,6 +121,7 @@ body.loading-locked {
   inset: 0;
 }
 
+/* Twinkle stars matching Tiara */
 .twinkle-star {
   position: absolute;
   border-radius: 50%;
@@ -226,6 +152,7 @@ body.loading-locked {
   100% { opacity: 0.2; transform: scale(0.7); }
 }
 
+/* Shooting stars like Tiara */
 .shooting-star {
   position: absolute;
   height: 2px;
@@ -242,10 +169,25 @@ body.loading-locked {
 }
 
 @keyframes shooting-tail {
-  0% { transform: translate3d(0, 0, 0) rotate(-35deg); width: 0; opacity: 0; }
-  15% { width: 140px; opacity: 1; }
-  30% { transform: translate3d(-350px, 260px, 0) rotate(-35deg); width: 0; opacity: 0; }
-  100% { transform: translate3d(-350px, 260px, 0) rotate(-35deg); width: 0; opacity: 0; }
+  0% {
+    transform: translate3d(0, 0, 0) rotate(-35deg);
+    width: 0;
+    opacity: 0;
+  }
+  15% {
+    width: 140px;
+    opacity: 1;
+  }
+  30% {
+    transform: translate3d(-350px, 260px, 0) rotate(-35deg);
+    width: 0;
+    opacity: 0;
+  }
+  100% {
+    transform: translate3d(-350px, 260px, 0) rotate(-35deg);
+    width: 0;
+    opacity: 0;
+  }
 }
 
 /* Center Stage */
@@ -259,62 +201,25 @@ body.loading-locked {
   width: 100%;
   max-width: 580px;
   padding: 20px;
-  perspective: 1000px;
 }
 
-/* Backlit Stage Aura Glow */
 .logo-aura-glow {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -60%);
-  width: 360px;
-  height: 360px;
-  background: radial-gradient(circle, rgba(250, 204, 21, 0.28) 0%, rgba(239, 68, 68, 0.12) 40%, rgba(245, 158, 11, 0.04) 65%, transparent 75%);
-  filter: blur(48px);
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, rgba(255, 224, 102, 0.04) 45%, transparent 70%);
+  filter: blur(40px);
   z-index: 1;
   pointer-events: none;
-  animation: aura-stage-pulse 2.8s ease-in-out infinite alternate;
-  will-change: transform, opacity;
+  animation: aura-pulse 3s ease-in-out infinite alternate;
 }
 
-@keyframes aura-stage-pulse {
-  0% { transform: translate(-50%, -60%) scale(0.92); opacity: 0.6; }
-  100% { transform: translate(-50%, -60%) scale(1.18); opacity: 1; }
-}
-
-/* Concentric Sonic Wave Ripples */
-.sonic-waves-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -60%);
-  width: min(64vmin, 320px);
-  height: min(64vmin, 320px);
-  pointer-events: none;
-  z-index: 2;
-}
-
-.sonic-wave {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  border: 1.5px solid rgba(250, 204, 21, 0.45);
-  box-shadow: 0 0 20px rgba(245, 158, 11, 0.3), inset 0 0 14px rgba(245, 158, 11, 0.15);
-  opacity: 0;
-  animation: sonic-pulse-wave 2.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
-  will-change: transform, opacity;
-}
-
-.sonic-wave-1 { animation-delay: 0s; }
-.sonic-wave-2 { animation-delay: 0.8s; }
-.sonic-wave-3 { animation-delay: 1.6s; }
-
-@keyframes sonic-pulse-wave {
-  0% { transform: scale(0.7); opacity: 0; }
-  25% { opacity: 0.75; border-color: rgba(250, 204, 21, 0.7); }
-  75% { opacity: 0.2; }
-  100% { transform: scale(1.85); opacity: 0; }
+@keyframes aura-pulse {
+  0% { transform: translate(-50%, -60%) scale(0.9); opacity: 0.4; }
+  100% { transform: translate(-50%, -60%) scale(1.2); opacity: 0.7; }
 }
 
 /* Shockwave pulse ring on 100% completion */
@@ -327,10 +232,10 @@ body.loading-locked {
   height: 140px;
   border-radius: 50%;
   border: 3px solid #ffe066;
-  box-shadow: 0 0 45px #ffb703, inset 0 0 30px #ffb703;
+  box-shadow: 0 0 35px #ffb703, inset 0 0 25px #ffb703;
   opacity: 0;
   pointer-events: none;
-  z-index: 8;
+  z-index: 4;
 }
 
 .shockwave-ring.pulse {
@@ -338,12 +243,13 @@ body.loading-locked {
 }
 
 @keyframes shockwave-expand {
-  0% { transform: translate(-50%, -60%) scale(0.6); opacity: 1; border-width: 6px; }
-  100% { transform: translate(-50%, -60%) scale(6.2); opacity: 0; border-width: 1px; }
+  0% { transform: translate(-50%, -60%) scale(0.6); opacity: 1; border-width: 5px; }
+  100% { transform: translate(-50%, -60%) scale(5.8); opacity: 0; border-width: 1px; }
 }
 
 /* ========================================================
    UNIFIED LOADER EMBLEM CONTAINER
+   Base uncharged logo & blazing liquid mask locked 1:1
    ======================================================== */
 .loader-emblem-container {
   position: relative;
@@ -351,26 +257,25 @@ body.loading-locked {
   height: min(64vmin, 320px);
   margin: 0 auto;
   z-index: 5;
-  transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.8s ease-out;
+  transition: transform 1.35s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 1.1s ease-out;
   transform-origin: center center;
-  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.7));
 }
 
-/* 1. Base Layer: Deep metallic silhouette */
+/* 1. Base Layer: The White/Silver Logo outline (Ultra-light, no dark shadows) */
 .emblem-base-logo {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;
-  opacity: 0.16;
-  filter: brightness(0.6) drop-shadow(0 0 4px rgba(255, 255, 255, 0.2));
+  opacity: 0.08;
+  filter: none;
   pointer-events: none;
   z-index: 2;
   transition: opacity 0.4s ease;
 }
 
-/* 2. Natural Dual Opposing Stage with Liquid Energy */
+/* 2. Natural Dual Opposing Stage (Clean & Very Light) */
 .emblem-natural-stage {
   position: absolute;
   inset: 0;
@@ -378,8 +283,7 @@ body.loading-locked {
   height: 100%;
   z-index: 5;
   pointer-events: none;
-  filter: drop-shadow(0 0 14px rgba(250, 204, 21, 0.45));
-  overflow: hidden;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.2));
 }
 
 .emblem-natural-layer {
@@ -412,221 +316,151 @@ body.loading-locked {
   backface-visibility: hidden;
 }
 
-/* Yellow outline with radiant stage illumination & liquid reveal */
-.layer-yellow .natural-layer-img {
-  --reveal-y: 0%;
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 var(--reveal-y), transparent calc(var(--reveal-y) + 9%));
-  mask-image: linear-gradient(to bottom, #000 0%, #000 var(--reveal-y), transparent calc(var(--reveal-y) + 9%));
-}
-
+/* Yellow outline - very light subtle glow, no dark shadows */
 #yellow-outline-img {
-  filter: drop-shadow(0 0 10px rgba(250, 204, 21, 0.9)) drop-shadow(0 0 24px rgba(245, 158, 11, 0.5));
+  filter: drop-shadow(0 0 4px rgba(255, 224, 102, 0.35));
 }
 
-/* White inner artwork with brilliant silver luster & liquid reveal */
-.layer-white .natural-layer-img {
-  --reveal-w: 0%;
-  -webkit-mask-image: linear-gradient(to top, #000 0%, #000 var(--reveal-w), transparent calc(var(--reveal-w) + 9%));
-  mask-image: linear-gradient(to top, #000 0%, #000 var(--reveal-w), transparent calc(var(--reveal-w) + 9%));
-}
-
+/* White inner artwork - very light subtle glow, no dark shadows */
 #white-inner-img {
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.9)) drop-shadow(0 0 18px rgba(255, 235, 170, 0.4));
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.35));
 }
 
-/* Shimmer Sweep Reflection Beam across Gold Contours */
-.emblem-shimmer-sweep {
-  position: absolute;
-  inset: -60%;
-  background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.4) 48%, rgba(250, 204, 21, 0.65) 52%, transparent 60%);
-  pointer-events: none;
-  z-index: 6;
-  transform: rotate(25deg) translateY(-120%);
-  animation: emblem-shimmer-pass 3.2s ease-in-out infinite;
-  mix-blend-mode: color-dodge;
+
+
+@keyframes tiara-wave-drift {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-18vmin); }
 }
 
-@keyframes emblem-shimmer-pass {
-  0%, 35% { transform: rotate(25deg) translateY(-130%); opacity: 0; }
-  45% { opacity: 0.9; }
-  65%, 100% { transform: rotate(25deg) translateY(130%); opacity: 0; }
+@keyframes tiara-wave-drift-back {
+  from { transform: translateX(-24vmin); }
+  to   { transform: translateX(0); }
 }
 
-/* ========================================================
-   LIVE LOADING HUD WITH EQUALIZER & ACOUSTIC READOUT
-   ======================================================== */
+/* Loading HUD */
 .loader-hud {
-  margin-top: 32px;
+  margin-top: 35px;
   text-align: center;
   z-index: 10;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .hud-brand {
-  font-family: var(--font-display, 'Syne', sans-serif);
-  font-size: 1.55rem;
-  letter-spacing: 0.28em;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  letter-spacing: 0.3em;
   font-weight: 800;
-  background: linear-gradient(180deg, #ffffff 30%, #facc15 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 16px rgba(250, 204, 21, 0.5));
+  color: #fff;
+  text-shadow: 0 0 20px rgba(245, 158, 11, 0.6);
 }
 
 .hud-tagline {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 8px;
-  font-family: var(--font-caps, 'Outfit', sans-serif);
-  font-size: 0.72rem;
-  letter-spacing: 0.28em;
-  color: #facc15;
-  background: rgba(250, 204, 21, 0.08);
-  border: 1px solid rgba(250, 204, 21, 0.25);
-  padding: 4px 14px;
-  border-radius: 999px;
-  box-shadow: 0 0 15px rgba(250, 204, 21, 0.15);
+  font-family: var(--font-caps);
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  color: var(--accent-gold);
 }
 
-.hud-equalizer-bars {
+.hud-tagline-bars {
   display: inline-flex;
   align-items: flex-end;
-  gap: 2.5px;
-  height: 11px;
+  gap: 2px;
+  height: 10px;
 }
 
-.hud-equalizer-bars span {
+.hud-tagline-bars span {
   width: 2px;
-  background: #facc15;
+  background: var(--accent-gold);
   border-radius: 1px;
-  box-shadow: 0 0 6px #facc15;
-  animation: concert-eq-bounce 0.6s ease-in-out infinite alternate;
+  animation: hud-eq 0.8s ease-in-out infinite alternate;
 }
 
-.hud-equalizer-bars span:nth-child(1) { height: 40%; animation-delay: 0.05s; }
-.hud-equalizer-bars span:nth-child(2) { height: 90%; animation-delay: 0.18s; }
-.hud-equalizer-bars span:nth-child(3) { height: 55%; animation-delay: 0.32s; }
-.hud-equalizer-bars span:nth-child(4) { height: 100%; animation-delay: 0.12s; }
-.hud-equalizer-bars span:nth-child(5) { height: 70%; animation-delay: 0.45s; }
-.hud-equalizer-bars span:nth-child(6) { height: 45%; animation-delay: 0.22s; }
-.hud-equalizer-bars span:nth-child(7) { height: 85%; animation-delay: 0.38s; }
+.hud-tagline-bars span:nth-child(2) { animation-delay: 0.15s; height: 100%; }
+.hud-tagline-bars span:nth-child(3) { animation-delay: 0.3s; height: 60%; }
+.hud-tagline-bars span:nth-child(4) { animation-delay: 0.45s; height: 80%; }
+.hud-tagline-bars span:nth-child(5) { animation-delay: 0.6s; height: 40%; }
 
-@keyframes concert-eq-bounce {
-  0% { height: 2px; opacity: 0.5; }
-  100% { height: 11px; opacity: 1; }
+@keyframes hud-eq {
+  0% { height: 2px; }
+  100% { height: 10px; }
 }
 
 .progress-display {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  margin-top: 8px;
-  width: 240px;
+  gap: 8px;
+  margin-top: 10px;
+  width: 220px;
 }
 
 .counter-box {
-  font-family: var(--font-mono, 'JetBrains Mono', monospace);
-  font-size: 2.2rem;
-  font-weight: 800;
+  font-family: var(--font-caps);
+  font-size: 2rem;
+  font-weight: 700;
   color: #ffffff;
   display: flex;
   align-items: baseline;
-  text-shadow: 0 0 20px rgba(250, 204, 21, 0.65), 0 0 35px rgba(255, 255, 255, 0.3);
-  letter-spacing: -0.02em;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
 }
 
 .counter-box .pct-symbol {
-  font-size: 1.1rem;
-  color: #facc15;
-  margin-left: 4px;
+  font-size: 1rem;
+  color: var(--accent-gold);
+  margin-left: 3px;
 }
 
 .meter-bar-track {
   width: 100%;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(250, 204, 21, 0.18);
-  border-radius: 999px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  overflow: hidden;
   position: relative;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.6);
 }
 
 .meter-fill-bar {
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, #dc2626 0%, #f59e0b 50%, #facc15 100%);
-  border-radius: 999px;
-  box-shadow: 0 0 12px #facc15, 0 0 20px rgba(245, 158, 11, 0.5);
-  position: relative;
+  background: linear-gradient(90deg, var(--accent-crimson), var(--accent-gold));
+  border-radius: 4px;
+  box-shadow: 0 0 10px var(--accent-gold);
   will-change: width;
 }
 
-.meter-fill-glow-head {
-  position: absolute;
-  right: -3px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 8px;
-  height: 8px;
-  background: #ffffff;
-  border-radius: 50%;
-  box-shadow: 0 0 8px #ffffff, 0 0 16px #facc15;
-}
-
 .hud-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--font-mono, monospace);
-  font-size: 0.76rem;
-  color: #9ca3af;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  min-height: 1.4em;
-}
-
-.status-pulse-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #facc15;
-  box-shadow: 0 0 8px #facc15;
-  animation: status-dot-pulse 1.2s infinite ease-in-out;
-}
-
-@keyframes status-dot-pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.4; transform: scale(0.8); }
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  min-height: 1.2em;
 }
 
 .skip-btn {
-  margin-top: 22px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  color: #9ca3af;
-  font-family: var(--font-caps, sans-serif);
-  font-size: 0.72rem;
-  letter-spacing: 0.2em;
+  margin-top: 25px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  padding: 7px 18px;
-  border-radius: 999px;
+  padding: 8px 18px;
+  border-radius: 30px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
+  transition: all 0.25s ease;
+  z-index: 20;
 }
 
 .skip-btn:hover {
-  background: rgba(250, 204, 21, 0.12);
-  border-color: rgba(250, 204, 21, 0.5);
-  color: #facc15;
-  box-shadow: 0 0 15px rgba(250, 204, 21, 0.25);
-  transform: translateY(-1px);
+  border-color: #fff;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.06);
 }
 
 /* Interactive Loader Canvas & Sparks */
@@ -817,15 +651,13 @@ body.loading-locked {
   }
 }
 
-/* When shutters open, loader center stage, atmosphere and starfield fade away swiftly */
+/* When shutters open, loader center stage and starfield fade away swiftly */
 .loader-overlay.shutters-opening .loader-center-stage,
 .loader-overlay.shutters-opening .stars-backdrop,
-.loader-overlay.shutters-opening .loader-stage-atmosphere,
-.loader-overlay.shutters-opening .sonic-waves-container,
 .loader-overlay.shutters-opening .loader-canvas {
   opacity: 0 !important;
-  transform: scale(1.06);
-  transition: opacity 0.35s ease, transform 0.4s ease;
+  transform: scale(1.04);
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .loader-overlay.shutters-opening .loader-hud,
