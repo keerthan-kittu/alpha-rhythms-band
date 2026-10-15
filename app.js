@@ -1741,7 +1741,7 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
 
     // Calendar State
     let activeYear = 2026;
-    let activeMode = 'single'; // 'single' (Full view single section) or 'all' (compact year matrix)
+    let activeMode = 'all'; // Default: Whole Year Calendar (12 Month Blocks)
     let focusedMonth = 11;     // 0-indexed (11 = December)
 
     const MONTH_NAMES = [
@@ -1827,8 +1827,13 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
     }
 
     window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && dateModal && !dateModal.classList.contains('hidden')) {
-        closeMinimalDateModal();
+      if (e.key === 'Escape') {
+        if (dateModal && !dateModal.classList.contains('hidden')) {
+          closeMinimalDateModal();
+        } else if (activeMode === 'single') {
+          activeMode = 'all';
+          renderCalendar(false, true);
+        }
       }
     });
 
@@ -1840,7 +1845,7 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
     }
 
     // Main Calendar Render Engine
-    function renderCalendar() {
+    function renderCalendar(animZoomIn, animZoomOut) {
       // Update Active Year Title
       if (yearTitle) {
         yearTitle.textContent = `YEAR ${activeYear}`;
@@ -1848,9 +1853,9 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
 
       if (scheduleSubtitle) {
         if (activeMode === 'all') {
-          scheduleSubtitle.textContent = `FULL 12-MONTH ${activeYear} TOUR & AVAILABILITY SCHEDULE • TAP ANY DATE TO BOOK`;
+          scheduleSubtitle.textContent = `FULL 12-MONTH ${activeYear} TOUR CALENDAR • CLICK ANY MONTH BLOCK TO MAXIMIZE & BOOK`;
         } else {
-          scheduleSubtitle.textContent = `${MONTH_NAMES[focusedMonth].toUpperCase()} ${activeYear} SPOTLIGHT SCHEDULE • TAP ANY DATE TO BOOK`;
+          scheduleSubtitle.textContent = `${MONTH_NAMES[focusedMonth].toUpperCase()} ${activeYear} SPOTLIGHT • TAP ANY DATE TO BOOK • CLICK MINIMIZE FOR YEAR VIEW`;
         }
       }
 
@@ -1895,18 +1900,18 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
 
       // Render Calendar Body
       if (activeMode === 'all') {
-        renderWholeYearView();
+        renderWholeYearView(animZoomOut);
       } else {
-        renderSingleMonthView();
+        renderSingleMonthView(animZoomIn);
       }
     }
 
     // Render 12-Month Whole Year View
-    function renderWholeYearView() {
+    function renderWholeYearView(animate) {
       calContainer.innerHTML = '';
 
       const grid = document.createElement('div');
-      grid.className = 'year-12-months-grid';
+      grid.className = 'year-12-months-grid' + (animate ? ' cal-anim-zoom-out' : '');
 
       for (let m = 0; m < 12; m++) {
         const monthCard = createMonthCard(activeYear, m);
@@ -1916,11 +1921,14 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
       calContainer.appendChild(grid);
     }
 
-    // Create Month Card for Whole Year View
+    // Create Month Card for Whole Year View (Click to Maximize)
     function createMonthCard(year, monthIdx) {
       const card = document.createElement('div');
       card.className = 'cal-month-card';
       card.id = `month-card-${monthIdx}`;
+      card.setAttribute('role', 'button');
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('aria-label', `${MONTH_NAMES[monthIdx]} ${year} - Click to maximize month`);
 
       const firstDay = new Date(year, monthIdx, 1).getDay();
       const daysInMonth = new Date(year, monthIdx + 1, 0).getDate();
@@ -1941,22 +1949,15 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
       const head = document.createElement('div');
       head.className = 'cal-month-head';
 
-      const titleBtn = document.createElement('button');
-      titleBtn.type = 'button';
-      titleBtn.className = 'cal-month-title-btn';
-      titleBtn.innerHTML = `<span>${MONTH_NAMES[monthIdx]}</span> <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.65rem; opacity:0.6;"></i>`;
-      titleBtn.title = `Focus on ${MONTH_NAMES[monthIdx]} ${year}`;
-      titleBtn.onclick = () => {
-        focusedMonth = monthIdx;
-        activeMode = 'single';
-        renderCalendar();
-      };
+      const titleEl = document.createElement('div');
+      titleEl.className = 'cal-month-title-btn';
+      titleEl.innerHTML = `<span>${MONTH_NAMES[monthIdx]}</span> <i class="fa-solid fa-up-right-and-down-left-from-center" style="font-size:0.68rem; opacity:0.8;" title="Click to Maximize"></i>`;
 
       const pill = document.createElement('span');
       pill.className = `cal-month-status-pill ${bookedInMonth > 0 ? 'pill-booked' : 'pill-open'}`;
       pill.textContent = bookedInMonth > 0 ? `${bookedInMonth} Booked` : 'All Open';
 
-      head.appendChild(titleBtn);
+      head.appendChild(titleEl);
       head.appendChild(pill);
       card.appendChild(head);
 
@@ -1989,41 +1990,65 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
 
         const cell = document.createElement('div');
         cell.className = `cal-day-cell ${isBooked ? 'cell-booked' : 'cell-available'}`;
-        cell.setAttribute('role', 'button');
-        cell.setAttribute('tabindex', '0');
-        cell.setAttribute('data-date', iso);
-        cell.setAttribute('aria-label', `${MONTH_NAMES[monthIdx]} ${day}, ${year} - ${isBooked ? 'Booked' : 'Available'}`);
         cell.textContent = day;
-
-        cell.onclick = (e) => {
-          e.preventDefault();
-          openMinimalDateModal(iso, isBooked, day, monthIdx, year);
-        };
-
-        cell.onkeydown = (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            cell.click();
-          }
-        };
-
         daysGrid.appendChild(cell);
       }
 
       card.appendChild(daysGrid);
+
+      // Maximize cue at the bottom of the card
+      const cue = document.createElement('div');
+      cue.className = 'cal-month-expand-cue';
+      cue.innerHTML = `<span>Maximize Month</span> <i class="fa-solid fa-maximize"></i>`;
+      card.appendChild(cue);
+
+      // Clicking anywhere on this month card maximizes it with animation!
+      card.onclick = (e) => {
+        e.preventDefault();
+        focusedMonth = monthIdx;
+        activeMode = 'single';
+        renderCalendar(true, false);
+        const frame = document.getElementById('poster-calendar-frame');
+        if (frame) {
+          frame.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      };
+
+      card.onkeydown = (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          card.click();
+        }
+      };
+
       return card;
     }
 
-    // Render Single Month Spotlight View
-    function renderSingleMonthView() {
+    // Render Single Month Spotlight View (Maximized View)
+    function renderSingleMonthView(animate) {
       calContainer.innerHTML = '';
 
       const wrap = document.createElement('div');
-      wrap.className = 'spotlight-month-container';
+      wrap.className = 'spotlight-month-container' + (animate ? ' cal-anim-zoom-in' : '');
 
-      // Header with Month Title and Navigation
+      // Header with Minimize Option and Month Navigation
       const header = document.createElement('div');
       header.className = 'spotlight-month-header';
+
+      // Left Minimize Button
+      const minBtn = document.createElement('button');
+      minBtn.type = 'button';
+      minBtn.className = 'spotlight-minimize-btn';
+      minBtn.innerHTML = `<i class="fa-solid fa-arrow-left"></i> <span>Minimize to ${activeYear} Calendar</span>`;
+      minBtn.title = `Minimize back to ${activeYear} 12-month calendar (Esc)`;
+      minBtn.onclick = () => {
+        activeMode = 'all';
+        renderCalendar(false, true);
+        const frame = document.getElementById('poster-calendar-frame');
+        if (frame) {
+          frame.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      };
 
       const titleGroup = document.createElement('div');
       titleGroup.className = 'spotlight-title-group';
@@ -2040,7 +2065,7 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
         } else {
           focusedMonth--;
         }
-        renderCalendar();
+        renderCalendar(false, false);
       };
 
       const title = document.createElement('h4');
@@ -2059,13 +2084,24 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
         } else {
           focusedMonth++;
         }
-        renderCalendar();
+        renderCalendar(false, false);
       };
 
       titleGroup.appendChild(prevMonthBtn);
       titleGroup.appendChild(title);
       titleGroup.appendChild(nextMonthBtn);
+
+      // Right Quick Minimize Button
+      const rightMinBtn = document.createElement('button');
+      rightMinBtn.type = 'button';
+      rightMinBtn.className = 'spotlight-minimize-btn spotlight-min-icon-only';
+      rightMinBtn.innerHTML = '<i class="fa-solid fa-compress"></i> <span>Minimize ✕</span>';
+      rightMinBtn.title = 'Minimize back to full year';
+      rightMinBtn.onclick = minBtn.onclick;
+
+      header.appendChild(minBtn);
       header.appendChild(titleGroup);
+      header.appendChild(rightMinBtn);
       wrap.appendChild(header);
 
       // Weekday Names Row
@@ -2135,6 +2171,25 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
       }
 
       wrap.appendChild(daysGrid);
+
+      // Bottom bar with secondary minimize button
+      const btmBar = document.createElement('div');
+      btmBar.className = 'spotlight-bottom-back-bar';
+      const btmMinBtn = document.createElement('button');
+      btmMinBtn.type = 'button';
+      btmMinBtn.className = 'spotlight-bottom-minimize-btn';
+      btmMinBtn.innerHTML = '<i class="fa-solid fa-compress"></i> <span>Minimize back to 12-Month Year Calendar</span>';
+      btmMinBtn.onclick = () => {
+        activeMode = 'all';
+        renderCalendar(false, true);
+        const frame = document.getElementById('poster-calendar-frame');
+        if (frame) {
+          frame.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      };
+      btmBar.appendChild(btmMinBtn);
+      wrap.appendChild(btmBar);
+
       calContainer.appendChild(wrap);
     }
 
