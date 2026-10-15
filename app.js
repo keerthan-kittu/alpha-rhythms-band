@@ -1703,8 +1703,8 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
        - One-click copy admin link & reset to defaults
      ======================================================== */
   function initLiveBookingCalendar() {
-    const posterGrid = document.getElementById('poster-days-grid');
-    if (!posterGrid) return;
+    const calContainer = document.getElementById('calendar-dynamic-container');
+    if (!calContainer) return;
 
     // Default official booked dates matching the Instagram/CoastalColors poster
     const DEFAULT_BOOKED_DATES = [
@@ -1739,6 +1739,29 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
 
     let bookedDates = getBookedDates();
 
+    // Calendar State
+    let activeYear = 2026;
+    let activeMode = 'single'; // 'single' (Full view single section) or 'all' (compact year matrix)
+    let focusedMonth = 11;     // 0-indexed (11 = December)
+
+    const MONTH_NAMES = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const WEEKDAY_SHORT = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const WEEKDAY_INITIALS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+
+    // Header Controls Elements
+    const yearTitle = document.getElementById('cal-active-year-title');
+    const prevYearBtn = document.getElementById('cal-prev-year');
+    const nextYearBtn = document.getElementById('cal-next-year');
+    const yearPills = document.querySelectorAll('.cal-year-pill');
+    const modeYearBtn = document.getElementById('cal-mode-year-btn');
+    const modeMonthBtn = document.getElementById('cal-mode-month-btn');
+    const monthTabs = document.querySelectorAll('.cal-month-tab');
+    const scheduleSubtitle = document.getElementById('cal-schedule-subtitle');
+
     // Modal elements (Minimalist dialogue box)
     const dateModal = document.getElementById('date-dialog-modal');
     const dateModalClose = document.getElementById('date-dialog-close');
@@ -1748,13 +1771,13 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
     const dateModalCallBtn = document.getElementById('date-dialog-call-btn');
     const dateModalWaBtn = document.getElementById('date-dialog-wa-btn');
 
-    function openMinimalDateModal(dateIso, isBooked, dayNum) {
+    function openMinimalDateModal(dateIso, isBooked, dayNum, monthIdx, yearNum) {
       if (!dateModal) return;
 
-      const dateObj = new Date(2026, 11, dayNum);
-      const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-      const dayName = dayNames[dateObj.getDay()];
-      const displayTitle = `DECEMBER ${dayNum}, 2026`;
+      const dateObj = new Date(yearNum, monthIdx, dayNum);
+      const dayName = DAY_NAMES[dateObj.getDay()];
+      const monthName = MONTH_NAMES[monthIdx];
+      const displayTitle = `${monthName.toUpperCase()} ${dayNum}, ${yearNum}`;
 
       if (dateModalTitle) {
         dateModalTitle.textContent = displayTitle;
@@ -1777,9 +1800,9 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
       if (dateModalWaBtn) {
         let msg = '';
         if (isBooked) {
-          msg = encodeURIComponent(`Hi Alpha Rhythms, I saw that December ${dayNum}, 2026 (${dayName}) is booked on your schedule. Are there any nearby dates or slots available?`);
+          msg = encodeURIComponent(`Hi Alpha Rhythms, I saw that ${monthName} ${dayNum}, ${yearNum} (${dayName}) is booked on your schedule. Are there any nearby dates or slots available?`);
         } else {
-          msg = encodeURIComponent(`Hi Alpha Rhythms, I would like to inquire about booking the band on December ${dayNum}, 2026 (${dayName}). Please let me know availability and pricing.`);
+          msg = encodeURIComponent(`Hi Alpha Rhythms, I would like to inquire about booking the band on ${monthName} ${dayNum}, ${yearNum} (${dayName}). Please let me know availability and pricing.`);
         }
         dateModalWaBtn.href = `https://wa.me/917349099787?text=${msg}`;
       }
@@ -1809,46 +1832,375 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
       }
     });
 
-    // Sync all cell states and click handlers
-    function syncGridCells() {
-      const cells = posterGrid.querySelectorAll('.poster-cell[data-date]');
-      cells.forEach(cell => {
-        const dateIso = cell.getAttribute('data-date');
-        if (!dateIso) return;
-        const dayNum = parseInt(dateIso.split('-')[2], 10);
-        const isBooked = bookedDates.includes(dateIso);
+    // Helper: format YYYY-MM-DD
+    function toIso(year, monthIdx, day) {
+      const mm = String(monthIdx + 1).padStart(2, '0');
+      const dd = String(day).padStart(2, '0');
+      return `${year}-${mm}-${dd}`;
+    }
 
-        // Update classes
-        cell.classList.remove('cell-available', 'cell-booked');
-        if (isBooked) {
-          cell.classList.add('cell-booked');
-          cell.setAttribute('aria-label', `December ${dayNum}, 2026 - Booked`);
+    // Main Calendar Render Engine
+    function renderCalendar() {
+      // Update Active Year Title
+      if (yearTitle) {
+        yearTitle.textContent = `YEAR ${activeYear}`;
+      }
+
+      if (scheduleSubtitle) {
+        if (activeMode === 'all') {
+          scheduleSubtitle.textContent = `FULL 12-MONTH ${activeYear} TOUR & AVAILABILITY SCHEDULE • TAP ANY DATE TO BOOK`;
         } else {
-          cell.classList.add('cell-available');
-          cell.setAttribute('aria-label', `December ${dayNum}, 2026 - Available`);
+          scheduleSubtitle.textContent = `${MONTH_NAMES[focusedMonth].toUpperCase()} ${activeYear} SPOTLIGHT SCHEDULE • TAP ANY DATE TO BOOK`;
         }
+      }
 
-        // Attach click handler -> ALWAYS opens minimal contact dialogue
+      // Update Year Pills
+      yearPills.forEach(pill => {
+        const y = parseInt(pill.getAttribute('data-year'), 10);
+        if (y === activeYear) {
+          pill.classList.add('active');
+        } else {
+          pill.classList.remove('active');
+        }
+      });
+
+      // Update Mode Buttons
+      if (modeYearBtn && modeMonthBtn) {
+        if (activeMode === 'all') {
+          modeYearBtn.classList.add('active');
+          modeMonthBtn.classList.remove('active');
+        } else {
+          modeYearBtn.classList.remove('active');
+          modeMonthBtn.classList.add('active');
+        }
+      }
+
+      // Update Month Tabs
+      monthTabs.forEach(tab => {
+        const m = tab.getAttribute('data-month');
+        if (activeMode === 'all' && m === 'all') {
+          tab.classList.add('active');
+        } else if (activeMode === 'single' && m !== 'all' && parseInt(m, 10) === focusedMonth) {
+          tab.classList.add('active');
+        } else {
+          tab.classList.remove('active');
+        }
+      });
+
+      // Render Calendar Body
+      if (activeMode === 'all') {
+        renderWholeYearView();
+      } else {
+        renderSingleMonthView();
+      }
+    }
+
+    // Render 12-Month Whole Year View
+    function renderWholeYearView() {
+      calContainer.innerHTML = '';
+
+      const grid = document.createElement('div');
+      grid.className = 'year-12-months-grid';
+
+      for (let m = 0; m < 12; m++) {
+        const monthCard = createMonthCard(activeYear, m);
+        grid.appendChild(monthCard);
+      }
+
+      calContainer.appendChild(grid);
+    }
+
+    // Create Month Card for Whole Year View
+    function createMonthCard(year, monthIdx) {
+      const card = document.createElement('div');
+      card.className = 'cal-month-card';
+      card.id = `month-card-${monthIdx}`;
+
+      const firstDay = new Date(year, monthIdx, 1).getDay();
+      const daysInMonth = new Date(year, monthIdx + 1, 0).getDate();
+
+      // Count booked dates in this month
+      let bookedInMonth = 0;
+      for (let d = 1; d <= daysInMonth; d++) {
+        if (bookedDates.includes(toIso(year, monthIdx, d))) {
+          bookedInMonth++;
+        }
+      }
+
+      if (bookedInMonth > 0) {
+        card.classList.add('has-booked-dates');
+      }
+
+      // Head
+      const head = document.createElement('div');
+      head.className = 'cal-month-head';
+
+      const titleBtn = document.createElement('button');
+      titleBtn.type = 'button';
+      titleBtn.className = 'cal-month-title-btn';
+      titleBtn.innerHTML = `<span>${MONTH_NAMES[monthIdx]}</span> <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.65rem; opacity:0.6;"></i>`;
+      titleBtn.title = `Focus on ${MONTH_NAMES[monthIdx]} ${year}`;
+      titleBtn.onclick = () => {
+        focusedMonth = monthIdx;
+        activeMode = 'single';
+        renderCalendar();
+      };
+
+      const pill = document.createElement('span');
+      pill.className = `cal-month-status-pill ${bookedInMonth > 0 ? 'pill-booked' : 'pill-open'}`;
+      pill.textContent = bookedInMonth > 0 ? `${bookedInMonth} Booked` : 'All Open';
+
+      head.appendChild(titleBtn);
+      head.appendChild(pill);
+      card.appendChild(head);
+
+      // Weekday Row
+      const wdRow = document.createElement('div');
+      wdRow.className = 'cal-card-weekdays';
+      WEEKDAY_INITIALS.forEach(initial => {
+        const wd = document.createElement('div');
+        wd.className = 'cal-card-wd';
+        wd.textContent = initial;
+        wdRow.appendChild(wd);
+      });
+      card.appendChild(wdRow);
+
+      // Days Grid
+      const daysGrid = document.createElement('div');
+      daysGrid.className = 'cal-card-days-grid';
+
+      // Empty leading cells
+      for (let e = 0; e < firstDay; e++) {
+        const empty = document.createElement('div');
+        empty.className = 'cal-day-cell cell-empty';
+        daysGrid.appendChild(empty);
+      }
+
+      // Date cells
+      for (let day = 1; day <= daysInMonth; day++) {
+        const iso = toIso(year, monthIdx, day);
+        const isBooked = bookedDates.includes(iso);
+
+        const cell = document.createElement('div');
+        cell.className = `cal-day-cell ${isBooked ? 'cell-booked' : 'cell-available'}`;
+        cell.setAttribute('role', 'button');
+        cell.setAttribute('tabindex', '0');
+        cell.setAttribute('data-date', iso);
+        cell.setAttribute('aria-label', `${MONTH_NAMES[monthIdx]} ${day}, ${year} - ${isBooked ? 'Booked' : 'Available'}`);
+        cell.textContent = day;
+
         cell.onclick = (e) => {
           e.preventDefault();
-          openMinimalDateModal(dateIso, isBooked, dayNum);
+          openMinimalDateModal(iso, isBooked, day, monthIdx, year);
         };
 
-        // Keyboard navigation
         cell.onkeydown = (e) => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
             cell.click();
           }
         };
-      });
+
+        daysGrid.appendChild(cell);
+      }
+
+      card.appendChild(daysGrid);
+      return card;
     }
+
+    // Render Single Month Spotlight View
+    function renderSingleMonthView() {
+      calContainer.innerHTML = '';
+
+      const wrap = document.createElement('div');
+      wrap.className = 'spotlight-month-container';
+
+      // Header with Month Title and Navigation
+      const header = document.createElement('div');
+      header.className = 'spotlight-month-header';
+
+      const titleGroup = document.createElement('div');
+      titleGroup.className = 'spotlight-title-group';
+
+      const prevMonthBtn = document.createElement('button');
+      prevMonthBtn.type = 'button';
+      prevMonthBtn.className = 'spotlight-nav-btn';
+      prevMonthBtn.innerHTML = '<i class="fa-solid fa-chevron-left"></i> <span>Prev Month</span>';
+      prevMonthBtn.title = 'Go to Previous Month';
+      prevMonthBtn.onclick = () => {
+        if (focusedMonth === 0) {
+          focusedMonth = 11;
+          activeYear--;
+        } else {
+          focusedMonth--;
+        }
+        renderCalendar();
+      };
+
+      const title = document.createElement('h4');
+      title.className = 'spotlight-month-title';
+      title.textContent = `${MONTH_NAMES[focusedMonth].toUpperCase()} ${activeYear}`;
+
+      const nextMonthBtn = document.createElement('button');
+      nextMonthBtn.type = 'button';
+      nextMonthBtn.className = 'spotlight-nav-btn';
+      nextMonthBtn.innerHTML = '<span>Next Month</span> <i class="fa-solid fa-chevron-right"></i>';
+      nextMonthBtn.title = 'Go to Next Month';
+      nextMonthBtn.onclick = () => {
+        if (focusedMonth === 11) {
+          focusedMonth = 0;
+          activeYear++;
+        } else {
+          focusedMonth++;
+        }
+        renderCalendar();
+      };
+
+      titleGroup.appendChild(prevMonthBtn);
+      titleGroup.appendChild(title);
+      titleGroup.appendChild(nextMonthBtn);
+
+      const matrixToggleBtn = document.createElement('button');
+      matrixToggleBtn.type = 'button';
+      matrixToggleBtn.className = 'spotlight-back-btn';
+      matrixToggleBtn.innerHTML = '<i class="fa-solid fa-grip"></i> 12-Month Compact Matrix';
+      matrixToggleBtn.onclick = () => {
+        activeMode = 'all';
+        renderCalendar();
+      };
+
+      header.appendChild(titleGroup);
+      header.appendChild(matrixToggleBtn);
+      wrap.appendChild(header);
+
+      // Weekday Names Row
+      const wdRow = document.createElement('div');
+      wdRow.className = 'poster-weekdays-grid';
+      WEEKDAY_SHORT.forEach(name => {
+        const wd = document.createElement('div');
+        wd.className = 'poster-weekday';
+        wd.textContent = name;
+        wdRow.appendChild(wd);
+      });
+      wrap.appendChild(wdRow);
+
+      // Large Days Grid
+      const daysGrid = document.createElement('div');
+      daysGrid.className = 'poster-days-grid';
+
+      const firstDay = new Date(activeYear, focusedMonth, 1).getDay();
+      const daysInMonth = new Date(activeYear, focusedMonth + 1, 0).getDate();
+
+      // Empty leading cells
+      for (let e = 0; e < firstDay; e++) {
+        const empty = document.createElement('div');
+        empty.className = 'poster-cell cell-empty';
+        daysGrid.appendChild(empty);
+      }
+
+      // Day cells
+      for (let day = 1; day <= daysInMonth; day++) {
+        const iso = toIso(activeYear, focusedMonth, day);
+        const isBooked = bookedDates.includes(iso);
+
+        const cell = document.createElement('div');
+        cell.className = `poster-cell ${isBooked ? 'cell-booked' : 'cell-available'}`;
+        cell.setAttribute('role', 'button');
+        cell.setAttribute('tabindex', '0');
+        cell.setAttribute('data-date', iso);
+        cell.setAttribute('aria-label', `${MONTH_NAMES[focusedMonth]} ${day}, ${activeYear} - ${isBooked ? 'Booked' : 'Available'}`);
+
+        const numSpan = document.createElement('span');
+        numSpan.className = 'cell-num';
+        numSpan.textContent = day;
+        cell.appendChild(numSpan);
+
+        cell.onclick = (e) => {
+          e.preventDefault();
+          openMinimalDateModal(iso, isBooked, day, focusedMonth, activeYear);
+        };
+
+        cell.onkeydown = (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            cell.click();
+          }
+        };
+
+        daysGrid.appendChild(cell);
+      }
+
+      // Empty trailing cells to complete grid
+      const totalCells = firstDay + daysInMonth;
+      const trailing = (7 - (totalCells % 7)) % 7;
+      for (let t = 0; t < trailing; t++) {
+        const empty = document.createElement('div');
+        empty.className = 'poster-cell cell-empty';
+        daysGrid.appendChild(empty);
+      }
+
+      wrap.appendChild(daysGrid);
+      calContainer.appendChild(wrap);
+    }
+
+    // Attach Year Navigation Event Handlers
+    if (prevYearBtn) {
+      prevYearBtn.onclick = () => {
+        activeYear--;
+        renderCalendar();
+      };
+    }
+
+    if (nextYearBtn) {
+      nextYearBtn.onclick = () => {
+        activeYear++;
+        renderCalendar();
+      };
+    }
+
+    yearPills.forEach(pill => {
+      pill.onclick = () => {
+        const y = parseInt(pill.getAttribute('data-year'), 10);
+        if (y) {
+          activeYear = y;
+          renderCalendar();
+        }
+      };
+    });
+
+    if (modeYearBtn) {
+      modeYearBtn.onclick = () => {
+        activeMode = 'all';
+        renderCalendar();
+      };
+    }
+
+    if (modeMonthBtn) {
+      modeMonthBtn.onclick = () => {
+        activeMode = 'single';
+        renderCalendar();
+      };
+    }
+
+    monthTabs.forEach(tab => {
+      tab.onclick = () => {
+        const m = tab.getAttribute('data-month');
+        if (m === 'all') {
+          activeMode = 'all';
+          renderCalendar();
+        } else {
+          focusedMonth = parseInt(m, 10);
+          activeMode = 'single';
+          renderCalendar();
+        }
+      };
+    });
 
     // Real-time synchronization with admin.html (via localStorage storage event & BroadcastChannel)
     window.addEventListener('storage', (e) => {
       if (e.key === 'alpha_booked_dates_2026') {
         bookedDates = getBookedDates();
-        syncGridCells();
+        renderCalendar();
       }
     });
 
@@ -1857,7 +2209,7 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
       bc.onmessage = (e) => {
         if (e.data && e.data.type === 'DATES_UPDATED' && Array.isArray(e.data.dates)) {
           bookedDates = e.data.dates;
-          syncGridCells();
+          renderCalendar();
         }
       };
     }
@@ -1877,18 +2229,18 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
             if (Array.isArray(data.dates)) {
               bookedDates = data.dates;
               saveBookedDates(bookedDates);
-              syncGridCells();
+              renderCalendar();
               return;
             }
           }
         } catch (err) {
-          // Network fallback to local/cached state
+          // Network fallback
         }
       }
     }
 
     // Initial render & cloud sync
-    syncGridCells();
+    renderCalendar();
     syncWithCloudCalendar();
 
     // Re-check cloud when tab regains focus or every 20 seconds

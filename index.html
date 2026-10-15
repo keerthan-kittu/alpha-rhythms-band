@@ -244,7 +244,6 @@
           <a href="https://www.instagram.com/alpha.rhythms/p/DdyAkF5t11j/" target="_blank" rel="noopener noreferrer" class="perf-featured-card" aria-label="Watch Konkan Fiesta Season 6 Headline Concert on Instagram">
             <div class="featured-media-box">
               <img src="assets/konkan_fiesta_poster.jpg" alt="Konkan Fiesta Season 6 Headline - Alpha Rhythms Live" class="featured-media-img" loading="lazy">
-              <div class="featured-media-scrim"></div>
               <div class="featured-live-badge">
                 <span class="pulse-dot"></span>
                 <span>NEXT MAJOR HEADLINE SHOW</span>
@@ -482,6 +481,8 @@
           </a>
         </div>
 
+
+
         <!-- The CoastalColors.in Poster Frame Card -->
         <div class="poster-calendar-frame" id="poster-calendar-frame">
           
@@ -503,148 +504,91 @@
             </div>
 
             <div class="poster-title-center">
-              <div class="poster-event-eyebrow"><i class="fa-solid fa-bolt text-gold"></i> FEATURED TOUR HEADLINE</div>
-              <h3 class="poster-main-title">KONKAN FIESTA SEASON 6</h3>
-              <div class="poster-month-badge">
-                <span class="poster-month-stripes">///</span>
-                <span class="poster-month-text">7TH NOVEMBER • SOORYA WOODS, MAROLI</span>
+              <div class="poster-event-eyebrow"><i class="fa-solid fa-bolt text-gold"></i> LIVE TOUR &amp; WEDDING SCHEDULE</div>
+              <h3 class="poster-main-title">ALPHA RHYTHMS TOUR CALENDAR</h3>
+              
+              <!-- Interactive Year Navigator Header -->
+              <div class="cal-year-nav-bar">
+                <button type="button" class="cal-year-arrow" id="cal-prev-year" aria-label="Previous Year">
+                  <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <div class="poster-month-badge cal-year-badge">
+                  <span class="poster-month-stripes">///</span>
+                  <span class="poster-month-text" id="cal-active-year-title">YEAR 2026</span>
+                </div>
+                <button type="button" class="cal-year-arrow" id="cal-next-year" aria-label="Next Year">
+                  <i class="fa-solid fa-chevron-right"></i>
+                </button>
               </div>
-              <span class="poster-schedule-note">DECEMBER 2026 LIVE TOUR &amp; WEDDING AVAILABILITY CALENDAR</span>
+
+              <!-- Quick Jump Year Selector Pills (Multi-Year Support) -->
+              <div class="cal-year-pills-row" id="cal-year-pills-row">
+                <button type="button" class="cal-year-pill active" data-year="2026">
+                  <i class="fa-solid fa-fire text-gold"></i> 2026 Tour
+                </button>
+                <button type="button" class="cal-year-pill" data-year="2027">
+                  <i class="fa-solid fa-calendar text-gold"></i> 2027 Upcoming
+                </button>
+                <button type="button" class="cal-year-pill" data-year="2028">
+                  2028
+                </button>
+                <button type="button" class="cal-year-pill" data-year="2029">
+                  2029
+                </button>
+                <button type="button" class="cal-year-pill" data-year="2030">
+                  2030
+                </button>
+              </div>
+
+              <span class="poster-schedule-note" id="cal-schedule-subtitle">FULL 12-MONTH LIVE TOUR &amp; AVAILABILITY SCHEDULE &bull; TAP ANY DATE TO BOOK</span>
+            </div>
+
+            <!-- View Switcher & Month Tabs Strip -->
+            <div class="cal-view-control-bar">
+              <div class="cal-mode-toggle-group">
+                <button type="button" class="cal-mode-btn active" id="cal-mode-year-btn">
+                  <i class="fa-solid fa-grip"></i> Whole Year (12 Months)
+                </button>
+                <button type="button" class="cal-mode-btn" id="cal-mode-month-btn">
+                  <i class="fa-solid fa-calendar-day"></i> Month Spotlight
+                </button>
+              </div>
+
+              <!-- Month Quick Jump Tabs -->
+              <div class="cal-month-tabs-strip" id="cal-month-tabs-strip">
+                <button type="button" class="cal-month-tab active" data-month="all">All 12 Months</button>
+                <button type="button" class="cal-month-tab" data-month="0">Jan</button>
+                <button type="button" class="cal-month-tab" data-month="1">Feb</button>
+                <button type="button" class="cal-month-tab" data-month="2">Mar</button>
+                <button type="button" class="cal-month-tab" data-month="3">Apr</button>
+                <button type="button" class="cal-month-tab" data-month="4">May</button>
+                <button type="button" class="cal-month-tab" data-month="5">Jun</button>
+                <button type="button" class="cal-month-tab" data-month="6">Jul</button>
+                <button type="button" class="cal-month-tab" data-month="7">Aug</button>
+                <button type="button" class="cal-month-tab" data-month="8">Sep</button>
+                <button type="button" class="cal-month-tab" data-month="9">Oct</button>
+                <button type="button" class="cal-month-tab" data-month="10">Nov</button>
+                <button type="button" class="cal-month-tab" data-month="11">Dec</button>
+              </div>
             </div>
 
             <!-- Legend: Booked | Available -->
             <div class="poster-legend-pill">
               <div class="legend-chip legend-chip-booked">
                 <span class="chip-swatch swatch-red"></span>
-                <span class="chip-text">Booked</span>
+                <span class="chip-text">Booked &bull; Locked</span>
               </div>
               <span class="legend-divider">|</span>
               <div class="legend-chip legend-chip-available">
                 <span class="chip-swatch swatch-yellow"></span>
-                <span class="chip-text">Available</span>
+                <span class="chip-text">Available &bull; Open for Booking</span>
               </div>
             </div>
           </div>
 
-          <!-- Weekdays Row -->
-          <div class="poster-weekdays-grid">
-            <div class="poster-weekday">Sun</div>
-            <div class="poster-weekday">Mon</div>
-            <div class="poster-weekday">Tue</div>
-            <div class="poster-weekday">Wed</div>
-            <div class="poster-weekday">Thu</div>
-            <div class="poster-weekday">Fri</div>
-            <div class="poster-weekday">Sat</div>
-          </div>
-
-          <!-- Calendar Days Grid (Exact 35 cells matching CoastalColors.in Poster: 3 empty, Wed 1 to Fri 31, 1 empty) -->
-          <div class="poster-days-grid" id="poster-days-grid" role="grid" aria-label="December 2026 Availability Calendar">
-            <!-- Row 1: Wed 1 to Sat 4 -->
-            <div class="poster-cell cell-empty" aria-hidden="true"></div>
-            <div class="poster-cell cell-empty" aria-hidden="true"></div>
-            <div class="poster-cell cell-empty" aria-hidden="true"></div>
-            <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-01" aria-label="Wednesday, December 1, 2026 - Available">
-              <span class="cell-num">1</span>
-            </div>
-            <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-02" aria-label="Thursday, December 2, 2026 - Available">
-              <span class="cell-num">2</span>
-            </div>
-            <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-03" aria-label="Friday, December 3, 2026 - Available">
-              <span class="cell-num">3</span>
-            </div>
-            <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-04" aria-label="Saturday, December 4, 2026 - Available">
-              <span class="cell-num">4</span>
-            </div>
-
-            <!-- Row 2: Sun 5 to Sat 11 -->
-            <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-05" aria-label="Sunday, December 5, 2026 - Available">
-              <span class="cell-num">5</span>
-            </div>
-            <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-06" aria-label="Monday, December 6, 2026 - Available">
-              <span class="cell-num">6</span>
-            </div>
-            <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-07" aria-label="Tuesday, December 7, 2026 - Available">
-              <span class="cell-num">7</span>
-            </div>
-            <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-08" aria-label="Wednesday, December 8, 2026 - Available">
-              <span class="cell-num">8</span>
-            </div>
-            <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-09" aria-label="Thursday, December 9, 2026 - Available">
-              <span class="cell-num">9</span>
-            </div>
-            <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-10" aria-label="Friday, December 10, 2026 - Available">
-              <span class="cell-num">10</span>
-            </div>
-            <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-11" aria-label="Saturday, December 11, 2026 - Available">
-              <span class="cell-num">11</span>
-            </div>
-
-            <!-- Row 3: Sun 12 (RED) to Sat 18 -->
-            <div class="poster-cell cell-booked" role="button" tabindex="0" data-date="2026-12-12" aria-label="Sunday, December 12, 2026 - Booked">
-              <span class="cell-num">12</span>
-            </div>
-            <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-13" aria-label="Monday, December 13, 2026 - Available">
-              <span class="cell-num">13</span>
-            </div>
-            <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-14" aria-label="Tuesday, December 14, 2026 - Available">
-              <span class="cell-num">14</span>
-            </div>
-            <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-15" aria-label="Wednesday, December 15, 2026 - Available">
-              <span class="cell-num">15</span>
-            </div>
-            <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-16" aria-label="Thursday, December 16, 2026 - Available">
-              <span class="cell-num">16</span>
-            </div>
-            <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-17" aria-label="Friday, December 17, 2026 - Available">
-              <span class="cell-num">17</span>
-            </div>
-            <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-18" aria-label="Saturday, December 18, 2026 - Available">
-              <span class="cell-num">18</span>
-            </div>
-
-            <!-- Row 4: Sun 19 to Sat 25 (RED) -->
-            <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-19" aria-label="Sunday, December 19, 2026 - Available">
-              <span class="cell-num">19</span>
-            </div>
-            <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-20" aria-label="Monday, December 20, 2026 - Available">
-              <span class="cell-num">20</span>
-            </div>
-            <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-21" aria-label="Tuesday, December 21, 2026 - Available">
-              <span class="cell-num">21</span>
-            </div>
-            <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-22" aria-label="Wednesday, December 22, 2026 - Available">
-              <span class="cell-num">22</span>
-            </div>
-            <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-23" aria-label="Thursday, December 23, 2026 - Available">
-              <span class="cell-num">23</span>
-            </div>
-            <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-24" aria-label="Friday, December 24, 2026 - Available">
-              <span class="cell-num">24</span>
-            </div>
-            <div class="poster-cell cell-booked" role="button" tabindex="0" data-date="2026-12-25" aria-label="Saturday, December 25, 2026 - Booked">
-              <span class="cell-num">25</span>
-            </div>
-
-            <!-- Row 5: Sun 26 (RED), Mon 27, Tue 28 (RED), Wed 29, Thu 30 (RED), Fri 31, Sat empty -->
-            <div class="poster-cell cell-booked" role="button" tabindex="0" data-date="2026-12-26" aria-label="Sunday, December 26, 2026 - Booked">
-              <span class="cell-num">26</span>
-            </div>
-            <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-27" aria-label="Monday, December 27, 2026 - Available">
-              <span class="cell-num">27</span>
-            </div>
-            <div class="poster-cell cell-booked" role="button" tabindex="0" data-date="2026-12-28" aria-label="Tuesday, December 28, 2026 - Booked">
-              <span class="cell-num">28</span>
-            </div>
-            <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-29" aria-label="Wednesday, December 29, 2026 - Available">
-              <span class="cell-num">29</span>
-            </div>
-            <div class="poster-cell cell-booked" role="button" tabindex="0" data-date="2026-12-30" aria-label="Thursday, December 30, 2026 - Booked">
-              <span class="cell-num">30</span>
-            </div>
-            <div class="poster-cell cell-available" role="button" tabindex="0" data-date="2026-12-31" aria-label="Friday, December 31, 2026 - Available">
-              <span class="cell-num">31</span>
-            </div>
-            <div class="poster-cell cell-empty" aria-hidden="true"></div>
+          <!-- Dynamic Calendar Body Container (Whole Year 12 Months or Spotlight Month) -->
+          <div id="calendar-dynamic-container" class="cal-dynamic-container">
+            <!-- Populated dynamically via app.js -->
           </div>
 
           <!-- Poster Bottom Footer -->
