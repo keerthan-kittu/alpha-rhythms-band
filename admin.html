@@ -406,43 +406,43 @@
             <div class="poster-event-eyebrow"><i class="fa-solid fa-crown text-gold"></i> LIVE SCHEDULE MANAGER</div>
             <h2 class="poster-main-title">BAND AVAILABILITY SCHEDULE</h2>
             
-            <!-- Year Navigation -->
-            <div class="cal-year-nav-bar" style="display:flex; align-items:center; justify-content:center; gap:16px; margin:8px 0 12px;">
+            <!-- Year Navigation (1 Clean Row) -->
+            <div class="cal-year-nav-bar">
               <button type="button" class="cal-year-arrow" id="admin-prev-year" aria-label="Previous Year">
                 <i class="fa-solid fa-chevron-left"></i>
               </button>
-              <div class="poster-month-badge cal-year-badge">
+              <div class="cal-year-center-group">
                 <span class="poster-month-stripes">///</span>
-                <span class="poster-month-text" id="admin-year-title">YEAR 2026</span>
+                <div class="cal-year-pills-row" id="admin-year-pills">
+                  <button type="button" class="cal-year-pill active" data-year="2026">2026</button>
+                  <button type="button" class="cal-year-pill" data-year="2027">2027</button>
+                  <button type="button" class="cal-year-pill" data-year="2028">2028</button>
+                  <button type="button" class="cal-year-pill" data-year="2029">2029</button>
+                  <button type="button" class="cal-year-pill" data-year="2030">2030</button>
+                </div>
+                <span class="poster-month-stripes">///</span>
               </div>
               <button type="button" class="cal-year-arrow" id="admin-next-year" aria-label="Next Year">
                 <i class="fa-solid fa-chevron-right"></i>
               </button>
             </div>
 
-            <!-- Year Quick Pills -->
-            <div class="cal-year-pills-row" id="admin-year-pills" style="display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
-              <button type="button" class="cal-year-pill active" data-year="2026">2026 Tour</button>
-              <button type="button" class="cal-year-pill" data-year="2027">2027 Upcoming</button>
-              <button type="button" class="cal-year-pill" data-year="2028">2028</button>
-              <button type="button" class="cal-year-pill" data-year="2029">2029</button>
-              <button type="button" class="cal-year-pill" data-year="2030">2030</button>
-            </div>
-
-            <!-- Month Quick Tabs -->
-            <div class="cal-month-tabs-strip" id="admin-month-tabs" style="display:flex; justify-content:center; gap:6px; flex-wrap:wrap; margin-bottom:12px;">
-              <button type="button" class="cal-month-tab" data-month="0">Jan</button>
-              <button type="button" class="cal-month-tab" data-month="1">Feb</button>
-              <button type="button" class="cal-month-tab" data-month="2">Mar</button>
-              <button type="button" class="cal-month-tab" data-month="3">Apr</button>
-              <button type="button" class="cal-month-tab" data-month="4">May</button>
-              <button type="button" class="cal-month-tab" data-month="5">Jun</button>
-              <button type="button" class="cal-month-tab" data-month="6">Jul</button>
-              <button type="button" class="cal-month-tab" data-month="7">Aug</button>
-              <button type="button" class="cal-month-tab" data-month="8">Sep</button>
-              <button type="button" class="cal-month-tab" data-month="9">Oct</button>
-              <button type="button" class="cal-month-tab" data-month="10">Nov</button>
-              <button type="button" class="cal-month-tab active" data-month="11">Dec</button>
+            <!-- Month Ribbon (1 Responsive Row) -->
+            <div class="cal-view-control-bar">
+              <div class="cal-month-tabs-strip" id="admin-month-tabs">
+                <button type="button" class="cal-month-tab" data-month="0">Jan</button>
+                <button type="button" class="cal-month-tab" data-month="1">Feb</button>
+                <button type="button" class="cal-month-tab" data-month="2">Mar</button>
+                <button type="button" class="cal-month-tab" data-month="3">Apr</button>
+                <button type="button" class="cal-month-tab" data-month="4">May</button>
+                <button type="button" class="cal-month-tab" data-month="5">Jun</button>
+                <button type="button" class="cal-month-tab" data-month="6">Jul</button>
+                <button type="button" class="cal-month-tab" data-month="7">Aug</button>
+                <button type="button" class="cal-month-tab" data-month="8">Sep</button>
+                <button type="button" class="cal-month-tab" data-month="9">Oct</button>
+                <button type="button" class="cal-month-tab" data-month="10">Nov</button>
+                <button type="button" class="cal-month-tab active" data-month="11">Dec</button>
+              </div>
             </div>
 
             <span class="poster-schedule-note" id="admin-month-subnote">DECEMBER 2026 • CLICK ANY DATE TO TOGGLE AVAILABILITY</span>

@@ -507,56 +507,36 @@
               <div class="poster-event-eyebrow"><i class="fa-solid fa-bolt text-gold"></i> LIVE TOUR &amp; WEDDING SCHEDULE</div>
               <h3 class="poster-main-title">ALPHA RHYTHMS TOUR CALENDAR</h3>
               
-              <!-- Interactive Year Navigator Header -->
+              <!-- Unified Year Selector Header (1 Clean Responsive Row) -->
               <div class="cal-year-nav-bar">
                 <button type="button" class="cal-year-arrow" id="cal-prev-year" aria-label="Previous Year">
                   <i class="fa-solid fa-chevron-left"></i>
                 </button>
-                <div class="poster-month-badge cal-year-badge">
+                <div class="cal-year-center-group">
                   <span class="poster-month-stripes">///</span>
-                  <span class="poster-month-text" id="cal-active-year-title">YEAR 2026</span>
+                  <div class="cal-year-pills-row" id="cal-year-pills-row">
+                    <button type="button" class="cal-year-pill active" data-year="2026">2026</button>
+                    <button type="button" class="cal-year-pill" data-year="2027">2027</button>
+                    <button type="button" class="cal-year-pill" data-year="2028">2028</button>
+                    <button type="button" class="cal-year-pill" data-year="2029">2029</button>
+                    <button type="button" class="cal-year-pill" data-year="2030">2030</button>
+                  </div>
+                  <span class="poster-month-stripes">///</span>
                 </div>
                 <button type="button" class="cal-year-arrow" id="cal-next-year" aria-label="Next Year">
                   <i class="fa-solid fa-chevron-right"></i>
                 </button>
               </div>
 
-              <!-- Quick Jump Year Selector Pills (Multi-Year Support) -->
-              <div class="cal-year-pills-row" id="cal-year-pills-row">
-                <button type="button" class="cal-year-pill active" data-year="2026">
-                  <i class="fa-solid fa-fire text-gold"></i> 2026 Tour
-                </button>
-                <button type="button" class="cal-year-pill" data-year="2027">
-                  <i class="fa-solid fa-calendar text-gold"></i> 2027 Upcoming
-                </button>
-                <button type="button" class="cal-year-pill" data-year="2028">
-                  2028
-                </button>
-                <button type="button" class="cal-year-pill" data-year="2029">
-                  2029
-                </button>
-                <button type="button" class="cal-year-pill" data-year="2030">
-                  2030
-                </button>
-              </div>
-
-              <span class="poster-schedule-note" id="cal-schedule-subtitle">FULL 12-MONTH LIVE TOUR &amp; AVAILABILITY SCHEDULE &bull; TAP ANY DATE TO BOOK</span>
+              <span class="poster-schedule-note" id="cal-schedule-subtitle">TAP ANY DATE TO BOOK DIRECTLY &bull; LIVE AVAILABILITY</span>
             </div>
 
-            <!-- View Switcher & Month Tabs Strip -->
+            <!-- Sleek Horizontal Month Ribbon (1 Responsive Row) -->
             <div class="cal-view-control-bar">
-              <div class="cal-mode-toggle-group">
-                <button type="button" class="cal-mode-btn active" id="cal-mode-year-btn">
-                  <i class="fa-solid fa-grip"></i> Whole Year (12 Months)
-                </button>
-                <button type="button" class="cal-mode-btn" id="cal-mode-month-btn">
-                  <i class="fa-solid fa-calendar-day"></i> Month Spotlight
-                </button>
-              </div>
-
-              <!-- Month Quick Jump Tabs -->
               <div class="cal-month-tabs-strip" id="cal-month-tabs-strip">
-                <button type="button" class="cal-month-tab active" data-month="all">All 12 Months</button>
+                <button type="button" class="cal-month-tab cal-tab-matrix" data-month="all" title="View all 12 months at once">
+                  <i class="fa-solid fa-grip"></i> 12 Months
+                </button>
                 <button type="button" class="cal-month-tab" data-month="0">Jan</button>
                 <button type="button" class="cal-month-tab" data-month="1">Feb</button>
                 <button type="button" class="cal-month-tab" data-month="2">Mar</button>
@@ -568,7 +548,7 @@
                 <button type="button" class="cal-month-tab" data-month="8">Sep</button>
                 <button type="button" class="cal-month-tab" data-month="9">Oct</button>
                 <button type="button" class="cal-month-tab" data-month="10">Nov</button>
-                <button type="button" class="cal-month-tab" data-month="11">Dec</button>
+                <button type="button" class="cal-month-tab active" data-month="11">Dec</button>
               </div>
             </div>
 

@@ -1880,8 +1880,14 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
         const m = tab.getAttribute('data-month');
         if (activeMode === 'all' && m === 'all') {
           tab.classList.add('active');
+          if (tab.scrollIntoView) {
+            tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+          }
         } else if (activeMode === 'single' && m !== 'all' && parseInt(m, 10) === focusedMonth) {
           tab.classList.add('active');
+          if (tab.scrollIntoView) {
+            tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+          }
         } else {
           tab.classList.remove('active');
         }
@@ -2025,7 +2031,7 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
       const prevMonthBtn = document.createElement('button');
       prevMonthBtn.type = 'button';
       prevMonthBtn.className = 'spotlight-nav-btn';
-      prevMonthBtn.innerHTML = '<i class="fa-solid fa-chevron-left"></i> <span>Prev Month</span>';
+      prevMonthBtn.innerHTML = '<i class="fa-solid fa-chevron-left"></i> <span class="nav-btn-lbl">Prev</span>';
       prevMonthBtn.title = 'Go to Previous Month';
       prevMonthBtn.onclick = () => {
         if (focusedMonth === 0) {
@@ -2044,7 +2050,7 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
       const nextMonthBtn = document.createElement('button');
       nextMonthBtn.type = 'button';
       nextMonthBtn.className = 'spotlight-nav-btn';
-      nextMonthBtn.innerHTML = '<span>Next Month</span> <i class="fa-solid fa-chevron-right"></i>';
+      nextMonthBtn.innerHTML = '<span class="nav-btn-lbl">Next</span> <i class="fa-solid fa-chevron-right"></i>';
       nextMonthBtn.title = 'Go to Next Month';
       nextMonthBtn.onclick = () => {
         if (focusedMonth === 11) {
@@ -2059,18 +2065,7 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
       titleGroup.appendChild(prevMonthBtn);
       titleGroup.appendChild(title);
       titleGroup.appendChild(nextMonthBtn);
-
-      const matrixToggleBtn = document.createElement('button');
-      matrixToggleBtn.type = 'button';
-      matrixToggleBtn.className = 'spotlight-back-btn';
-      matrixToggleBtn.innerHTML = '<i class="fa-solid fa-grip"></i> 12-Month Compact Matrix';
-      matrixToggleBtn.onclick = () => {
-        activeMode = 'all';
-        renderCalendar();
-      };
-
       header.appendChild(titleGroup);
-      header.appendChild(matrixToggleBtn);
       wrap.appendChild(header);
 
       // Weekday Names Row
