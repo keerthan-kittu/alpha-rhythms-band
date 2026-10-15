@@ -2755,14 +2755,17 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  margin: 10px 0 12px;
-  flex-wrap: nowrap;
+  gap: 8px;
+  width: 100%;
+  max-width: 440px;
+  margin: 10px auto 12px;
+  box-sizing: border-box;
+  padding: 0 4px;
 }
 
 .cal-year-arrow {
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background: rgba(0, 0, 0, 0.6);
   border: 1.5px solid rgba(250, 204, 21, 0.5);
@@ -2770,7 +2773,7 @@ section {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   cursor: pointer;
   transition: all 0.2s ease;
   flex-shrink: 0;
@@ -2790,14 +2793,17 @@ section {
 .cal-year-center-group {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  gap: 5px;
   background: rgba(0, 0, 0, 0.7);
   border: 1.5px solid rgba(250, 204, 21, 0.4);
   border-radius: 30px;
-  padding: 4px 10px;
+  padding: 3px 8px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  max-width: calc(100% - 88px);
   overflow-x: auto;
   scrollbar-width: none;
+  box-sizing: border-box;
 }
 
 .cal-year-center-group::-webkit-scrollbar {
@@ -7567,7 +7573,7 @@ section {
 @media (max-width: 768px) {
   /* 1. Global Compact Section Padding & Heading Hierarchy */
   .section-block {
-    padding: 42px 0 28px !important;
+    padding: 38px 12px 24px !important;
   }
 
   .section-header {
@@ -7920,28 +7926,75 @@ section {
   }
 
   .poster-head-wrap {
-    padding: 12px 12px 8px !important;
+    padding: 14px 12px 10px !important;
   }
 
   .poster-head-top {
-    flex-direction: row !important;
-    justify-content: space-between !important;
+    flex-direction: column !important;
+    justify-content: center !important;
     align-items: center !important;
+    text-align: center !important;
     gap: 8px !important;
-    margin-bottom: 8px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .poster-brand-badge {
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    gap: 4px !important;
   }
 
   .poster-crest-img {
-    width: 32px !important;
-    height: 32px !important;
+    width: 38px !important;
+    height: 38px !important;
+    margin: 0 auto !important;
+  }
+
+  .poster-brand-text {
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  .poster-est {
+    font-size: 0.62rem !important;
+    letter-spacing: 0.16em !important;
+    text-align: center !important;
   }
 
   .poster-brand-title {
-    font-size: 0.88rem !important;
+    font-size: 1.15rem !important;
+    text-align: center !important;
+    line-height: 1.15 !important;
+  }
+
+  .poster-stars {
+    font-size: 0.70rem !important;
+    text-align: center !important;
+    margin-top: 2px !important;
+  }
+
+  .poster-sponsor-block {
+    text-align: center !important;
+    align-items: center !important;
+    border-top: 1px solid rgba(250, 204, 21, 0.25) !important;
+    padding-top: 6px !important;
+    width: 100% !important;
+    max-width: 290px !important;
+    margin: 0 auto !important;
   }
 
   .poster-sponsor-domain {
-    font-size: 0.88rem !important;
+    font-size: 1.05rem !important;
+    text-align: center !important;
+  }
+
+  .poster-sponsor-sub {
+    font-size: 0.68rem !important;
+    text-align: center !important;
+    line-height: 1.25 !important;
+    margin: 2px auto 0 !important;
   }
 
   .poster-title-row {
@@ -7968,7 +8021,13 @@ section {
 
   .poster-schedule-note {
     font-size: 0.66rem !important;
-    margin-top: 4px !important;
+    line-height: 1.35 !important;
+    margin: 4px auto 8px !important;
+    padding: 0 6px !important;
+    display: block !important;
+    overflow: visible !important;
+    word-break: break-word !important;
+    text-align: center !important;
   }
 
   .poster-legend-pill {
@@ -8006,24 +8065,51 @@ section {
 
   /* Calendar Mobile Controls Optimization */
   .cal-year-nav-bar {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     gap: 6px !important;
-    margin: 6px 0 8px !important;
+    margin: 8px auto 10px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 0 4px !important;
   }
 
   .cal-year-arrow {
     width: 32px !important;
     height: 32px !important;
     font-size: 0.78rem !important;
+    flex-shrink: 0 !important;
   }
 
   .cal-year-center-group {
     padding: 2px 6px !important;
-    gap: 4px !important;
+    gap: 3px !important;
+    max-width: calc(100% - 76px) !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+    box-sizing: border-box !important;
+  }
+
+  .cal-year-center-group::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .cal-year-center-group .poster-month-stripes {
+    display: none !important;
+  }
+
+  .cal-year-pills-row {
+    gap: 3px !important;
+    flex-wrap: nowrap !important;
   }
 
   .cal-year-pill {
-    font-size: 0.74rem !important;
-    padding: 4px 8px !important;
+    font-size: 0.72rem !important;
+    padding: 3px 7px !important;
+    border-radius: 12px !important;
+    flex-shrink: 0 !important;
   }
 
   .cal-view-control-bar {
