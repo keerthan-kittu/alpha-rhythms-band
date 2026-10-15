@@ -477,7 +477,6 @@ Alpha Rhythms on stage at Tiara!
     const mainHeader = document.getElementById('main-header');
     const mobileCrest = document.getElementById('hero-mobile-crest');
     const heroDock = document.querySelector('.hero-stage-dock');
-    const welcomeTitle = document.querySelector('.hero-welcome-title');
 
     if (heroBandImg) {
       heroBandImg.classList.remove('hero-entrance');
@@ -499,13 +498,6 @@ Alpha Rhythms on stage at Tiara!
       void heroDock.offsetWidth;
       heroDock.classList.add('hero-entrance');
     }
-    if (welcomeTitle) {
-      welcomeTitle.classList.remove('hero-welcome-drop');
-      void welcomeTitle.offsetWidth;
-      welcomeTitle.classList.add('hero-welcome-drop');
-    }
-
-    showToast("Welcome to Alpha Rhythms page !", "fa-bolt");
   }
 
   // Backward compatibility alias
