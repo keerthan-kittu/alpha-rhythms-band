@@ -1748,6 +1748,7 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
       'January', 'February', 'March', 'April', 'May', 'June',
       'July', 'August', 'September', 'October', 'November', 'December'
     ];
+    const MONTH_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const WEEKDAY_SHORT = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     const WEEKDAY_INITIALS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
@@ -1951,11 +1952,11 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
 
       const titleEl = document.createElement('div');
       titleEl.className = 'cal-month-title-btn';
-      titleEl.innerHTML = `<span>${MONTH_NAMES[monthIdx]}</span> <i class="fa-solid fa-up-right-and-down-left-from-center" style="font-size:0.68rem; opacity:0.8;" title="Click to Maximize"></i>`;
+      titleEl.innerHTML = `<span class="month-name-full">${MONTH_NAMES[monthIdx]}</span><span class="month-name-short">${MONTH_SHORT[monthIdx]}</span> <i class="fa-solid fa-up-right-and-down-left-from-center" style="font-size:0.58rem; opacity:0.8;" title="Click to Maximize"></i>`;
 
       const pill = document.createElement('span');
       pill.className = `cal-month-status-pill ${bookedInMonth > 0 ? 'pill-booked' : 'pill-open'}`;
-      pill.textContent = bookedInMonth > 0 ? `${bookedInMonth} Booked` : 'All Open';
+      pill.innerHTML = bookedInMonth > 0 ? `<span class="pill-full">${bookedInMonth} Booked</span><span class="pill-short">${bookedInMonth}B</span>` : `<span class="pill-full">Open</span><span class="pill-short">✓</span>`;
 
       head.appendChild(titleEl);
       head.appendChild(pill);
@@ -1999,7 +2000,7 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
       // Maximize cue at the bottom of the card
       const cue = document.createElement('div');
       cue.className = 'cal-month-expand-cue';
-      cue.innerHTML = `<span>Maximize Month</span> <i class="fa-solid fa-maximize"></i>`;
+      cue.innerHTML = `<span>Maximize</span> <i class="fa-solid fa-maximize"></i>`;
       card.appendChild(cue);
 
       // Clicking anywhere on this month card maximizes it with animation!
