@@ -2024,13 +2024,7 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
 
       card.appendChild(daysGrid);
 
-      // Maximize cue at the bottom of the card
-      const cue = document.createElement('div');
-      cue.className = 'cal-month-expand-cue';
-      cue.innerHTML = `<span>Maximize</span> <i class="fa-solid fa-maximize"></i>`;
-      card.appendChild(cue);
-
-      // Clicking anywhere on this month card maximizes it with animation!
+      // Clicking anywhere inside this month block maximizes it with animation!
       card.onclick = (e) => {
         e.preventDefault();
         focusedMonth = monthIdx;
