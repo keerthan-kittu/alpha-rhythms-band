@@ -3058,34 +3058,37 @@ section {
 
 .year-12-months-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
   padding: 12px;
   background: #000000;
   box-sizing: border-box;
 }
 
-@media (max-width: 1240px) {
+/* Tablets: 4x1 Grid (4 columns per row) */
+@media (min-width: 641px) and (max-width: 1024px) {
   .year-12-months-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-    padding: 10px;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 8px !important;
+    padding: 10px 6px !important;
   }
 }
 
-@media (max-width: 820px) {
+/* Mobile: 3x1 Grid (3 columns per row) */
+@media (max-width: 640px) {
   .year-12-months-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
-    padding: 8px 6px;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 5px !important;
+    padding: 6px 4px !important;
   }
 }
 
-@media (max-width: 360px) {
+/* Extra small devices below 320px */
+@media (max-width: 320px) {
   .year-12-months-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 5px;
-    padding: 6px 4px;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 4px !important;
+    padding: 4px 2px !important;
   }
 }
 
@@ -8365,32 +8368,36 @@ section {
   }
 
   .year-12-months-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 6px !important;
-    padding: 6px !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 5px !important;
+    padding: 6px 4px !important;
   }
 
   .cal-month-card {
-    padding: 8px 6px 6px !important;
+    padding: 6px 4px 4px !important;
     border-radius: 8px !important;
   }
 
   .cal-month-title-btn {
-    font-size: 0.80rem !important;
+    font-size: 0.72rem !important;
   }
 
   .cal-month-status-pill {
-    font-size: 0.58rem !important;
-    padding: 2px 6px !important;
+    font-size: 0.52rem !important;
+    padding: 1px 4px !important;
   }
 
   .cal-card-wd {
-    font-size: 0.58rem !important;
+    font-size: 0.54rem !important;
+  }
+
+  .cal-card-days-grid {
+    gap: 1.5px !important;
   }
 
   .cal-day-cell {
-    font-size: 0.72rem !important;
-    border-radius: 4px !important;
+    font-size: 0.62rem !important;
+    border-radius: 3px !important;
   }
 
   /* 5. Band Lineup Section */
