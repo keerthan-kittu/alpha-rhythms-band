@@ -3764,7 +3764,7 @@ section {
    Ensures phone numbers, numerical codes, and key metrics NEVER
    wrap or break onto multiple lines across any screen size.
    ======================================================== */
-a[href^="tel:"],
+a[href^="tel:"]:not(.git-btn-gold-call):not(.btn):not(.btn-gold),
 .quick-contact-hotline,
 .phone-pill-digits,
 .git-contact-link,
@@ -5684,10 +5684,16 @@ a[href^="tel:"],
 .git-right-col {
   display: flex;
   justify-content: center;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .git-booking-card {
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   background: radial-gradient(circle at 50% 0%, rgba(28, 24, 18, 0.88) 0%, rgba(11, 11, 15, 0.98) 100%);
   border: 1px solid rgba(245, 158, 11, 0.35);
   border-radius: 24px;
@@ -5729,6 +5735,10 @@ a[href^="tel:"],
 }
 
 .git-inner-box {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   background: rgba(18, 18, 24, 0.75);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 18px;
@@ -8804,15 +8814,35 @@ a[href^="tel:"],
   /* 6. Contact & Booking Section */
   .contact-section {
     padding: 55px 0 65px !important;
-  }
-
-  .git-container {
-    padding: 0 16px !important;
+    overflow-x: hidden !important;
+    width: 100% !important;
+    max-width: 100vw !important;
     box-sizing: border-box !important;
   }
 
+  .contact-container {
+    padding: 0 16px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+
   .git-layout-grid {
+    grid-template-columns: 1fr !important;
     gap: 22px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .git-left-col,
+  .git-right-col {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
   }
 
   .git-title {
@@ -8828,14 +8858,36 @@ a[href^="tel:"],
   }
 
   .git-contact-card {
+    display: flex !important;
+    align-items: center !important;
     padding: 14px 16px !important;
     gap: 12px !important;
     margin-bottom: 14px !important;
     border-radius: 14px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .git-contact-info {
+    min-width: 0 !important;
+    flex: 1 1 auto !important;
+  }
+
+  .git-contact-meta {
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
   }
 
   .git-social-pills {
+    display: flex !important;
+    flex-wrap: wrap !important;
     gap: 8px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
 
   .git-social-pill {
@@ -8843,18 +8895,25 @@ a[href^="tel:"],
     font-size: 0.78rem !important;
     min-height: 38px !important;
     box-sizing: border-box !important;
+    flex: 0 1 auto !important;
+    max-width: 100% !important;
   }
 
   .git-booking-card {
     padding: 22px 16px !important;
     border-radius: 18px !important;
     box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
   }
 
   .git-card-title {
     font-size: 1.35rem !important;
     line-height: 1.2 !important;
     margin-bottom: 6px !important;
+    word-break: break-word !important;
   }
 
   .git-card-sub {
@@ -8868,6 +8927,9 @@ a[href^="tel:"],
     gap: 10px !important;
     border-radius: 14px !important;
     box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
   }
 
   .git-phone-pill {
@@ -8890,29 +8952,37 @@ a[href^="tel:"],
   }
 
   .git-btn-green-wa {
-    padding: 13px 10px !important;
-    font-size: clamp(0.74rem, 3.2vw, 0.88rem) !important;
+    padding: 14px 12px !important;
+    font-size: clamp(0.78rem, 3.4vw, 0.90rem) !important;
     border-radius: 10px !important;
     width: 100% !important;
+    max-width: 100% !important;
     box-sizing: border-box !important;
-    white-space: nowrap !important;
+    white-space: normal !important;
+    word-break: normal !important;
+    line-height: 1.35 !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     gap: 8px !important;
+    text-align: center !important;
   }
 
   .git-btn-gold-call {
-    padding: 13px 10px !important;
-    font-size: clamp(0.72rem, 3.1vw, 0.84rem) !important;
+    padding: 14px 12px !important;
+    font-size: clamp(0.78rem, 3.4vw, 0.90rem) !important;
     border-radius: 10px !important;
     width: 100% !important;
+    max-width: 100% !important;
     box-sizing: border-box !important;
-    white-space: nowrap !important;
+    white-space: normal !important;
+    word-break: normal !important;
+    line-height: 1.35 !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 6px !important;
+    gap: 8px !important;
+    text-align: center !important;
   }
 
   .git-trust-strip {
@@ -8920,6 +8990,18 @@ a[href^="tel:"],
     padding-top: 12px !important;
     margin-top: 12px !important;
     gap: 6px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .git-trust-line-1,
+  .git-trust-line-2 {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 12px !important;
+    flex-wrap: wrap !important;
+    text-align: center !important;
   }
 
   /* 7. Footer: Modern Premium Responsive Architecture on Mobile */
