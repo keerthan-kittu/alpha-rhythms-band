@@ -3678,28 +3678,79 @@ section {
 .cal-quick-contact-bar {
   max-width: 920px;
   margin: 20px auto 0;
-  background: rgba(18, 18, 26, 0.85);
-  border: 1px solid rgba(245, 158, 11, 0.3);
-  border-radius: 12px;
-  padding: 14px 22px;
+  background: rgba(18, 18, 26, 0.9);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  border-radius: 14px;
+  padding: 16px 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
+  gap: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
 .quick-contact-text {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 0.88rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
   color: #e2e8f0;
+}
+
+.quick-contact-prompt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.90rem;
+  color: #cbd5e1;
+  line-height: 1.4;
+}
+
+.quick-contact-hotline {
+  font-family: var(--font-caps, 'Outfit', sans-serif);
+  font-size: clamp(1.2rem, 2.5vw, 1.45rem);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: #f59e0b !important;
+  text-decoration: underline !important;
+  text-underline-offset: 4px;
+  white-space: nowrap !important;
+  word-break: keep-all !important;
+  display: inline-block !important;
+  transition: all 0.2s ease;
+}
+
+.quick-contact-hotline:hover {
+  color: #fbbf24 !important;
+  text-shadow: 0 0 12px rgba(245, 158, 11, 0.6);
+  transform: translateX(2px);
 }
 
 .quick-contact-buttons {
   display: flex;
-  gap: 10px;
+  gap: 12px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ========================================================
+   UNIVERSAL NUMERICAL & PHONE NUMBER INTEGRITY RULE
+   Ensures phone numbers, numerical codes, and key metrics NEVER
+   wrap or break onto multiple lines across any screen size.
+   ======================================================== */
+a[href^="tel:"],
+.quick-contact-hotline,
+.phone-pill-digits,
+.git-contact-link,
+.git-phone-pill,
+.date-dialog-phone,
+.footer-contact-val,
+.nobr-number,
+.phone-number-str {
+  white-space: nowrap !important;
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
+  hyphens: manual !important;
 }
 
 /* --- TAB 3: Poster Showcase Card --- */
@@ -4241,16 +4292,39 @@ section {
   .cal-quick-contact-bar {
     flex-direction: column;
     text-align: center;
-    gap: 12px;
-    padding: 14px;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 14px;
+  }
+  .quick-contact-text {
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
+  .quick-contact-prompt {
+    justify-content: center;
+    text-align: center;
+    flex-wrap: wrap;
+    font-size: 0.86rem;
+  }
+  .quick-contact-hotline {
+    font-size: 1.3rem !important;
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    display: inline-block !important;
+    margin-top: 4px;
   }
   .quick-contact-buttons {
     width: 100%;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
   }
   .quick-contact-buttons .btn {
-    width: 100%;
+    flex: 1 1 140px;
     justify-content: center;
+    white-space: nowrap !important;
   }
 
   .direct-dialogue-card {
@@ -5664,6 +5738,15 @@ section {
   font-weight: 800;
   letter-spacing: 0.05em;
   color: #ffffff;
+  white-space: nowrap !important;
+  word-break: keep-all !important;
+  display: inline-block !important;
+}
+
+.nobr-number {
+  white-space: nowrap !important;
+  word-break: keep-all !important;
+  display: inline-block !important;
 }
 
 .git-inner-subtext {
@@ -8784,10 +8867,16 @@ section {
   }
 
   .footer-contact-val {
-    word-break: break-word !important;
-    overflow-wrap: break-word !important;
     font-size: 0.82rem !important;
     max-width: 100% !important;
+  }
+  .footer-contact-val[href^="mailto:"] {
+    word-break: break-all !important;
+  }
+  .footer-contact-val[href^="tel:"],
+  .footer-contact-val.text-gold {
+    white-space: nowrap !important;
+    word-break: keep-all !important;
   }
 
   .rank-card-glow {
