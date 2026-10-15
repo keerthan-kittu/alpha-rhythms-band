@@ -170,8 +170,35 @@ Alpha Rhythms on stage at Tiara!
   const teaserBars = document.getElementById('teaser-bars');
   const heroRiffBtn = document.getElementById('hero-riff-btn');
 
-  // Toast Container
+  // Toast Container & Notification System
   const toastContainer = document.getElementById('toast-container');
+
+  function showToast(message, iconClass = 'fa-bolt') {
+    let container = document.getElementById('toast-container');
+    if (!container) {
+      container = document.createElement('div');
+      container.id = 'toast-container';
+      container.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:99999;display:flex;flex-direction:column;gap:10px;pointer-events:none;';
+      document.body.appendChild(container);
+    }
+
+    const toast = document.createElement('div');
+    toast.className = 'site-toast-notification';
+    toast.style.cssText = 'background:rgba(18,3,5,0.95);border:1.5px solid #facc15;color:#ffffff;padding:10px 18px;border-radius:12px;font-family:var(--font-display,Outfit,sans-serif);font-size:0.85rem;font-weight:700;box-shadow:0 10px 30px rgba(0,0,0,0.8),0 0 15px rgba(250,204,21,0.3);display:flex;align-items:center;gap:10px;pointer-events:auto;transition:all 0.3s ease;transform:translateY(10px);opacity:0;';
+    toast.innerHTML = `<i class="fa-solid ${iconClass}" style="color:#facc15;"></i> <span>${message}</span>`;
+    
+    container.appendChild(toast);
+    requestAnimationFrame(() => {
+      toast.style.transform = 'translateY(0)';
+      toast.style.opacity = '1';
+    });
+
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateY(10px)';
+      setTimeout(() => toast.remove(), 350);
+    }, 3200);
+  }
 
   // ==========================================================
   // 1. COSMIC STARFIELD GENERATOR (TIARA STYLE)
