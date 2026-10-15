@@ -3069,8 +3069,34 @@ section {
 @media (min-width: 641px) and (max-width: 1024px) {
   .year-12-months-grid {
     grid-template-columns: repeat(4, 1fr) !important;
-    gap: 8px !important;
-    padding: 10px 6px !important;
+    gap: 7px !important;
+    padding: 8px 6px !important;
+  }
+  .cal-month-card {
+    padding: 7px 5px 5px !important;
+    border-radius: 8px !important;
+  }
+  .cal-month-title-btn {
+    font-size: 0.76rem !important;
+  }
+  .cal-month-status-pill {
+    font-size: 0.54rem !important;
+    padding: 1px 4px !important;
+  }
+  .cal-card-wd {
+    font-size: 0.56rem !important;
+  }
+  .cal-card-days-grid {
+    gap: 2px !important;
+  }
+  .cal-day-cell {
+    font-size: 0.65rem !important;
+    border-radius: 3px !important;
+  }
+  .cal-month-expand-cue {
+    font-size: 0.54rem !important;
+    padding: 2px 4px !important;
+    margin-top: 4px !important;
   }
 }
 
@@ -3078,8 +3104,49 @@ section {
 @media (max-width: 640px) {
   .year-12-months-grid {
     grid-template-columns: repeat(3, 1fr) !important;
-    gap: 5px !important;
+    gap: 4px !important;
     padding: 6px 4px !important;
+  }
+  .cal-month-card {
+    padding: 6px 3px 4px !important;
+    border-radius: 6px !important;
+    border-width: 1px !important;
+  }
+  .cal-month-head {
+    margin-bottom: 3px !important;
+    padding-bottom: 2px !important;
+  }
+  .cal-month-title-btn {
+    font-size: 0.7rem !important;
+    letter-spacing: 0 !important;
+    gap: 2px !important;
+  }
+  .cal-month-status-pill {
+    font-size: 0.5rem !important;
+    padding: 1px 3px !important;
+    border-radius: 4px !important;
+  }
+  .cal-card-weekdays {
+    margin-bottom: 2px !important;
+  }
+  .cal-card-wd {
+    font-size: 0.52rem !important;
+    padding: 0 !important;
+  }
+  .cal-card-days-grid {
+    gap: 1.5px !important;
+  }
+  .cal-day-cell {
+    font-size: 0.6rem !important;
+    border-radius: 2px !important;
+    letter-spacing: -0.02em !important;
+  }
+  .cal-month-expand-cue {
+    font-size: 0.5rem !important;
+    padding: 2px 3px !important;
+    margin-top: 3px !important;
+    letter-spacing: 0 !important;
+    gap: 3px !important;
   }
 }
 
@@ -8369,8 +8436,16 @@ section {
 
   .year-12-months-grid {
     grid-template-columns: repeat(3, 1fr) !important;
-    gap: 5px !important;
+    gap: 4px !important;
     padding: 6px 4px !important;
+  }
+
+  @media (min-width: 641px) {
+    .year-12-months-grid {
+      grid-template-columns: repeat(4, 1fr) !important;
+      gap: 7px !important;
+      padding: 8px 6px !important;
+    }
   }
 
   .cal-month-card {
