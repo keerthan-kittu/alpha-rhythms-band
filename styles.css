@@ -1335,10 +1335,10 @@ body.loading-locked {
 
 .dock-main {
   font-family: var(--font-display);
-  font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+  font-size: clamp(1.4rem, 2.5vw, 2.15rem);
   font-weight: 900;
-  letter-spacing: 0.08em;
-  line-height: 1.05;
+  letter-spacing: 0.05em;
+  line-height: 1.12;
   margin: 0;
   background: linear-gradient(
     110deg,
@@ -1353,7 +1353,39 @@ body.loading-locked {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   filter: drop-shadow(0 2px 14px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 12px rgba(245, 158, 11, 0.35));
-  animation: metallic-shimmer 4.5s linear infinite;
+}
+
+/* Dropping / Falling Entrance Animation for Welcome Title */
+.hero-welcome-title {
+  display: inline-block;
+  animation: hero-title-drop 1.15s cubic-bezier(0.22, 1.25, 0.36, 1) 0.2s both, metallic-shimmer 4.5s linear infinite;
+  will-change: transform, opacity, filter;
+}
+
+.hero-welcome-drop {
+  animation: hero-title-drop 1.15s cubic-bezier(0.22, 1.25, 0.36, 1) both, metallic-shimmer 4.5s linear infinite !important;
+}
+
+@keyframes hero-title-drop {
+  0% {
+    opacity: 0;
+    transform: translateY(-90px) scale(1.18);
+    filter: blur(12px) brightness(1.6);
+    text-shadow: 0 0 30px rgba(245, 158, 11, 0.9);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(12px) scale(0.97);
+    filter: blur(0) brightness(1.15);
+  }
+  80% {
+    transform: translateY(-5px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0) brightness(1);
+  }
 }
 
 @keyframes metallic-shimmer {
@@ -6895,8 +6927,9 @@ a[href^="tel:"],
   }
 
   .dock-main {
-    font-size: clamp(1.4rem, 6vw, 1.85rem);
-    letter-spacing: 0.12em;
+    font-size: clamp(1.12rem, 4.8vw, 1.5rem);
+    letter-spacing: 0.04em;
+    line-height: 1.15;
   }
 
   /* 3. Subtle bottom discover prompt balancing lower stage area */
@@ -8824,131 +8857,288 @@ a[href^="tel:"],
     gap: 4px !important;
   }
 
-  /* 7. Footer: Clean Stacked Responsive Layout on Mobile */
+  /* 7. Footer: Modern Premium Responsive Architecture on Mobile */
   .site-footer {
-    padding: 32px 0 20px !important;
+    padding: 44px 18px 28px !important;
+    background: linear-gradient(180deg, #09090e 0%, #040406 100%) !important;
+    border-top: 1px solid rgba(245, 158, 11, 0.25) !important;
     overflow: hidden !important;
     max-width: 100vw !important;
   }
 
-  .footer-container {
-    padding: 0 16px !important;
+  .footer-content-wrap {
+    padding: 0 !important;
     max-width: 100% !important;
     box-sizing: border-box !important;
-    overflow: hidden !important;
   }
 
   .footer-layout-grid {
-    grid-template-columns: 1fr !important;
-    gap: 24px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 32px !important;
+    align-items: center !important;
+    text-align: center !important;
     max-width: 100% !important;
     box-sizing: border-box !important;
   }
 
-  .footer-brand-column,
-  .footer-nav-column,
-  .footer-contact-column {
-    width: 100% !important;
-    max-width: 100% !important;
-    box-sizing: border-box !important;
-  }
-
-  .footer-heading {
-    font-size: 0.72rem !important;
-    letter-spacing: 0.14em !important;
-    margin-bottom: 10px !important;
-    color: var(--accent-gold) !important;
-  }
-
-  .footer-link {
-    font-size: 0.85rem !important;
-    padding: 4px 0 !important;
-    display: inline-block !important;
-  }
-
-  .footer-contact-val {
-    font-size: 0.82rem !important;
-    max-width: 100% !important;
-  }
-  .footer-contact-val[href^="mailto:"] {
-    word-break: break-all !important;
-  }
-  .footer-contact-val[href^="tel:"],
-  .footer-contact-val.text-gold {
-    white-space: nowrap !important;
-    word-break: keep-all !important;
-  }
-
-  .rank-card-glow {
-    max-width: 100% !important;
-    width: 100% !important;
-    left: 0 !important;
-    top: 0 !important;
-  }
-
+  /* 7A. Brand Identity Block */
   .footer-brand-column {
-    grid-column: 1 / -1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    width: 100% !important;
+    max-width: 440px !important;
+    margin: 0 auto !important;
+  }
+
+  .footer-brand-lockup {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 12px !important;
+    margin-bottom: 6px !important;
+    text-decoration: none !important;
+  }
+
+  .footer-logo-img {
+    width: 44px !important;
+    height: 44px !important;
+    filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.45)) !important;
   }
 
   .footer-brand-title {
-    font-size: 1.05rem !important;
+    font-family: var(--font-display, 'Cinzel', serif) !important;
+    font-size: 1.35rem !important;
+    font-weight: 900 !important;
+    letter-spacing: 0.12em !important;
+    color: #ffffff !important;
   }
 
   .footer-tagline {
-    font-size: 0.72rem !important;
-    line-height: 1.35 !important;
-    margin-bottom: 10px !important;
+    font-size: 0.86rem !important;
+    line-height: 1.55 !important;
+    color: #94a3b8 !important;
+    margin: 8px auto 16px !important;
+    max-width: 360px !important;
   }
 
   .footer-social-strip {
-    gap: 8px !important;
+    display: flex !important;
+    justify-content: center !important;
+    gap: 12px !important;
+    margin-top: 4px !important;
   }
 
   .footer-social-icon {
-    width: 30px !important;
-    height: 30px !important;
-    font-size: 0.80rem !important;
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    border-radius: 50% !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.12) !important;
+    color: #f59e0b !important;
+    font-size: 1.15rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.2s ease !important;
+  }
+
+  .footer-social-icon:hover,
+  .footer-social-icon:active {
+    background: rgba(245, 158, 11, 0.2) !important;
+    border-color: #f59e0b !important;
+    color: #ffffff !important;
+    transform: translateY(-2px) !important;
+  }
+
+  /* 7B. Quick Navigation Interactive Pill Grid */
+  .footer-nav-column {
+    width: 100% !important;
+    max-width: 440px !important;
+    margin: 0 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
   }
 
   .footer-heading {
-    font-size: 0.68rem !important;
-    letter-spacing: 0.14em !important;
-    margin-bottom: 8px !important;
+    font-family: var(--font-caps, 'Outfit', sans-serif) !important;
+    font-size: 0.78rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.18em !important;
+    color: #f59e0b !important;
+    margin-bottom: 14px !important;
+    text-transform: uppercase !important;
+  }
+
+  .footer-nav-links {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+
+  .footer-nav-links li:last-child {
+    grid-column: 1 / -1 !important;
   }
 
   .footer-link {
-    font-size: 0.74rem !important;
-    padding: 3px 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 42px !important;
+    padding: 8px 12px !important;
+    border-radius: 10px !important;
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #e2e8f0 !important;
+    font-size: 0.84rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.04em !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease !important;
+  }
+
+  .footer-link:hover,
+  .footer-link:active {
+    background: rgba(245, 158, 11, 0.15) !important;
+    border-color: rgba(245, 158, 11, 0.45) !important;
+    color: #fbbf24 !important;
+    transform: translateY(-1px) !important;
+  }
+
+  /* 7C. Direct Inquiries Card */
+  .footer-contact-column {
+    width: 100% !important;
+    max-width: 440px !important;
+    margin: 0 auto !important;
+    background: rgba(18, 18, 26, 0.8) !important;
+    border: 1.5px solid rgba(245, 158, 11, 0.3) !important;
+    border-radius: 16px !important;
+    padding: 22px 18px !important;
+    box-sizing: border-box !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  .footer-contact-list {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 14px !important;
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
   }
 
   .footer-contact-list li {
-    margin-bottom: 8px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    margin: 0 !important;
   }
 
   .footer-contact-sub {
-    font-size: 0.58rem !important;
+    font-size: 0.68rem !important;
+    letter-spacing: 0.14em !important;
+    color: #64748b !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    margin-bottom: 4px !important;
   }
 
   .footer-contact-val {
-    font-size: 0.72rem !important;
+    font-size: 0.94rem !important;
+    color: #e2e8f0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease !important;
   }
 
-  .footer-admin-portal-btn {
-    padding: 5px 10px !important;
-    font-size: 0.64rem !important;
+  .footer-contact-val.text-gold {
+    font-size: 1.12rem !important;
+    font-weight: 800 !important;
+    color: #f59e0b !important;
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    letter-spacing: 0.04em !important;
   }
 
+  .footer-contact-val[href^="tel:"]:hover {
+    color: #fbbf24 !important;
+    text-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+  }
+
+  .footer-contact-val[href*="wa.me"] {
+    color: #22c55e !important;
+    font-weight: 700 !important;
+  }
+
+  .footer-contact-val[href^="mailto:"] {
+    word-break: break-all !important;
+    font-size: 0.84rem !important;
+    color: #cbd5e1 !important;
+  }
+
+  /* 7D. Footer Bottom Bar */
   .footer-bottom-bar {
-    padding-top: 14px !important;
-    margin-top: 16px !important;
+    width: 100% !important;
+    max-width: 440px !important;
+    margin: 8px auto 0 !important;
+    padding-top: 24px !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    display: flex !important;
     flex-direction: column !important;
+    align-items: center !important;
     text-align: center !important;
-    gap: 6px !important;
+    gap: 14px !important;
   }
 
-  .footer-copy-text,
+  .footer-scroll-top-btn {
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 50% !important;
+    background: rgba(245, 158, 11, 0.12) !important;
+    border: 1.5px solid rgba(245, 158, 11, 0.45) !important;
+    color: #f59e0b !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 1.15rem !important;
+    transition: all 0.25s ease !important;
+    order: -1 !important;
+  }
+
+  .footer-scroll-top-btn:hover,
+  .footer-scroll-top-btn:active {
+    background: #f59e0b !important;
+    color: #000000 !important;
+    transform: translateY(-2px) !important;
+  }
+
   .footer-regions-text {
-    font-size: 0.64rem !important;
+    font-size: 0.80rem !important;
+    color: #94a3b8 !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.05em !important;
+    line-height: 1.4 !important;
+  }
+
+  .footer-copy-text {
+    font-size: 0.76rem !important;
+    color: #64748b !important;
+    font-weight: 500 !important;
+    line-height: 1.4 !important;
   }
 }
 
