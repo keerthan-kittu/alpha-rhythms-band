@@ -9,6 +9,8 @@ const DEFAULT_BOOKED_DATES = [
   '2026-12-30'
 ];
 
+const KVDB_URL = 'https://kvdb.io/S9mGT2W5mMykyzCfn3GGkw/alpha-calendar';
+
 module.exports = async function handler(req, res) {
   // Universal CORS
   res.setHeader('Access-Control-Allow-Credentials', 'true');
@@ -25,6 +27,7 @@ module.exports = async function handler(req, res) {
 
   try {
     if (req.method === 'GET') {
+      // 1. Try Vercel Blob
       try {
         const { blobs } = await list({ prefix: BLOB_PATH });
         const targetBlob = blobs.find(b => b.pathname === BLOB_PATH) || blobs[0];
@@ -43,8 +46,25 @@ module.exports = async function handler(req, res) {
           }
         }
       } catch (err) {
-        console.warn('Could not read existing blob:', err);
+        // Blob store suspended or unavailable, fall through to KVDB
       }
+
+      // 2. High-Availability KVDB Cloud Store
+      try {
+        const kvRes = await fetch(`${KVDB_URL}?t=${Date.now()}`, { cache: 'no-store' });
+        if (kvRes.ok) {
+          const data = await kvRes.json();
+          if (Array.isArray(data.dates)) {
+            return res.status(200).json({
+              dates: data.dates,
+              updatedAt: data.updatedAt || null
+            });
+          }
+        }
+      } catch (kvErr) {
+        // Fall through to defaults
+      }
+
       return res.status(200).json({ dates: DEFAULT_BOOKED_DATES, updatedAt: null });
     }
 
@@ -72,17 +92,35 @@ module.exports = async function handler(req, res) {
         updatedAt: new Date().toISOString()
       };
 
-      const result = await put(BLOB_PATH, JSON.stringify(payload), {
-        access: 'public',
-        addRandomSuffix: false,
-        allowOverwrite: true
-      });
+      // 1. Save to KVDB Cloud Store (Always reliable & unmetered)
+      try {
+        await fetch(KVDB_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+      } catch (kvErr) {
+        console.warn('KVDB write warning:', kvErr);
+      }
+
+      // 2. Try Vercel Blob (if active)
+      let blobUrl = null;
+      try {
+        const result = await put(BLOB_PATH, JSON.stringify(payload), {
+          access: 'public',
+          addRandomSuffix: false,
+          allowOverwrite: true
+        });
+        blobUrl = result.url;
+      } catch (blobErr) {
+        // Silently continue with KVDB
+      }
 
       return res.status(200).json({
         success: true,
         dates: validDates,
         updatedAt: payload.updatedAt,
-        url: result.url
+        url: blobUrl
       });
     }
 

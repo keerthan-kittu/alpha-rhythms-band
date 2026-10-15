@@ -2288,7 +2288,8 @@ Alpha Rhythms is a relentless powerhouse live concert band known for electrifyin
     async function syncWithCloudCalendar() {
       const endpoints = [
         '/api/calendar',
-        'https://alpha-rhythms-band.vercel.app/api/calendar'
+        'https://alpha-rhythms-band.vercel.app/api/calendar',
+        'https://kvdb.io/S9mGT2W5mMykyzCfn3GGkw/alpha-calendar'
       ];
       for (const endpoint of endpoints) {
         try {
